@@ -4,42 +4,42 @@
 #include "debug/DebugLogInterface.hpp"
 
 
-IInput* ServiceProvider::input_service_ = NULL;
-IVideo* ServiceProvider::video_service_ = NULL;
-IDebug* ServiceProvider::debug_service_ = NULL;
+IInput* ServiceProvider::m_inputService = NULL;
+IVideo* ServiceProvider::m_videoService = NULL;
+IDebug* ServiceProvider::m_debugService = NULL;
 
 
-void ServiceProvider::Provide(IInput* input_service)
+void ServiceProvider::provide(IInput* inputService)
 {
-	ServiceProvider::input_service_ = input_service;
+	ServiceProvider::m_inputService = inputService;
 }
 
 
-void ServiceProvider::Provide(IVideo* video_service)
+void ServiceProvider::provide(IVideo* videoService)
 {
-	ServiceProvider::video_service_ = video_service;
+	ServiceProvider::m_videoService = videoService;
 }
 
 
-void ServiceProvider::Provide(IDebug* debug_service)
+void ServiceProvider::provide(IDebug* debugService)
 {
-	ServiceProvider::debug_service_ = debug_service;
+	ServiceProvider::m_debugService = debugService;
 }
 
 
-IInput* ServiceProvider::get_input()
+IInput* ServiceProvider::getInput()
 {
-	return ServiceProvider::input_service_;
+	return ServiceProvider::m_inputService;
 }
 
 
-IVideo* ServiceProvider::get_video()
+IVideo* ServiceProvider::getVideo()
 {
-	return ServiceProvider::video_service_;
+	return ServiceProvider::m_videoService;
 }
 
 
-IDebug* ServiceProvider::get_debug()
+IDebug* ServiceProvider::getDebug()
 {
-	return ServiceProvider::debug_service_;
+	return ServiceProvider::m_debugService;
 }

@@ -9,14 +9,14 @@ GameMap::~GameMap()
 {
 }
 
-void GameMap::OnTick()
+void GameMap::onTick()
 {
 }
 
-void GameMap::OnRender()
+void GameMap::onRender()
 {
 }
 
-void GameMap::OnEvent(int eventType, int param1, int param2)
+void GameMap::onEvent(int eventType, int param1, int param2)
 {
 }

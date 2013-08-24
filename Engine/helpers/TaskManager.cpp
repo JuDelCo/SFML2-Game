@@ -3,58 +3,58 @@
 #include <cassert>
 
 
-bool ITaskManager::AddTask(task_ptr& task)
+bool ITaskManager::addTask(taskPtr& task)
 {
-	if(!task->Start())
+	if (!task->start())
 	{
 		return false;
 	}
 
-	std::list<task_ptr>::iterator it;
+	std::list<taskPtr>::iterator it;
 
-	for(it = task_list_.begin(); it != task_list_.end(); it++)
+	for (it = m_taskList.begin(); it != m_taskList.end(); it++)
 	{
-		task_ptr& comp = (*it);
+		taskPtr& comp = (*it);
 
-		if(comp->priority_ > task->priority_)
+		if (comp->m_priority > task->m_priority)
 		{
 			break;
 		}
 	}
 
-	task_list_.insert(it, task);
+	m_taskList.insert(it, task);
 
 	return true;
 }
 
 
-void ITaskManager::UpdateTaskList()
+void ITaskManager::updateTaskList()
 {
-	while(!task_list_.empty())
+	while (!m_taskList.empty())
 	{
-		std::list<task_ptr>::iterator it, thisIt;
+		std::list<taskPtr>::iterator it, thisIt;
 
-		for(it = task_list_.begin(); it != task_list_.end();)
+		for (it = m_taskList.begin(); it != m_taskList.end();)
 		{
-			task_ptr task = (*it);
+			taskPtr task = (*it);
 			++it;
 
-			if(!task->is_finished_)
+			if (!task->m_isFinished)
 			{
-				task->Update();
+				task->update();
 			}
 		}
 
-		for(it = task_list_.begin(); it != task_list_.end();)
+		for (it = m_taskList.begin(); it != m_taskList.end();)
 		{
-			task_ptr task = (*it);
+			taskPtr task = (*it);
 			thisIt = it;
 			++it;
 
-			if(task->is_finished_)
+			if (task->m_isFinished)
 			{
-				task->Stop();
-				task_list_.erase(thisIt);
+				task->stop();
+				m_taskList.erase(thisIt);
 				task = 0;
 			}
 		}
@@ -62,77 +62,77 @@ void ITaskManager::UpdateTaskList()
 }
 
 
-void ITaskManager::SuspendTask(task_ptr& task)
+void ITaskManager::suspendTask(taskPtr& task)
 {
-	if(std::find(task_list_.begin(), task_list_.end(), task) != task_list_.end())
+	if (std::find(m_taskList.begin(), m_taskList.end(), task) != m_taskList.end())
 	{
-		task->OnSuspend();
-		task_list_.remove(task);
-		paused_task_list_.push_back(task);
+		task->onSuspend();
+		m_taskList.remove(task);
+		m_pausedTaskList.push_back(task);
 	}
 }
 
 
-void ITaskManager::ResumeTask(task_ptr& task)
+void ITaskManager::resumeTask(taskPtr& task)
 {
-	if(std::find(paused_task_list_.begin(), paused_task_list_.end(), task) != paused_task_list_.end())
+	if (std::find(m_pausedTaskList.begin(), m_pausedTaskList.end(), task) != m_pausedTaskList.end())
 	{
-		task->OnResume();
-		paused_task_list_.remove(task);
+		task->onResume();
+		m_pausedTaskList.remove(task);
 
-		std::list<task_ptr>::iterator it;
+		std::list<taskPtr>::iterator it;
 
-		for(it = task_list_.begin(); it != task_list_.end(); it++)
+		for (it = m_taskList.begin(); it != m_taskList.end(); it++)
 		{
-			task_ptr& comp = (*it);
+			taskPtr& comp = (*it);
 
-			if(comp->priority_ > task->priority_)
+			if (comp->m_priority > task->m_priority)
 			{
 				break;
 			}
 		}
 
-		task_list_.insert(it, task);
+		m_taskList.insert(it, task);
 	}
 }
 
 
-void ITaskManager::RemoveTask(task_ptr& task)
+void ITaskManager::removeTask(taskPtr& task)
 {
 	assert(task && "Tried to remove a null task.");
 
-	if(std::find(task_list_.begin(), task_list_.end(), task) != task_list_.end())
+	if (std::find(m_taskList.begin(), m_taskList.end(), task) != m_taskList.end())
 	{
-		task->is_finished_ = true;
+		task->m_isFinished = true;
 
 		return;
 	}
 
-	std::list<task_ptr>::iterator it;
+	std::list<taskPtr>::iterator it;
 
-	if((it = std::find(paused_task_list_.begin(), paused_task_list_.end(), task)) != task_list_.end())
+	if ((it = std::find(m_pausedTaskList.begin(), m_pausedTaskList.end(), task)) != m_taskList.end())
 	{
-		task->Stop();
-		paused_task_list_.erase(it);
+		task->stop();
+		m_pausedTaskList.erase(it);
 
 		return;
 	}
 }
 
 
-void ITaskManager::KillAllTasks()
+void ITaskManager::killAllTasks()
 {
-	for(std::list<task_ptr>::iterator it = task_list_.begin(); it != task_list_.end(); it++)
+	for (std::list<taskPtr>::iterator it = m_taskList.begin(); it != m_taskList.end(); it++)
 	{
-		(*it)->is_finished_ = true;
+		(*it)->m_isFinished = true;
 	}
 
-	std::list<task_ptr>::iterator it;
+	std::list<taskPtr>::iterator it;
 
-	for(it = paused_task_list_.begin(); it != paused_task_list_.end(); it++)
+	for (it = m_pausedTaskList.begin(); it != m_pausedTaskList.end(); it++)
 	{
-		(*it)->Stop();
+		(*it)->stop();
 	}
 
-	paused_task_list_.clear();
+	m_pausedTaskList.clear();
 }

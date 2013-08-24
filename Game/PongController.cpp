@@ -3,13 +3,13 @@
 
 Pong::Pong() : GameBase(1024, 768)
 {
-	fuente_.loadFromFile("resources/Arial.ttf");
-	marcador_.setFont(fuente_);
-	marcador_.setCharacterSize(50);
-	marcador_.setStyle(sf::Text::Regular);
-	marcador_.setColor(sf::Color::White);
+	m_fuente.loadFromFile("resources/Arial.ttf");
+	m_marcador.setFont(m_fuente);
+	m_marcador.setCharacterSize(50);
+	m_marcador.setStyle(sf::Text::Regular);
+	m_marcador.setColor(sf::Color::White);
 
-	this->Reset();
+	reset();
 }
 
 
@@ -19,177 +19,177 @@ Pong::~Pong()
 }
 
 
-void Pong::Init()
+void Pong::init()
 {
 
 }
 
 
-void Pong::OnTick()
+void Pong::onTick()
 {
 	// Movimiento Jugador
-	if(INPUT->get_key_held()->Up.value)
+	if (INPUT->getKeyHeld()->Up.value)
 	{
-		if(player_pos_.y > 0)
+		if (m_playerPos.y > 0)
 		{
-			player_pos_.y -= 4;
+			m_playerPos.y -= 4;
 		}
 	}
 
-	if(INPUT->get_key_held()->Down.value)
+	if (INPUT->getKeyHeld()->Down.value)
 	{
-		if(player_pos_.y <= 668)
+		if (m_playerPos.y <= 668)
 		{
-			player_pos_.y += 4;
+			m_playerPos.y += 4;
 		}
 	}
 
 	// Movimiento CPU
-	if(ball_pos_.y + 10 < cpu_pos_.y + 50)
+	if (m_ballPos.y + 10 < m_cpuPos.y + 50)
 	{
-		if(cpu_pos_.y > 0)
+		if (m_cpuPos.y > 0)
 		{
-			cpu_pos_.y -= 4 + (0.5 * (signed int)(player_score_ - cpu_score_));
+			m_cpuPos.y -= 4 + (0.5 * (signed int)(m_playerScore - m_cpuScore));
 		}
 	}
 	else
 	{
-		if(cpu_pos_.y <= 668)
+		if (m_cpuPos.y <= 668)
 		{
-			cpu_pos_.y += 4 + (0.5 * (signed int)(player_score_ - cpu_score_));
+			m_cpuPos.y += 4 + (0.5 * (signed int)(m_playerScore - m_cpuScore));
 		}
 	}
 
 	// Colisiones Palas-Pelota
-	if(ball_pos_.x <= player_pos_.x + 20 && ball_pos_.x + 20 >= player_pos_.x)
+	if (m_ballPos.x <= m_playerPos.x + 20 && m_ballPos.x + 20 >= m_playerPos.x)
 	{
-		if(ball_pos_.y + 20 >= player_pos_.y && ball_pos_.y <= player_pos_.y + 100)
+		if (m_ballPos.y + 20 >= m_playerPos.y && m_ballPos.y <= m_playerPos.y + 100)
 		{
-			ball_mov_.x = 1;
+			m_ballMov.x = 1;
 		}
 	}
 
-	if(ball_pos_.x <= cpu_pos_.x + 20 && ball_pos_.x + 20 >= cpu_pos_.x)
+	if (m_ballPos.x <= m_cpuPos.x + 20 && m_ballPos.x + 20 >= m_cpuPos.x)
 	{
-		if(ball_pos_.y + 20 >= cpu_pos_.y && ball_pos_.y <= cpu_pos_.y + 100)
+		if (m_ballPos.y + 20 >= m_cpuPos.y && m_ballPos.y <= m_cpuPos.y + 100)
 		{
-			ball_mov_.x = 0;
+			m_ballMov.x = 0;
 		}
 	}
 
 	// Colisiones Bordes Pelota
-	if(ball_pos_.x - 5 < 0)
+	if (m_ballPos.x - 5 < 0)
 	{
-		cpu_score_++;
-		player_pos_.y = 334;
-		cpu_pos_.y = 334;
-		ball_mov_.x = 1;
-		ball_pos_.x = 502;
-		ball_pos_.y = 374;
+		m_cpuScore++;
+		m_playerPos.y = 334;
+		m_cpuPos.y = 334;
+		m_ballMov.x = 1;
+		m_ballPos.x = 502;
+		m_ballPos.y = 374;
 	}
 
-	if(ball_pos_.x + 5 > 1004)
+	if (m_ballPos.x + 5 > 1004)
 	{
-		player_score_++;
-		player_pos_.y = 334;
-		cpu_pos_.y = 334;
-		ball_mov_.x = 0;
-		ball_pos_.x = 502;
-		ball_pos_.y = 374;
+		m_playerScore++;
+		m_playerPos.y = 334;
+		m_cpuPos.y = 334;
+		m_ballMov.x = 0;
+		m_ballPos.x = 502;
+		m_ballPos.y = 374;
 	}
 
-	if(ball_pos_.y - 5 < 0)
+	if (m_ballPos.y - 5 < 0)
 	{
-		ball_mov_.y = 1;
+		m_ballMov.y = 1;
 	}
 
-	if(ball_pos_.y + 5 > 748)
+	if (m_ballPos.y + 5 > 748)
 	{
-		ball_mov_.y = 0;
+		m_ballMov.y = 0;
 	}
 
 	// Movimiento Pelota
-	if(ball_mov_.x)
+	if (m_ballMov.x)
 	{
-		ball_pos_.x += 5 + (0.5 * (signed int)(player_score_ - cpu_score_));
+		m_ballPos.x += 5 + (0.5 * (signed int)(m_playerScore - m_cpuScore));
 	}
 	else
 	{
-		ball_pos_.x -= 5 + (0.5 * (signed int)(player_score_ - cpu_score_));
+		m_ballPos.x -= 5 + (0.5 * (signed int)(m_playerScore - m_cpuScore));
 	}
 
-	if(ball_mov_.y)
+	if (m_ballMov.y)
 	{
-		ball_pos_.y += 5 + (0.5 * (signed int)(player_score_ - cpu_score_));
+		m_ballPos.y += 5 + (0.5 * (signed int)(m_playerScore - m_cpuScore));
 	}
 	else
 	{
-		ball_pos_.y -= 5 + (0.5 * (signed int)(player_score_ - cpu_score_));
+		m_ballPos.y -= 5 + (0.5 * (signed int)(m_playerScore - m_cpuScore));
 	}
 }
 
 
-void Pong::OnRender()
+void Pong::onRender()
 {
-	sf::RenderWindow* window = VIDEO->get_window();
+	sf::RenderWindow* window = VIDEO->getWindow();
 	window->clear(sf::Color::Black);
 
 	char message[50];
-	std::sprintf(message, "%02d | %02d", player_score_, cpu_score_);
-	marcador_.setString(message);
-	marcador_.setPosition(450, 20);
-	window->draw(marcador_);
+	std::sprintf(message, "%02d | %02d", m_playerScore, m_cpuScore);
+	m_marcador.setString(message);
+	m_marcador.setPosition(450, 20);
+	window->draw(m_marcador);
 
-	VIDEO->DrawRectangle(Vector2f(ball_pos_.x, ball_pos_.y), Vector2f(20, 20), sf::Color::White);
-	VIDEO->DrawRectangle(Vector2f(player_pos_.x, player_pos_.y), Vector2f(20, 100), sf::Color::White);
-	VIDEO->DrawRectangle(Vector2f(cpu_pos_.x, cpu_pos_.y), Vector2f(20, 100), sf::Color::White);
+	VIDEO->drawRectangle(Vector2f(m_ballPos.x, m_ballPos.y), Vector2f(20, 20), sf::Color::White);
+	VIDEO->drawRectangle(Vector2f(m_playerPos.x, m_playerPos.y), Vector2f(20, 100), sf::Color::White);
+	VIDEO->drawRectangle(Vector2f(m_cpuPos.x, m_cpuPos.y), Vector2f(20, 100), sf::Color::White);
 
-	VIDEO->SwapBuffers();
+	VIDEO->swapBuffers();
 }
 
 
-void Pong::OnEvent(const int event_type, const int param_1, const int param_2)
+void Pong::onEvent(const int eventType, const int param1, const int param2)
 {
-	this->event_handler_.Trigger(event_type);
+	m_eventHandler.trigger(eventType);
 
-	switch(event_type)
+	switch (eventType)
 	{
 		case EVENT_KEYDOWN:
-			switch(param_1)
+			switch (param1)
 			{
 				case KEY::Escape:
-					this->Stop();
+					stop();
 					break;
 
 				case KEY::F1:
-					this->Reset();
+					reset();
 					break;
 			}
 
 			break;
 
 		case EVENT_QUIT:
-			this->Stop();
+			stop();
 	}
 }
 
 
-void Pong::Reset()
+void Pong::reset()
 {
-	ball_pos_.x = 502;
-	ball_pos_.y = 374;
-	ball_mov_.x = 1;
-	ball_mov_.y = 1;
-	player_pos_.x = 10;
-	player_pos_.y = 334;
-	cpu_pos_.x = 1024 - 30;
-	cpu_pos_.y = 334;
-	player_score_ = 0;
-	cpu_score_ = 0;
+	m_ballPos.x = 502;
+	m_ballPos.y = 374;
+	m_ballMov.x = 1;
+	m_ballMov.y = 1;
+	m_playerPos.x = 10;
+	m_playerPos.y = 334;
+	m_cpuPos.x = 1024 - 30;
+	m_cpuPos.y = 334;
+	m_playerScore = 0;
+	m_cpuScore = 0;
 }
 
 
-void Pong::End()
+void Pong::end()
 {
 
 }

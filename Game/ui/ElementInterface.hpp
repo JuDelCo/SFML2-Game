@@ -9,19 +9,19 @@
 class IElement
 {
 	public:
-		IElement(IntRect rect, GameData* game_data);
+		IElement(IntRect rect, GameData* gameData);
 		virtual ~IElement() {};
-		bool is_enabled();
-		void Enable();
-		void Disable();
-		virtual void OnTick() = 0;
-		virtual void OnRender() = 0;
-		virtual void OnEvent(int eventType, int param1, int param2) = 0;
+		bool isEnabled();
+		void enable();
+		void disable();
+		virtual void onTick() = 0;
+		virtual void onRender() = 0;
+		virtual void onEvent(int eventType, int param1, int param2) = 0;
 
 	protected:
-		GameData* game_data;
-		IntRect rect;
-		bool enabled;
+		GameData* m_gameData;
+		IntRect m_rect;
+		bool m_enabled;
 };
 
 

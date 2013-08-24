@@ -6,7 +6,7 @@
 #include <list>
 #include "TaskInterface.hpp"
 
-#define task_ptr std::shared_ptr<ITask>
+#define taskPtr std::shared_ptr<ITask>
 
 
 class ITaskManager : public ITask
@@ -15,16 +15,16 @@ class ITaskManager : public ITask
 		ITaskManager(unsigned int priority = 10000) : ITask(priority) {}
 		~ITaskManager() {}
 
-		bool AddTask(task_ptr& task);
-		void UpdateTaskList();
-		void SuspendTask(task_ptr& task);
-		void ResumeTask(task_ptr& task);
-		void RemoveTask(task_ptr& task);
-		void KillAllTasks();
+		bool addTask(taskPtr& task);
+		void updateTaskList();
+		void suspendTask(taskPtr& task);
+		void resumeTask(taskPtr& task);
+		void removeTask(taskPtr& task);
+		void killAllTasks();
 
 	protected:
-		std::list<task_ptr> task_list_;
-		std::list<task_ptr> paused_task_list_;
+		std::list<taskPtr> m_taskList;
+		std::list<taskPtr> m_pausedTaskList;
 };
 
 

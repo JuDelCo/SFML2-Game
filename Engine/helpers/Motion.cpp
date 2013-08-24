@@ -2,13 +2,13 @@
 #include <math.h>
 
 
-Motion::Motion(const float initial_value, const float max_velocity, const float acceleration)
+Motion::Motion(const float initialValue, const float maxVelocity, const float acceleration)
 {
-	this->initial_value_ = initial_value;
-	this->max_velocity_ = max_velocity;
-	this->acceleration_ = acceleration;
+	m_initialValue = initialValue;
+	m_maxVelocity = maxVelocity;
+	m_acceleration = acceleration;
 
-	this->Reset();
+	reset();
 }
 
 
@@ -17,242 +17,242 @@ Motion::~Motion()
 }
 
 
-void Motion::NewValue(const float new_value, const float time_start)
+void Motion::newValue(const float newValue, const float timeStart)
 {
-	if(this->value_ != new_value)
+	if (m_value != newValue)
 	{
-		if(this->speed_ == 0.0)
+		if (m_speed == 0.0)
 		{
-			this->in_ajust_ = false;
+			m_inAjust = false;
 
-			this->desired_value_ = new_value;
-			this->previous_motion_ = this->value_;
-			this->previous_value_ = this->value_;
-			this->previous_time_ = (float)(time_start / 1000);
+			m_desiredValue = newValue;
+			m_previousMotion = m_value;
+			m_previousValue = m_value;
+			m_previousTime = (float)(timeStart / 1000);
 
-			if(this->desired_value_ >= this->previous_value_)
+			if (m_desiredValue >= m_previousValue)
 			{
-				this->signo_ = 1;
+				m_signo = 1;
 			}
 			else
 			{
-				this->signo_ = -1;
+				m_signo = -1;
 			}
 
-			this->time_started_ = (float)(time_start / 1000);
-			this->tau_ = this->max_velocity_ / this->acceleration_;
-			this->total_time_ = this->signo_ * ((this->desired_value_ - this->previous_value_) / this->max_velocity_) + this->tau_;
+			m_timeStarted = (float)(timeStart / 1000);
+			m_tau = m_maxVelocity / m_acceleration;
+			m_totalTime = m_signo * ((m_desiredValue - m_previousValue) / m_maxVelocity) + m_tau;
 
-			if((this->acceleration_ * this->tau_ * this->tau_) / 2 > this->signo_ * (this->desired_value_ - this->previous_value_) / 2)
+			if ((m_acceleration * m_tau * m_tau) / 2 > m_signo * (m_desiredValue - m_previousValue) / 2)
 			{
-				this->total_time_ = sqrt((2 * (this->signo_ * (this->desired_value_ - this->previous_value_)) / 2) / this->acceleration_) * 2;
-				this->tau_ = this->total_time_ / 2;
+				m_totalTime = sqrt((2 * (m_signo * (m_desiredValue - m_previousValue)) / 2) / m_acceleration) * 2;
+				m_tau = m_totalTime / 2;
 			}
 
-			this->in_progress_ = true;
+			m_inProgress = true;
 		}
-		else if(new_value != this->desired_value_)
+		else if (newValue != m_desiredValue)
 		{
-			float e = this->value_ + this->signo_ * ((this->speed_ * this->speed_) / this->acceleration_) / 2;
+			float e = m_value + m_signo * ((m_speed * m_speed) / m_acceleration) / 2;
 
-			if((this->value_ > e && new_value < e) || (this->value_ < e && new_value > e))
+			if ((m_value > e && newValue < e) || (m_value < e && newValue > e))
 			{
-				this->in_ajust_ = false;
+				m_inAjust = false;
 
-				this->desired_value_ = new_value;
+				m_desiredValue = newValue;
 
-				this->time_started_ = (float)(time_start / 1000) - (this->speed_ / this->acceleration_);
-				this->previous_motion_ = this->value_ - this->signo_ * ((this->speed_ * this->speed_) / this->acceleration_) / 2;
+				m_timeStarted = (float)(timeStart / 1000) - (m_speed / m_acceleration);
+				m_previousMotion = m_value - m_signo * ((m_speed * m_speed) / m_acceleration) / 2;
 
-				this->tau_ = this->max_velocity_ / this->acceleration_;
-				this->total_time_ = this->signo_ * ((this->desired_value_ - this->previous_motion_) / this->max_velocity_) + this->tau_;
+				m_tau = m_maxVelocity / m_acceleration;
+				m_totalTime = m_signo * ((m_desiredValue - m_previousMotion) / m_maxVelocity) + m_tau;
 
-				if((this->acceleration_ * this->tau_ * this->tau_) / 2 > this->signo_ * (this->desired_value_ - this->previous_motion_) / 2)
+				if ((m_acceleration * m_tau * m_tau) / 2 > m_signo * (m_desiredValue - m_previousMotion) / 2)
 				{
-					this->total_time_ = sqrt((2 * (this->signo_ * (this->desired_value_ - this->previous_motion_)) / 2) / this->acceleration_) * 2;
-					this->tau_ = this->total_time_ / 2;
+					m_totalTime = sqrt((2 * (m_signo * (m_desiredValue - m_previousMotion)) / 2) / m_acceleration) * 2;
+					m_tau = m_totalTime / 2;
 				}
 
-				this->previous_value_ = this->value_;
-				this->previous_time_ = this->time_started_;
+				m_previousValue = m_value;
+				m_previousTime = m_timeStarted;
 
-				this->in_progress_ = true;
+				m_inProgress = true;
 			}
 			else
 			{
-				this->in_progress_ = false;
-				this->phase_ = 0;
+				m_inProgress = false;
+				m_phase = 0;
 
-				this->time_started_ = (float)(time_start / 1000);
-				this->total_time_ = this->speed_ / this->acceleration_;
-				this->desired_value_ = new_value;
-				this->previous_motion_ = this->value_;
-				this->previous_value_ = this->value_;
-				this->previous_time_ = this->time_started_;
+				m_timeStarted = (float)(timeStart / 1000);
+				m_totalTime = m_speed / m_acceleration;
+				m_desiredValue = newValue;
+				m_previousMotion = m_value;
+				m_previousValue = m_value;
+				m_previousTime = m_timeStarted;
 
-				if((this->previous_value_ + this->signo_ * (this->acceleration_ * this->total_time_ * this->total_time_) / 2) >= this->previous_value_)
+				if ((m_previousValue + m_signo * (m_acceleration * m_totalTime * m_totalTime) / 2) >= m_previousValue)
 				{
-					this->signo_ = 1;
+					m_signo = 1;
 				}
 				else
 				{
-					this->signo_ = -1;
+					m_signo = -1;
 				}
 
-				this->in_ajust_ = true;
+				m_inAjust = true;
 			}
 		}
 	}
 }
 
 
-void Motion::OnTick(const float time_milliseconds)
+void Motion::onTick(const float timeMs)
 {
-	if(this->in_progress_)
+	if (m_inProgress)
 	{
-		float time = (float)(time_milliseconds / 1000);
-		time -= this->time_started_;
+		float time = (float)(timeMs / 1000);
+		time -= m_timeStarted;
 
-		if(time >= this->total_time_)
+		if (time >= m_totalTime)
 		{
-			this->phase_ = 0;
-			this->value_ = this->desired_value_;
-			this->previous_value_ = this->value_;
-			this->in_progress_ = false;
+			m_phase = 0;
+			m_value = m_desiredValue;
+			m_previousValue = m_value;
+			m_inProgress = false;
 		}
-		else if((this->total_time_ - this->tau_) < time)
+		else if ((m_totalTime - m_tau) < time)
 		{
-			this->phase_ = 3;
-			this->value_ =
-				this->desired_value_ +
-				this->signo_ *
+			m_phase = 3;
+			m_value =
+				m_desiredValue +
+				m_signo *
 				(
-					-((this->acceleration_ * this->total_time_ * this->total_time_) / 2) +
-					(this->acceleration_ * this->total_time_ * time) - ((this->acceleration_ / 2) * time * time)
+					-((m_acceleration * m_totalTime * m_totalTime) / 2) +
+					(m_acceleration * m_totalTime * time) - ((m_acceleration / 2) * time * time)
 				);
 		}
-		else if(this->tau_ < time && time <= (this->total_time_ - this->tau_))
+		else if (m_tau < time && time <= (m_totalTime - m_tau))
 		{
-			this->phase_ = 2;
-			this->value_ =
-				this->previous_motion_ -
-				(this->signo_ * ((this->max_velocity_ * this->max_velocity_) / (2 * this->acceleration_))) +
-				(this->signo_ * this->max_velocity_ * time);
+			m_phase = 2;
+			m_value =
+				m_previousMotion -
+				(m_signo * ((m_maxVelocity * m_maxVelocity) / (2 * m_acceleration))) +
+				(m_signo * m_maxVelocity * time);
 		}
 		else
 		{
-			this->phase_ = 1;
-			this->value_ = this->previous_motion_ + (this->signo_ * (this->acceleration_ / 2) * time * time);
+			m_phase = 1;
+			m_value = m_previousMotion + (m_signo * (m_acceleration / 2) * time * time);
 		}
 
-		this->speed_ = -(this->signo_) * (this->previous_value_ - this->value_) / (time - this->previous_time_);
-		this->previous_value_ = this->value_;
-		this->previous_time_ = time;
+		m_speed = -(m_signo) * (m_previousValue - m_value) / (time - m_previousTime);
+		m_previousValue = m_value;
+		m_previousTime = time;
 	}
-	else if(this->in_ajust_)
+	else if (m_inAjust)
 	{
-		float time = (float)(time_milliseconds / 1000);
-		time -= this->time_started_;
+		float time = (float)(timeMs / 1000);
+		time -= m_timeStarted;
 
-		if(time >= this->total_time_)
+		if (time >= m_totalTime)
 		{
-			this->speed_ = 0.0;
-			this->in_ajust_ = false;
+			m_speed = 0.0;
+			m_inAjust = false;
 
-			this->NewValue(this->desired_value_, time_milliseconds);
+			newValue(m_desiredValue, timeMs);
 		}
 		else
 		{
-			this->value_ =
-				(this->previous_motion_ + this->signo_ * (this->acceleration_ * this->total_time_ * this->total_time_) / 2) +
-				this->signo_ *
+			m_value =
+				(m_previousMotion + m_signo * (m_acceleration * m_totalTime * m_totalTime) / 2) +
+				m_signo *
 				(
-					-((this->acceleration_ * this->total_time_ * this->total_time_) / 2) +
-					(this->acceleration_ * this->total_time_ * time) - ((this->acceleration_ / 2) * time * time)
+					-((m_acceleration * m_totalTime * m_totalTime) / 2) +
+					(m_acceleration * m_totalTime * time) - ((m_acceleration / 2) * time * time)
 				);
 
-			this->speed_ = -(this->signo_) * (this->previous_value_ - this->value_) / (time - this->previous_time_);
-			this->previous_value_ = this->value_;
-			this->previous_time_ = time;
+			m_speed = -(m_signo) * (m_previousValue - m_value) / (time - m_previousTime);
+			m_previousValue = m_value;
+			m_previousTime = time;
 		}
 	}
 }
 
 
-void Motion::Reset()
+void Motion::reset()
 {
-	this->value_ = this->initial_value_;
-	this->desired_value_ = this->initial_value_;
-	this->speed_ = 0.0;
+	m_value = m_initialValue;
+	m_desiredValue = m_initialValue;
+	m_speed = 0.0;
 
-	this->phase_ = 0;
-	this->in_progress_ = false;
-	this->in_ajust_ = false;
-	this->time_started_ = 0.0;
-	this->previous_motion_ = 0.0;
-	this->total_time_ = 0.0;
-	this->tau_ = 0.0;
-	this->signo_ = 1;
-	this->previous_value_ = 0.0;
-	this->previous_time_ = 0.0;
+	m_phase = 0;
+	m_inProgress = false;
+	m_inAjust = false;
+	m_timeStarted = 0.0;
+	m_previousMotion = 0.0;
+	m_totalTime = 0.0;
+	m_tau = 0.0;
+	m_signo = 1;
+	m_previousValue = 0.0;
+	m_previousTime = 0.0;
 }
 
 
-void Motion::set_initial_value(const float initial_value)
+void Motion::setInitialValue(const float initialValue)
 {
-	this->initial_value_ = initial_value;
+	m_initialValue = initialValue;
 }
 
 
-float Motion::get_initial_value()
+float Motion::getInitialValue()
 {
-	return this->initial_value_;
+	return m_initialValue;
 }
 
 
-float Motion::get_max_velocity()
+float Motion::getMaxVelocity()
 {
-	return this->max_velocity_;
+	return m_maxVelocity;
 }
 
 
-float Motion::get_acceleration()
+float Motion::getAcceleration()
 {
-	return this->acceleration_;
+	return m_acceleration;
 }
 
 
-float Motion::get_value()
+float Motion::getValue()
 {
-	return this->value_;
+	return m_value;
 }
 
 
-float Motion::get_desired_value()
+float Motion::getDesiredValue()
 {
-	return this->desired_value_;
+	return m_desiredValue;
 }
 
 
-float Motion::get_speed()
+float Motion::getSpeed()
 {
-	return this->speed_;
+	return m_speed;
 }
 
 
-int Motion::get_phase()
+int Motion::getPhase()
 {
-	return this->phase_;
+	return m_phase;
 }
 
 
-bool Motion::is_in_progress()
+bool Motion::isInProgress()
 {
-	return this->in_progress_;
+	return m_inProgress;
 }
 
 
-bool Motion::is_in_ajust()
+bool Motion::isInAjust()
 {
-	return this->in_ajust_;
+	return m_inAjust;
 }

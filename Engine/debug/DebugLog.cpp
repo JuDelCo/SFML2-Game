@@ -6,30 +6,30 @@
 
 Debug::Debug()
 {
-	this->logger_.open("log.txt", std::ios_base::trunc);
+	m_logger.open("log.txt", std::ios_base::trunc);
 }
 
 
 Debug::~Debug()
 {
-	this->logger_.close();
+	m_logger.close();
 }
 
 
-void Debug::Write(int target, const char* message, ...)
+void Debug::write(int target, const char* message, ...)
 {
 	va_list args;
 	va_start(args, message);
 	char buffer[1024];
 	vsprintf(buffer, message, args);
 
-	if(target & LOG_FILE)
+	if (target & LOG_FILE)
 	{
-		this->logger_ << buffer << "\n";
-		this->logger_.flush();
+		m_logger << buffer << "\n";
+		m_logger.flush();
 	}
 
-	if(target & LOG_CONSOLE)
+	if (target & LOG_CONSOLE)
 	{
 		std::cout << message << std::endl;
 	}
@@ -38,35 +38,35 @@ void Debug::Write(int target, const char* message, ...)
 }
 
 
-void Debug::Write(int target, unsigned long message_id, ...)
+void Debug::write(int target, unsigned long messageId, ...)
 {
 	va_list args;
-	va_start(args, message_id);
+	va_start(args, messageId);
 	char buffer[1024];
-	vsprintf(buffer, this->logStrings_[message_id].c_str(), args);
+	vsprintf(buffer, m_logStrings[messageId].c_str(), args);
 
-	this->Write(target, buffer);
+	write(target, buffer);
 
 	va_end(args);
 }
 
 
-bool Debug::LoadStrings()
+bool Debug::loadStrings()
 {
 	std::ifstream in("strings.txt");
 
-	if(!in.is_open())
+	if (!in.is_open())
 	{
 		return false;
 	}
 
 	unsigned long index = 0;
 
-	while(!in.eof())
+	while (!in.eof())
 	{
-		char szBuf[1024];
-		in.getline(szBuf, 1024);
-		this->logStrings_[index++] = szBuf;
+		char buffer[1024];
+		in.getline(buffer, 1024);
+		m_logStrings[index++] = buffer;
 	}
 
 	return true;

@@ -1,7 +1,7 @@
 #include "RegionInterface.hpp"
 
 
-IRegion::IRegion(IntRect rect, GameData* game_data) : IElement(rect, game_data)
+IRegion::IRegion(IntRect rect, GameData* gameData) : IElement(rect, gameData)
 {
 }
 
@@ -9,15 +9,15 @@ IRegion::~IRegion()
 {
 }
 
-void IRegion::OnTick()
+void IRegion::onTick()
 {
-	this->game_data->TestFunction();
+	m_gameData->testFunction();
 }
 
-void IRegion::OnRender()
+void IRegion::onRender()
 {
 }
 
-void IRegion::OnEvent(int eventType, int param1, int param2)
+void IRegion::onEvent(int eventType, int param1, int param2)
 {
 }

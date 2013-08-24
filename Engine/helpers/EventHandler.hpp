@@ -11,7 +11,7 @@ class EventHandlerBase1
 {
 	public:
 		virtual ~EventHandlerBase1() {};
-		virtual ReturnT Notify(ParamT1 param1) = 0;
+		virtual ReturnT notify(ParamT1 param1) = 0;
 };
 
 
@@ -19,15 +19,15 @@ template <typename ListenerT, typename ReturnT, typename ParamT1>
 class EventHandler1 : public EventHandlerBase1<ReturnT, ParamT1>
 {
 	private:
-		typedef ReturnT(ListenerT::*PtrMember)(ParamT1);
+		typedef ReturnT(ListenerT::*MemberPtr)(ParamT1);
 
 		ListenerT* m_object;
-		PtrMember m_member;
+		MemberPtr m_member;
 
 	public:
-		EventHandler1(ListenerT* object, PtrMember member) : m_object(object), m_member(member) {}
+		EventHandler1(ListenerT* object, MemberPtr member) : m_object(object), m_member(member) {}
 
-		ReturnT Notify(ParamT1 param1)
+		ReturnT notify(ParamT1 param1)
 		{
 			return (m_object->*m_member)(param1);
 		}
@@ -47,27 +47,27 @@ class Event1
 
 		virtual ~Event1()
 		{
-			for(typename HandlersMap::iterator it = m_handlers.begin(); it != m_handlers.end(); ++it)
+			for (typename HandlersMap::iterator it = m_handlers.begin(); it != m_handlers.end(); ++it)
 			{
 				delete it->second;
 			}
 		}
 
 		template <typename ListenerT>
-		int Attach(ListenerT* object, ReturnT(ListenerT::*member)(ParamT1))
+		int attach(ListenerT* object, ReturnT(ListenerT::*member)(ParamT1))
 		{
-			typedef ReturnT(ListenerT::*PtrMember)(ParamT1);
+			typedef ReturnT(ListenerT::*MemberPtr)(ParamT1);
 			m_handlers[m_count] = (new EventHandler1<ListenerT, ReturnT, ParamT1>(object, member));
 			++m_count;
 
 			return m_count - 1;
 		}
 
-		bool Detach(int id)
+		bool detach(int id)
 		{
 			typename HandlersMap::iterator it = m_handlers.find(id);
 
-			if(it == m_handlers.end())
+			if (it == m_handlers.end())
 			{
 				return false;
 			}
@@ -78,30 +78,27 @@ class Event1
 			return true;
 		}
 
-		bool is_attached(int id)
+		bool isAttached(int id)
 		{
-			return m_handlers.find(id) != m_handlers.end();
+			return (m_handlers.find(id) != m_handlers.end());
 		}
 
-		void Notify(ParamT1 param1)
+		void notify(ParamT1 param1)
 		{
-			typename HandlersMap::iterator it = m_handlers.begin();
-
-			for(; it != m_handlers.end(); ++it)
+			for (typename HandlersMap::iterator it = m_handlers.begin(); it != m_handlers.end(); ++it)
 			{
-				it->second->Notify(param1);
+				it->second->notify(param1);
 			}
 		}
 
 		template <typename CollectorT>
-		typename CollectorT::return_type Notify(ParamT1 param1, CollectorT& collect)
+		typename CollectorT::return_type notify(ParamT1 param1, CollectorT& collect)
 		{
-			typename HandlersMap::iterator it = m_handlers.begin();
 			std::vector<ReturnT> results;
 
-			for(; it != m_handlers.end(); ++it)
+			for (typename HandlersMap::iterator it = m_handlers.begin(); it != m_handlers.end(); ++it)
 			{
-				results.push_back(it->second->Notify(param1));
+				results.push_back(it->second->notify(param1));
 			}
 
 			return collect(results.begin(), results.end());
@@ -117,7 +114,7 @@ class EventHandlerBase2
 {
 	public:
 		virtual ~EventHandlerBase2() {};
-		virtual ReturnT Notify(ParamT1 param1, ParamT2 param2) = 0;
+		virtual ReturnT notify(ParamT1 param1, ParamT2 param2) = 0;
 };
 
 
@@ -125,15 +122,15 @@ template <typename ListenerT, typename ReturnT, typename ParamT1, typename Param
 class EventHandler2 : public EventHandlerBase2<ReturnT, ParamT1, ParamT2>
 {
 	private:
-		typedef ReturnT(ListenerT::*PtrMember)(ParamT1, ParamT2);
+		typedef ReturnT(ListenerT::*MemberPtr)(ParamT1, ParamT2);
 
 		ListenerT* m_object;
-		PtrMember m_member;
+		MemberPtr m_member;
 
 	public:
-		EventHandler2(ListenerT* object, PtrMember member) : m_object(object), m_member(member) {}
+		EventHandler2(ListenerT* object, MemberPtr member) : m_object(object), m_member(member) {}
 
-		ReturnT Notify(ParamT1 param1, ParamT2 param2)
+		ReturnT notify(ParamT1 param1, ParamT2 param2)
 		{
 			return (m_object->*m_member)(param1, param2);
 		}
@@ -153,27 +150,27 @@ class Event2
 
 		virtual ~Event2()
 		{
-			for(typename HandlersMap::iterator it = m_handlers.begin(); it != m_handlers.end(); ++it)
+			for (typename HandlersMap::iterator it = m_handlers.begin(); it != m_handlers.end(); ++it)
 			{
 				delete it->second;
 			}
 		}
 
 		template <typename ListenerT>
-		int Attach(ListenerT* object, ReturnT(ListenerT::*member)(ParamT1, ParamT2))
+		int attach(ListenerT* object, ReturnT(ListenerT::*member)(ParamT1, ParamT2))
 		{
-			typedef ReturnT(ListenerT::*PtrMember)(ParamT1, ParamT2);
+			typedef ReturnT(ListenerT::*MemberPtr)(ParamT1, ParamT2);
 			m_handlers[m_count] = (new EventHandler2<ListenerT, ReturnT, ParamT1, ParamT2>(object, member));
 			++m_count;
 
 			return m_count - 1;
 		}
 
-		bool Detach(int id)
+		bool detach(int id)
 		{
 			typename HandlersMap::iterator it = m_handlers.find(id);
 
-			if(it == m_handlers.end())
+			if (it == m_handlers.end())
 			{
 				return false;
 			}
@@ -184,30 +181,27 @@ class Event2
 			return true;
 		}
 
-		bool is_attached(int id)
+		bool isAttached(int id)
 		{
-			return m_handlers.find(id) != m_handlers.end();
+			return (m_handlers.find(id) != m_handlers.end());
 		}
 
-		void Notify(ParamT1 param1, ParamT2 param2)
+		void notify(ParamT1 param1, ParamT2 param2)
 		{
-			typename HandlersMap::iterator it = m_handlers.begin();
-
-			for(; it != m_handlers.end(); ++it)
+			for (typename HandlersMap::iterator it = m_handlers.begin(); it != m_handlers.end(); ++it)
 			{
-				it->second->Notify(param1, param2);
+				it->second->notify(param1, param2);
 			}
 		}
 
 		template <typename CollectorT>
-		typename CollectorT::return_type Notify(ParamT1 param1, ParamT2 param2, CollectorT& collect)
+		typename CollectorT::return_type notify(ParamT1 param1, ParamT2 param2, CollectorT& collect)
 		{
-			typename HandlersMap::iterator it = m_handlers.begin();
 			std::vector<ReturnT> results;
 
-			for(; it != m_handlers.end(); ++it)
+			for (typename HandlersMap::iterator it = m_handlers.begin(); it != m_handlers.end(); ++it)
 			{
-				results.push_back(it->second->Notify(param1, param2));
+				results.push_back(it->second->notify(param1, param2));
 			}
 
 			return collect(results.begin(), results.end());
@@ -223,7 +217,7 @@ class EventHandlerBase3
 {
 	public:
 		virtual ~EventHandlerBase3() {};
-		virtual ReturnT Notify(ParamT1 param1, ParamT2 param2, ParamT3 param3) = 0;
+		virtual ReturnT notify(ParamT1 param1, ParamT2 param2, ParamT3 param3) = 0;
 };
 
 
@@ -231,15 +225,15 @@ template <typename ListenerT, typename ReturnT, typename ParamT1, typename Param
 class EventHandler3 : public EventHandlerBase3<ReturnT, ParamT1, ParamT2, ParamT3>
 {
 	private:
-		typedef ReturnT(ListenerT::*PtrMember)(ParamT1, ParamT2, ParamT3);
+		typedef ReturnT(ListenerT::*MemberPtr)(ParamT1, ParamT2, ParamT3);
 
 		ListenerT* m_object;
-		PtrMember m_member;
+		MemberPtr m_member;
 
 	public:
-		EventHandler3(ListenerT* object, PtrMember member) : m_object(object), m_member(member) {}
+		EventHandler3(ListenerT* object, MemberPtr member) : m_object(object), m_member(member) {}
 
-		ReturnT Notify(ParamT1 param1, ParamT2 param2, ParamT3 param3)
+		ReturnT notify(ParamT1 param1, ParamT2 param2, ParamT3 param3)
 		{
 			return (m_object->*m_member)(param1, param2, param3);
 		}
@@ -259,27 +253,27 @@ class Event3
 
 		virtual ~Event3()
 		{
-			for(typename HandlersMap::iterator it = m_handlers.begin(); it != m_handlers.end(); ++it)
+			for (typename HandlersMap::iterator it = m_handlers.begin(); it != m_handlers.end(); ++it)
 			{
 				delete it->second;
 			}
 		}
 
 		template <typename ListenerT>
-		int Attach(ListenerT* object, ReturnT(ListenerT::*member)(ParamT1, ParamT2, ParamT3))
+		int attach(ListenerT* object, ReturnT(ListenerT::*member)(ParamT1, ParamT2, ParamT3))
 		{
-			typedef ReturnT(ListenerT::*PtrMember)(ParamT1, ParamT2, ParamT3);
+			typedef ReturnT(ListenerT::*MemberPtr)(ParamT1, ParamT2, ParamT3);
 			m_handlers[m_count] = (new EventHandler3<ListenerT, ReturnT, ParamT1, ParamT2, ParamT3>(object, member));
 			++m_count;
 
 			return m_count - 1;
 		}
 
-		bool Detach(int id)
+		bool detach(int id)
 		{
 			typename HandlersMap::iterator it = m_handlers.find(id);
 
-			if(it == m_handlers.end())
+			if (it == m_handlers.end())
 			{
 				return false;
 			}
@@ -290,30 +284,27 @@ class Event3
 			return true;
 		}
 
-		bool is_attached(int id)
+		bool isAttached(int id)
 		{
-			return m_handlers.find(id) != m_handlers.end();
+			return (m_handlers.find(id) != m_handlers.end());
 		}
 
-		void Notify(ParamT1 param1, ParamT2 param2, ParamT3 param3)
+		void notify(ParamT1 param1, ParamT2 param2, ParamT3 param3)
 		{
-			typename HandlersMap::iterator it = m_handlers.begin();
-
-			for(; it != m_handlers.end(); ++it)
+			for (typename HandlersMap::iterator it = m_handlers.begin(); it != m_handlers.end(); ++it)
 			{
-				it->second->Notify(param1, param2, param3);
+				it->second->notify(param1, param2, param3);
 			}
 		}
 
 		template <typename CollectorT>
-		typename CollectorT::return_type Notify(ParamT1 param1, ParamT2 param2, ParamT3 param3, CollectorT& collect)
+		typename CollectorT::return_type notify(ParamT1 param1, ParamT2 param2, ParamT3 param3, CollectorT& collect)
 		{
-			typename HandlersMap::iterator it = m_handlers.begin();
 			std::vector<ReturnT> results;
 
-			for(; it != m_handlers.end(); ++it)
+			for (typename HandlersMap::iterator it = m_handlers.begin(); it != m_handlers.end(); ++it)
 			{
-				results.push_back(it->second->Notify(param1, param2, param3));
+				results.push_back(it->second->notify(param1, param2, param3));
 			}
 
 			return collect(results.begin(), results.end());

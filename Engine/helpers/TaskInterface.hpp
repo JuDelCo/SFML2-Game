@@ -5,17 +5,17 @@
 class ITask
 {
 	public:
-		ITask(unsigned int priority = 10000) : is_finished_(false), priority_(priority) {}
+		ITask(unsigned int priority = 10000) : m_isFinished(false), m_priority(priority) {}
 		~ITask() {}
 
-		virtual bool Start() = 0;
-		virtual void Update() = 0;
-		virtual void Stop() = 0;
-		virtual void OnSuspend() {};
-		virtual void OnResume() {};
+		virtual bool start() = 0;
+		virtual void update() = 0;
+		virtual void stop() = 0;
+		virtual void onSuspend() {};
+		virtual void onResume() {};
 
-		bool is_finished_;
-		unsigned int priority_;
+		bool m_isFinished;
+		unsigned int m_priority;
 };
 
 

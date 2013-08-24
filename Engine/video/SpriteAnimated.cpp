@@ -6,23 +6,23 @@
 
 SpriteAnimated::SpriteAnimated()
 {
-	this->current_frame_ = 0;
-	this->num_frames_ = 1;
-	this->frame_width_ = 0;
-	this->frame_time_ = 0;
-	this->time_remain_ = this->frame_time_;
+	m_currentFrame = 0;
+	m_numFrames = 1;
+	m_frameWidth = 0;
+	m_frameTime = 0;
+	m_timeRemain = m_frameTime;
 }
 
 
-SpriteAnimated::SpriteAnimated(const std::string location, const int num_frames, const int delay)
+SpriteAnimated::SpriteAnimated(const std::string location, const int numFrames, const int delay)
 {
-	this->LoadTexture(location, num_frames);
+	loadTexture(location, numFrames);
 
-	this->current_frame_ = 0;
-	this->frame_time_ = delay;
-	this->time_remain_ = this->frame_time_;
+	m_currentFrame = 0;
+	m_frameTime = delay;
+	m_timeRemain = m_frameTime;
 
-	this->setTextureRect(sf::IntRect(0, 0, this->frame_width_, this->getTexture()->getSize().y));
+	setTextureRect(sf::IntRect(0, 0, m_frameWidth, getTexture()->getSize().y));
 }
 
 
@@ -31,89 +31,89 @@ SpriteAnimated::~SpriteAnimated()
 }
 
 
-void SpriteAnimated::LoadTexture(const std::string location, const int num_frames)
+void SpriteAnimated::loadTexture(const std::string location, const int numFrames)
 {
-	if(!this->image_.loadFromFile(location))
+	if (!m_image.loadFromFile(location))
 	{
-		DEBUG->Write(LOG_FILE, "Unable to load sprite from: %s", location.c_str());
+		DEBUG->write(LOG_FILE, "Unable to load sprite from: %s", location.c_str());
 		exit(ERROR_SPRITELOAD);
 	}
 
-	this->setTexture(this->image_);
+	setTexture(m_image);
 
-	this->num_frames_ = num_frames;
-	this->frame_width_ = this->getTexture()->getSize().x / this->num_frames_;
+	m_numFrames = numFrames;
+	m_frameWidth = getTexture()->getSize().x / m_numFrames;
 
-	this->setTextureRect(sf::IntRect(0, 0, this->frame_width_, this->getTexture()->getSize().y));
+	setTextureRect(sf::IntRect(0, 0, m_frameWidth, getTexture()->getSize().y));
 }
 
 
-void SpriteAnimated::Update(const int& milliseconds_last_frame)
+void SpriteAnimated::update(const int& msLastFrame)
 {
-	if(this->frame_time_ > 0)
+	if (m_frameTime > 0)
 	{
-		this->time_remain_ -= milliseconds_last_frame; // Revisar si hubiera problema al congelar la pantalla (moverla)
+		m_timeRemain -= msLastFrame; // Revisar si hubiera problema al congelar la pantalla (moverla)
 
-		if(this->time_remain_ <= 0)
+		if (m_timeRemain <= 0)
 		{
-			if(++this->current_frame_ > (this->num_frames_ - 1))
+			if (++m_currentFrame > (m_numFrames - 1))
 			{
-				this->current_frame_ = 0;
+				m_currentFrame = 0;
 			}
 
-			this->time_remain_ = this->frame_time_;
+			m_timeRemain = m_frameTime;
 		}
 
-		this->setTextureRect(sf::IntRect((this->current_frame_ * this->frame_width_), 0, this->frame_width_, this->getTexture()->getSize().y));
+		setTextureRect(sf::IntRect((m_currentFrame * m_frameWidth), 0, m_frameWidth, getTexture()->getSize().y));
 	}
 }
 
 
-int SpriteAnimated::get_current_frame()
+int SpriteAnimated::getCurrentFrame()
 {
-	return this->current_frame_;
+	return m_currentFrame;
 }
 
 
-int SpriteAnimated::get_frame_width()
+int SpriteAnimated::getFrameWidth()
 {
-	return this->frame_width_;
+	return m_frameWidth;
 }
 
 
-int SpriteAnimated::get_num_of_frames()
+int SpriteAnimated::getNumOfFrames()
 {
-	return this->num_frames_;
+	return m_numFrames;
 }
 
 
-int SpriteAnimated::get_delay()
+int SpriteAnimated::getDelay()
 {
-	return this->frame_time_;
+	return m_frameTime;
 }
 
 
-void SpriteAnimated::set_current_frame(const int current_frame)
+void SpriteAnimated::setCurrentFrame(const int currentFrame)
 {
-	this->current_frame_ = current_frame;
+	m_currentFrame = currentFrame;
 
-	this->setTextureRect(sf::IntRect((this->current_frame_ * this->frame_width_), 0, this->frame_width_, this->getTexture()->getSize().y));
+	setTextureRect(sf::IntRect((m_currentFrame * m_frameWidth), 0, m_frameWidth, getTexture()->getSize().y));
 }
 
 
-void SpriteAnimated::set_frame_width(const int frame_width)
+void SpriteAnimated::setFrameWidth(const int frameWidth)
 {
-	this->frame_width_ = frame_width;
+	m_frameWidth = frameWidth;
 }
 
 
-void SpriteAnimated::set_num_of_frames(const int num_frames)
+void SpriteAnimated::setNumOfFrames(const int numFrames)
 {
-	this->num_frames_ = num_frames;
+	m_numFrames = numFrames;
 }
 
 
-void SpriteAnimated::set_delay(const int delay)
+void SpriteAnimated::setDelay(const int delay)
 {
-	this->frame_time_ = delay;
+	m_frameTime = delay;
 }

@@ -13,13 +13,13 @@ class Debug : public IDebug
 		Debug();
 		~Debug();
 
-		bool LoadStrings();
-		void Write(int target, const char* message, ...);
-		void Write(int target, unsigned long message_id, ...);
+		bool loadStrings();
+		void write(int target, const char* message, ...);
+		void write(int target, unsigned long messageId, ...);
 
 	private:
-		std::string logStrings_[MAX_LOG_STRINGS];
-		std::ofstream logger_;
+		std::string m_logStrings[MAX_LOG_STRINGS];
+		std::ofstream m_logger;
 };
 
 

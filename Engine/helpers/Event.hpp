@@ -16,15 +16,15 @@
         Ship_Type1() : shootListener(this, &Ship_Type1::onShootCommand) {}
 
     (Later in Code...)
-        MotherShipClass MotherShip;
-        Ship_Type1 Ship_1;
-        Ship_Type2* Ship_2 = new Ship_Type2();
+        MotherShipClass motherShip;
+        Ship_Type1 ship1;
+        Ship_Type2* ship2 = new Ship_Type2();
 
-        MotherShip.shootHandler.add(&Ship_1.shootListener);
-        MotherShip.shootHandler.add(&Ship_2->shootListener);
-        MotherShip.shootHandler.trigger(50);
-        delete Ship_2; // Ka-boom !
-        MotherShip.shootHandler.trigger(100);
+        motherShip.shootHandler.add(&ship1.shootListener);
+        motherShip.shootHandler.add(&ship2->shootListener);
+        motherShip.shootHandler.trigger(50);
+        delete ship2; // Ka-boom !
+        motherShip.shootHandler.trigger(100);
 
     //--------------------------------------
 
@@ -39,7 +39,7 @@
         int operator () (iterator begin, iterator end)
         {
             int sum = 0;
-            for(iterator it=begin; it!=end; ++it)
+            for (iterator it=begin; it!=end; ++it)
             {
                 sum+=*it;
             }
@@ -54,8 +54,8 @@ template <typename ReturnT, typename ParamT1>
 class EventListenerBase1
 {
 	public:
-		virtual int Add(Event1<ReturnT, ParamT1>* cpp_event) = 0;
-		virtual bool Remove() = 0;
+		virtual int add(Event1<ReturnT, ParamT1>* cppEvent) = 0;
+		virtual bool remove() = 0;
 };
 
 
@@ -63,38 +63,38 @@ template <typename ListenerT, typename ReturnT, typename ParamT1>
 class EventListener1 : public EventListenerBase1<ReturnT, ParamT1>
 {
 	public:
-		typedef ReturnT(ListenerT::*PtrMember)(ParamT1);
+		typedef ReturnT(ListenerT::*MemberPtr)(ParamT1);
 
-		EventListener1(ListenerT* object, PtrMember member) : m_object(object), m_member(member), m_cpp_event(NULL) {}
+		EventListener1(ListenerT* object, MemberPtr member) : m_object(object), m_member(member), m_cppEvent(NULL) {}
 
 		virtual ~EventListener1()
 		{
-			if(m_cpp_event != NULL)
+			if (m_cppEvent != NULL)
 			{
-				m_cpp_event->Detach(m_handle);
+				m_cppEvent->Detach(m_handle);
 			}
 		}
 
-		int Add(Event1<ReturnT, ParamT1>* cpp_event)
+		int add(Event1<ReturnT, ParamT1>* cppEvent)
 		{
-			m_cpp_event = cpp_event;
-			m_handle = m_cpp_event->Attach(m_object, m_member);
+			m_cppEvent = cppEvent;
+			m_handle = m_cppEvent->Attach(m_object, m_member);
 
 			return m_handle;
 		}
 
-		bool Remove()
+		bool remove()
 		{
-			m_cpp_event = NULL;
+			m_cppEvent = NULL;
 
 			return true;
 		}
 
 	private:
 		ListenerT* m_object;
-		PtrMember m_member;
+		MemberPtr m_member;
 		int m_handle;
-		Event1<ReturnT, ParamT1>* m_cpp_event;
+		Event1<ReturnT, ParamT1>* m_cppEvent;
 };
 
 
@@ -102,32 +102,30 @@ template <typename ReturnT, typename ParamT1>
 class EventManager1 : private Event1<ReturnT, ParamT1>
 {
 	public:
-		typedef std::map<int, EventListenerBase1<ReturnT, ParamT1>* > SlotHandlersMap;
+		typedef std::map<int, EventListenerBase1<ReturnT, ParamT1>*> SlotHandlersMap;
 
 		virtual ~EventManager1()
 		{
-			typename SlotHandlersMap::iterator it = m_slots.begin();
-
-			for(; it != m_slots.end(); ++it)
+			for (typename SlotHandlersMap::iterator it = m_slots.begin(); it != m_slots.end(); ++it)
 			{
-				if(this->is_attached(it->first))
+				if (this->isAttached(it->first))
 				{
-					it->second->Remove();
+					it->second->remove();
 				}
 			}
 		}
 
-		bool Add(EventListenerBase1<ReturnT, ParamT1>* slot)
+		bool add(EventListenerBase1<ReturnT, ParamT1>* slot)
 		{
-			int handle = slot->Add(this);
+			int handle = slot->add(this);
 			m_slots[handle] = slot;
 
 			return true;
 		}
 
-		bool Trigger(ParamT1 param1)
+		bool trigger(ParamT1 param1)
 		{
-			this->Notify(param1);
+			this->notify(param1);
 
 			return true;
 		}
@@ -135,7 +133,7 @@ class EventManager1 : private Event1<ReturnT, ParamT1>
 		template <class CollectorT>
 		typename CollectorT::return_type Trigger(ParamT1 param1, CollectorT& collect)
 		{
-			return Notify(param1, collect);
+			return notify(param1, collect);
 		}
 
 	private:
@@ -150,8 +148,8 @@ template <typename ReturnT, typename ParamT1, typename ParamT2>
 class EventListenerBase2
 {
 	public:
-		virtual int Add(Event2<ReturnT, ParamT1, ParamT2>* cpp_event) = 0;
-		virtual bool Remove() = 0;
+		virtual int add(Event2<ReturnT, ParamT1, ParamT2>* cppEvent) = 0;
+		virtual bool remove() = 0;
 };
 
 
@@ -159,38 +157,38 @@ template <typename ListenerT, typename ReturnT, typename ParamT1, typename Param
 class EventListener2 : public EventListenerBase2<ReturnT, ParamT1, ParamT2>
 {
 	public:
-		typedef ReturnT(ListenerT::*PtrMember)(ParamT1, ParamT2);
+		typedef ReturnT(ListenerT::*MemberPtr)(ParamT1, ParamT2);
 
-		EventListener2(ListenerT* object, PtrMember member) : m_object(object), m_member(member), m_cpp_event(NULL) {}
+		EventListener2(ListenerT* object, MemberPtr member) : m_object(object), m_member(member), m_cppEvent(NULL) {}
 
 		virtual ~EventListener2()
 		{
-			if(m_cpp_event != NULL)
+			if (m_cppEvent != NULL)
 			{
-				m_cpp_event->Detach(m_handle);
+				m_cppEvent->detach(m_handle);
 			}
 		}
 
-		int Add(Event2<ReturnT, ParamT1, ParamT2>* cpp_event)
+		int add(Event2<ReturnT, ParamT1, ParamT2>* cppEvent)
 		{
-			m_cpp_event = cpp_event;
-			m_handle = m_cpp_event->Attach(m_object, m_member);
+			m_cppEvent = cppEvent;
+			m_handle = m_cppEvent->attach(m_object, m_member);
 
 			return m_handle;
 		}
 
-		bool Remove()
+		bool remove()
 		{
-			m_cpp_event = NULL;
+			m_cppEvent = NULL;
 
 			return true;
 		}
 
 	private:
 		ListenerT* m_object;
-		PtrMember m_member;
+		MemberPtr m_member;
 		int m_handle;
-		Event2<ReturnT, ParamT1, ParamT2>* m_cpp_event;
+		Event2<ReturnT, ParamT1, ParamT2>* m_cppEvent;
 };
 
 
@@ -198,32 +196,30 @@ template <typename ReturnT, typename ParamT1, typename ParamT2>
 class EventManager2 : private Event2<ReturnT, ParamT1, ParamT2>
 {
 	public:
-		typedef std::map<int, EventListenerBase2<ReturnT, ParamT1, ParamT2>* > SlotHandlersMap;
+		typedef std::map<int, EventListenerBase2<ReturnT, ParamT1, ParamT2>*> SlotHandlersMap;
 
 		virtual ~EventManager2()
 		{
-			typename SlotHandlersMap::iterator it = m_slots.begin();
-
-			for(; it != m_slots.end(); ++it)
+			for (typename SlotHandlersMap::iterator it = m_slots.begin(); it != m_slots.end(); ++it)
 			{
-				if(this->is_attached(it->first))
+				if (this->isAttached(it->first))
 				{
-					it->second->Remove();
+					it->second->remove();
 				}
 			}
 		}
 
-		bool Add(EventListenerBase2<ReturnT, ParamT1, ParamT2>* slot)
+		bool add(EventListenerBase2<ReturnT, ParamT1, ParamT2>* slot)
 		{
-			int handle = slot->Add(this);
+			int handle = slot->add(this);
 			m_slots[handle] = slot;
 
 			return true;
 		}
 
-		bool Trigger(ParamT1 param1, ParamT2 param2)
+		bool trigger(ParamT1 param1, ParamT2 param2)
 		{
-			this->Notify(param1, param2);
+			this->notify(param1, param2);
 
 			return true;
 		}
@@ -231,7 +227,7 @@ class EventManager2 : private Event2<ReturnT, ParamT1, ParamT2>
 		template <class CollectorT>
 		typename CollectorT::return_type Trigger(ParamT1 param1, ParamT2 param2, CollectorT& collect)
 		{
-			return Notify(param1, param2, collect);
+			return notify(param1, param2, collect);
 		}
 
 	private:
@@ -246,8 +242,8 @@ template <typename ReturnT, typename ParamT1, typename ParamT2, typename ParamT3
 class EventListenerBase3
 {
 	public:
-		virtual int Add(Event3<ReturnT, ParamT1, ParamT2, ParamT3>* cpp_event) = 0;
-		virtual bool Remove() = 0;
+		virtual int add(Event3<ReturnT, ParamT1, ParamT2, ParamT3>* cppEvent) = 0;
+		virtual bool remove() = 0;
 };
 
 
@@ -255,38 +251,38 @@ template <typename ListenerT, typename ReturnT, typename ParamT1, typename Param
 class EventListener3 : public EventListenerBase3<ReturnT, ParamT1, ParamT2, ParamT3>
 {
 	public:
-		typedef ReturnT(ListenerT::*PtrMember)(ParamT1, ParamT2, ParamT3);
+		typedef ReturnT(ListenerT::*MemberPtr)(ParamT1, ParamT2, ParamT3);
 
-		EventListener3(ListenerT* object, PtrMember member) : m_object(object), m_member(member), m_cpp_event(NULL) {}
+		EventListener3(ListenerT* object, MemberPtr member) : m_object(object), m_member(member), m_cppEvent(NULL) {}
 
 		virtual ~EventListener3()
 		{
-			if(m_cpp_event != NULL)
+			if (m_cppEvent != NULL)
 			{
-				m_cpp_event->Detach(m_handle);
+				m_cppEvent->detach(m_handle);
 			}
 		}
 
-		int Add(Event3<ReturnT, ParamT1, ParamT2, ParamT3>* cpp_event)
+		int add(Event3<ReturnT, ParamT1, ParamT2, ParamT3>* cppEvent)
 		{
-			m_cpp_event = cpp_event;
-			m_handle = m_cpp_event->Attach(m_object, m_member);
+			m_cppEvent = cppEvent;
+			m_handle = m_cppEvent->attach(m_object, m_member);
 
 			return m_handle;
 		}
 
-		bool Remove()
+		bool remove()
 		{
-			m_cpp_event = NULL;
+			m_cppEvent = NULL;
 
 			return true;
 		}
 
 	private:
 		ListenerT* m_object;
-		PtrMember m_member;
+		MemberPtr m_member;
 		int m_handle;
-		Event3<ReturnT, ParamT1, ParamT2, ParamT3>* m_cpp_event;
+		Event3<ReturnT, ParamT1, ParamT2, ParamT3>* m_cppEvent;
 };
 
 
@@ -294,32 +290,30 @@ template <typename ReturnT, typename ParamT1, typename ParamT2, typename ParamT3
 class EventManager3 : private Event3<ReturnT, ParamT1, ParamT2, ParamT3>
 {
 	public:
-		typedef std::map<int, EventListenerBase3<ReturnT, ParamT1, ParamT2, ParamT3>* > SlotHandlersMap;
+		typedef std::map<int, EventListenerBase3<ReturnT, ParamT1, ParamT2, ParamT3>*> SlotHandlersMap;
 
 		virtual ~EventManager3()
 		{
-			typename SlotHandlersMap::iterator it = m_slots.begin();
-
-			for(; it != m_slots.end(); ++it)
+			for (typename SlotHandlersMap::iterator it = m_slots.begin(); it != m_slots.end(); ++it)
 			{
-				if(this->is_attached(it->first))
+				if (this->isAttached(it->first))
 				{
-					it->second->Remove();
+					it->second->remove();
 				}
 			}
 		}
 
-		bool Add(EventListenerBase3<ReturnT, ParamT1, ParamT2, ParamT3>* slot)
+		bool add(EventListenerBase3<ReturnT, ParamT1, ParamT2, ParamT3>* slot)
 		{
-			int handle = slot->Add(this);
+			int handle = slot->add(this);
 			m_slots[handle] = slot;
 
 			return true;
 		}
 
-		bool Trigger(ParamT1 param1, ParamT2 param2, ParamT3 param3)
+		bool trigger(ParamT1 param1, ParamT2 param2, ParamT3 param3)
 		{
-			this->Notify(param1, param2, param3);
+			this->notify(param1, param2, param3);
 
 			return true;
 		}
@@ -327,7 +321,7 @@ class EventManager3 : private Event3<ReturnT, ParamT1, ParamT2, ParamT3>
 		template <class CollectorT>
 		typename CollectorT::return_type Trigger(ParamT1 param1, ParamT2 param2, ParamT3 param3, CollectorT& collect)
 		{
-			return Notify(param1, param2, param3, collect);
+			return notify(param1, param2, param3, collect);
 		}
 
 	private:

@@ -9,7 +9,7 @@ class GameData
 {
 	public:
 		GameData();
-		void TestFunction();
+		void testFunction();
 };
 
 

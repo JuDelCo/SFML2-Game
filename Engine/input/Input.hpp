@@ -10,19 +10,19 @@ class Input : public IInput
 	public:
 		Input();
 		~Input();
-		void OnTick();
-		void ReleaseAll();
-		void ReleaseKeys();
-		void ReleaseMouse();
-		Key* GetKey(const KeyInfo* key_struct, unsigned int id_number);
-		bool is_window_closed();
-		KeyInfo* get_key_press();
-		KeyInfo* get_key_held();
-		KeyInfo* get_key_up();
-		MouseInfo* get_mouse();
+		void onTick();
+		void releaseAll();
+		void releaseKeys();
+		void releaseMouse();
+		Key* getKey(const KeyInfo* keyStruct, unsigned int numberId);
+		bool isWindowClosed();
+		KeyInfo* getKeyPress();
+		KeyInfo* getKeyHeld();
+		KeyInfo* getKeyUp();
+		MouseInfo* getMouse();
 
 	private:
-		void PollEvents();
+		void pollEvents();
 };
 
 

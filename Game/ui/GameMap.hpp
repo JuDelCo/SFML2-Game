@@ -8,11 +8,11 @@
 class GameMap : public IElement
 {
 	public:
-		GameMap(IntRect rect, GameData* game_data);
+		GameMap(IntRect rect, GameData* gameData);
 		~GameMap();
-		void OnTick();
-		void OnRender();
-		void OnEvent(int eventType, int param1, int param2);
+		void onTick();
+		void onRender();
+		void onEvent(int eventType, int param1, int param2);
 };
 
 

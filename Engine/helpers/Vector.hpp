@@ -13,7 +13,7 @@ class Vector2
 		Vector2(Type x, Type y) : x(x), y(y) {}
 		sf::Vector2<Type> sf()
 		{
-			return sf::Vector2<Type>(this->x, this->y);
+			return sf::Vector2<Type>(x, y);
 		}
 
 		Type x;
@@ -34,7 +34,7 @@ class Vector3
 		Vector3(Type x, Type y, Type z) : x(x), y(y), z(z) {}
 		sf::Vector3<Type> sf()
 		{
-			return sf::Vector3<Type>(this->x, this->y, this->z);
+			return sf::Vector3<Type>(x, y, z);
 		}
 
 		Type x;
@@ -52,17 +52,17 @@ template <typename Type>
 class Rect
 {
 	public :
-		Rect() : rectLeft(0), rectTop(0), rectWidth(0), rectHeight(0) {}
-		Rect(Type x1, Type x2, Type y1, Type y2) : rectLeft(x1), rectTop(x2), rectWidth(y1), rectHeight(y2) {}
+		Rect() : left(0), top(0), width(0), height(0) {}
+		Rect(Type x1, Type x2, Type y1, Type y2) : left(x1), top(x2), width(y1), height(y2) {}
 		sf::Rect<Type> sf()
 		{
-			return sf::Rect<Type>(this->rectLeft, this->rectTop, this->rectWidth, this->rectHeight);
+			return sf::Rect<Type>(left, top, width, height);
 		}
 
-		Type rectLeft;
-		Type rectTop;
-		Type rectWidth;
-		Type rectHeight;
+		Type left;
+		Type top;
+		Type width;
+		Type height;
 };
 
 

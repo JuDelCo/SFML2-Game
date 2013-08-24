@@ -7,9 +7,9 @@
 
 Input::Input()
 {
-	this->window_closed_ = false;
+	m_windowClosed = false;
 
-	this->ReleaseAll();
+	releaseAll();
 }
 
 
@@ -18,267 +18,267 @@ Input::~Input()
 }
 
 
-void Input::OnTick()
+void Input::onTick()
 {
-	this->mouse_.x_rel = 0;
-	this->mouse_.y_rel = 0;
-	this->mouse_.press.left = false;
-	this->mouse_.press.middle = false;
-	this->mouse_.press.right = false;
-	this->mouse_.press.wheel_up = false;
-	this->mouse_.press.wheel_down = false;
-	this->mouse_.up.left = false;
-	this->mouse_.up.middle = false;
-	this->mouse_.up.right = false;
-	this->mouse_.up.wheel_up = false;
-	this->mouse_.up.wheel_down = false;
+	m_mouse.xRel = 0;
+	m_mouse.yRel = 0;
+	m_mouse.press.left = false;
+	m_mouse.press.middle = false;
+	m_mouse.press.right = false;
+	m_mouse.press.wheelUp = false;
+	m_mouse.press.wheelDown = false;
+	m_mouse.up.left = false;
+	m_mouse.up.middle = false;
+	m_mouse.up.right = false;
+	m_mouse.up.wheelUp = false;
+	m_mouse.up.wheelDown = false;
 
-	memcpy(&this->key_press_, &KEY::KEY_CONFIG, sizeof(KeyInfo));
-	memcpy(&this->key_up_, &KEY::KEY_CONFIG, sizeof(KeyInfo));
+	memcpy(&m_keyPress, &KEY::KEY_CONFIG, sizeof(KeyInfo));
+	memcpy(&m_keyUp, &KEY::KEY_CONFIG, sizeof(KeyInfo));
 
-	this->PollEvents();
+	pollEvents();
 }
 
 
-void Input::ReleaseAll()
+void Input::releaseAll()
 {
-	this->ReleaseKeys();
-	this->ReleaseMouse();
+	releaseKeys();
+	releaseMouse();
 }
 
 
-void Input::ReleaseKeys()
+void Input::releaseKeys()
 {
-	memcpy(&this->key_press_, &KEY::KEY_CONFIG, sizeof(KeyInfo));
-	memcpy(&this->key_held_, &KEY::KEY_CONFIG, sizeof(KeyInfo));
-	memcpy(&this->key_up_, &KEY::KEY_CONFIG, sizeof(KeyInfo));
+	memcpy(&m_keyPress, &KEY::KEY_CONFIG, sizeof(KeyInfo));
+	memcpy(&m_keyHeld, &KEY::KEY_CONFIG, sizeof(KeyInfo));
+	memcpy(&m_keyUp, &KEY::KEY_CONFIG, sizeof(KeyInfo));
 }
 
 
-void Input::ReleaseMouse()
+void Input::releaseMouse()
 {
-	this->mouse_.x_rel = 0;
-	this->mouse_.y_rel = 0;
-	this->mouse_.press.left = false;
-	this->mouse_.press.middle = false;
-	this->mouse_.press.right = false;
-	this->mouse_.press.wheel_up = false;
-	this->mouse_.press.wheel_down = false;
-	this->mouse_.held.left = false;
-	this->mouse_.held.middle = false;
-	this->mouse_.held.right = false;
-	this->mouse_.held.wheel_up = false;
-	this->mouse_.held.wheel_down = false;
-	this->mouse_.up.left = false;
-	this->mouse_.up.middle = false;
-	this->mouse_.up.right = false;
-	this->mouse_.up.wheel_up = false;
-	this->mouse_.up.wheel_down = false;
+	m_mouse.xRel = 0;
+	m_mouse.yRel = 0;
+	m_mouse.press.left = false;
+	m_mouse.press.middle = false;
+	m_mouse.press.right = false;
+	m_mouse.press.wheelUp = false;
+	m_mouse.press.wheelDown = false;
+	m_mouse.held.left = false;
+	m_mouse.held.middle = false;
+	m_mouse.held.right = false;
+	m_mouse.held.wheelUp = false;
+	m_mouse.held.wheelDown = false;
+	m_mouse.up.left = false;
+	m_mouse.up.middle = false;
+	m_mouse.up.right = false;
+	m_mouse.up.wheelUp = false;
+	m_mouse.up.wheelDown = false;
 }
 
 
-Key* Input::GetKey(const KeyInfo* key_struct, unsigned int id_number)
+Key* Input::getKey(const KeyInfo* key_struct, unsigned int numberId)
 {
-	return (((Key*)key_struct) + id_number);
+	return (((Key*)key_struct) + numberId);
 }
 
 
-bool Input::is_window_closed()
+bool Input::isWindowClosed()
 {
-	return this->window_closed_;
+	return m_windowClosed;
 }
 
 
-KeyInfo* Input::get_key_press()
+KeyInfo* Input::getKeyPress()
 {
-	return &this->key_press_;
+	return &m_keyPress;
 }
 
 
-KeyInfo* Input::get_key_held()
+KeyInfo* Input::getKeyHeld()
 {
-	return &this->key_held_;
+	return &m_keyHeld;
 }
 
 
-KeyInfo* Input::get_key_up()
+KeyInfo* Input::getKeyUp()
 {
-	return &this->key_up_;
+	return &m_keyUp;
 }
 
 
-MouseInfo* Input::get_mouse()
+MouseInfo* Input::getMouse()
 {
-	return &this->mouse_;
+	return &m_mouse;
 }
 
 
-void Input::PollEvents()
+void Input::pollEvents()
 {
 	sf::Event event;
 
-	IVideo* video = ServiceProvider::get_video();
+	IVideo* video = ServiceProvider::getVideo();
 
-	while(video->get_window()->pollEvent(event))
+	while (video->getWindow()->pollEvent(event))
 	{
-		switch(event.type)
+		switch (event.type)
 		{
 			case sf::Event::GainedFocus:
-				this->event_handler_.Trigger(EVENT_KEYFOCUS, 0, 0);
+				m_eventHandler.trigger(EVENT_KEYFOCUS, 0, 0);
 				break;
 
 			case sf::Event::LostFocus:
-				this->ReleaseKeys();
-				this->event_handler_.Trigger(EVENT_KEYBLUR, 0, 0);
+				releaseKeys();
+				m_eventHandler.trigger(EVENT_KEYBLUR, 0, 0);
 				break;
 
 			case sf::Event::KeyPressed:
-				for(unsigned int x = 0; x < NUMBER_OF_KEYS; ++x)
+				for (unsigned int x = 0; x < NUMBER_OF_KEYS; ++x)
 				{
-					Key* key_down = this->GetKey(&this->key_press_, x);
-					Key* key_held = this->GetKey(&this->key_held_, x);
+					Key* keyDown = getKey(&m_keyPress, x);
+					Key* keyHeld = getKey(&m_keyHeld, x);
 
-					if(key_down->sdl_key == event.key.code)
+					if (keyDown->sdlKey == event.key.code)
 					{
-						key_down->value = true;
-						key_held->value = true;
+						keyDown->value = true;
+						keyHeld->value = true;
 
-						this->event_handler_.Trigger(EVENT_KEYDOWN, key_down->sdl_key, 0);
+						m_eventHandler.trigger(EVENT_KEYDOWN, keyDown->sdlKey, 0);
 					}
 				}
 
 				break;
 
 			case sf::Event::KeyReleased:
-				for(unsigned int x = 0; x < NUMBER_OF_KEYS; ++x)
+				for (unsigned int x = 0; x < NUMBER_OF_KEYS; ++x)
 				{
-					Key* key_up = this->GetKey(&this->key_up_, x);
-					Key* key_held = this->GetKey(&this->key_held_, x);
+					Key* keyUp = getKey(&m_keyUp, x);
+					Key* keyHeld = getKey(&m_keyHeld, x);
 
-					if(key_up->sdl_key == event.key.code)
+					if (keyUp->sdlKey == event.key.code)
 					{
-						key_up->value = true;
-						key_held->value = false;
+						keyUp->value = true;
+						keyHeld->value = false;
 
-						this->event_handler_.Trigger(EVENT_KEYUP, key_up->sdl_key, 0);
+						m_eventHandler.trigger(EVENT_KEYUP, keyUp->sdlKey, 0);
 					}
 				}
 
 				break;
 
 			case sf::Event::MouseEntered:
-				this->event_handler_.Trigger(EVENT_MOUSEFOCUS, 0, 0);
+				m_eventHandler.trigger(EVENT_MOUSEFOCUS, 0, 0);
 				break;
 
 			case sf::Event::MouseLeft:
-				this->ReleaseMouse();
-				this->event_handler_.Trigger(EVENT_MOUSEBLUR, 0, 0);
+				releaseMouse();
+				m_eventHandler.trigger(EVENT_MOUSEBLUR, 0, 0);
 				break;
 
 			case sf::Event::MouseMoved:
-				this->mouse_.x_rel = event.mouseMove.x - this->mouse_.x;
-				this->mouse_.y_rel = event.mouseMove.y - this->mouse_.y;
-				this->mouse_.x = event.mouseMove.x;
-				this->mouse_.y = event.mouseMove.y;
-				this->event_handler_.Trigger(EVENT_MOUSEMOTION, 0, 0);
+				m_mouse.xRel = event.mouseMove.x - m_mouse.x;
+				m_mouse.yRel = event.mouseMove.y - m_mouse.y;
+				m_mouse.x = event.mouseMove.x;
+				m_mouse.y = event.mouseMove.y;
+				m_eventHandler.trigger(EVENT_MOUSEMOTION, 0, 0);
 				break;
 
 			case sf::Event::MouseButtonPressed:
-				switch(event.mouseButton.button)
+				switch (event.mouseButton.button)
 				{
 					case sf::Mouse::Left:
-						this->mouse_.press.left = true;
-						this->mouse_.held.left = true;
-						this->mouse_.x = event.mouseButton.x;
-						this->mouse_.y = event.mouseButton.y;
+						m_mouse.press.left = true;
+						m_mouse.held.left = true;
+						m_mouse.x = event.mouseButton.x;
+						m_mouse.y = event.mouseButton.y;
 						break;
 
 					case sf::Mouse::Middle:
-						this->mouse_.press.middle = true;
-						this->mouse_.held.middle = true;
-						this->mouse_.x = event.mouseButton.x;
-						this->mouse_.y = event.mouseButton.y;
+						m_mouse.press.middle = true;
+						m_mouse.held.middle = true;
+						m_mouse.x = event.mouseButton.x;
+						m_mouse.y = event.mouseButton.y;
 						break;
 
 					case sf::Mouse::Right:
-						this->mouse_.press.right = true;
-						this->mouse_.held.right = true;
-						this->mouse_.x = event.mouseButton.x;
-						this->mouse_.y = event.mouseButton.y;
+						m_mouse.press.right = true;
+						m_mouse.held.right = true;
+						m_mouse.x = event.mouseButton.x;
+						m_mouse.y = event.mouseButton.y;
 						break;
 
 					default:
 						break;
 				}
 
-				this->event_handler_.Trigger(EVENT_MOUSEDOWN, 0, 0);
+				m_eventHandler.trigger(EVENT_MOUSEDOWN, 0, 0);
 				break;
 
 			case sf::Event::MouseButtonReleased:
-				switch(event.mouseButton.button)
+				switch (event.mouseButton.button)
 				{
 					case sf::Mouse::Left:
-						this->mouse_.up.left = true;
-						this->mouse_.held.left = false;
-						this->mouse_.x = event.mouseButton.x;
-						this->mouse_.y = event.mouseButton.y;
+						m_mouse.up.left = true;
+						m_mouse.held.left = false;
+						m_mouse.x = event.mouseButton.x;
+						m_mouse.y = event.mouseButton.y;
 						break;
 
 					case sf::Mouse::Middle:
-						this->mouse_.up.middle = true;
-						this->mouse_.held.middle = false;
-						this->mouse_.x = event.mouseButton.x;
-						this->mouse_.y = event.mouseButton.y;
+						m_mouse.up.middle = true;
+						m_mouse.held.middle = false;
+						m_mouse.x = event.mouseButton.x;
+						m_mouse.y = event.mouseButton.y;
 						break;
 
 					case sf::Mouse::Right:
-						this->mouse_.up.right = true;
-						this->mouse_.held.right = false;
-						this->mouse_.x = event.mouseButton.x;
-						this->mouse_.y = event.mouseButton.y;
+						m_mouse.up.right = true;
+						m_mouse.held.right = false;
+						m_mouse.x = event.mouseButton.x;
+						m_mouse.y = event.mouseButton.y;
 						break;
 
 					default:
 						break;
 				}
 
-				this->event_handler_.Trigger(EVENT_MOUSEUP, 0, 0);
+				m_eventHandler.trigger(EVENT_MOUSEUP, 0, 0);
 				break;
 
 			case sf::Event::MouseWheelMoved:
-				if(event.mouseWheel.delta > 0)
+				if (event.mouseWheel.delta > 0)
 				{
-					this->mouse_.press.wheel_up = true;
-					this->mouse_.held.wheel_up = false;
-					this->mouse_.up.wheel_up = false;
-					this->mouse_.x = event.mouseWheel.x; // ???
-					this->mouse_.y = event.mouseWheel.y; // ???
+					m_mouse.press.wheelUp = true;
+					m_mouse.held.wheelUp = false;
+					m_mouse.up.wheelUp = false;
+					m_mouse.x = event.mouseWheel.x; // ???
+					m_mouse.y = event.mouseWheel.y; // ???
 				}
 				else
 				{
-					this->mouse_.press.wheel_down = true;
-					this->mouse_.held.wheel_down = false;
-					this->mouse_.up.wheel_down = false;
-					this->mouse_.x = event.mouseWheel.x; // ???
-					this->mouse_.y = event.mouseWheel.y; // ???
+					m_mouse.press.wheelDown = true;
+					m_mouse.held.wheelDown = false;
+					m_mouse.up.wheelDown = false;
+					m_mouse.x = event.mouseWheel.x; // ???
+					m_mouse.y = event.mouseWheel.y; // ???
 				}
 
-				this->event_handler_.Trigger(EVENT_MOUSEWHEEL, 0, 0);
-				this->mouse_.press.wheel_up = false; // ?
-				this->mouse_.press.wheel_down = false; // ?
+				m_eventHandler.trigger(EVENT_MOUSEWHEEL, 0, 0);
+				m_mouse.press.wheelUp = false; // ?
+				m_mouse.press.wheelDown = false; // ?
 				break;
 
 			case sf::Event::TextEntered:
-				this->event_handler_.Trigger(EVENT_TEXTENTERED, event.text.unicode, 0);
+				m_eventHandler.trigger(EVENT_TEXTENTERED, event.text.unicode, 0);
 				break;
 
 			case sf::Event::Resized:
-				this->event_handler_.Trigger(EVENT_VIDEORESIZE, event.size.width, event.size.height);
+				m_eventHandler.trigger(EVENT_VIDEORESIZE, event.size.width, event.size.height);
 				break;
 
 			case sf::Event::Closed:
-				this->window_closed_ = true;
-				this->event_handler_.Trigger(EVENT_QUIT, 0, 0);
+				m_windowClosed = true;
+				m_eventHandler.trigger(EVENT_QUIT, 0, 0);
 				return;
 				break;
 
@@ -287,6 +287,6 @@ void Input::PollEvents()
 		}
 	}
 
-	this->mouse_.x = sf::Mouse::getPosition(*video->get_window()).x;
-	this->mouse_.y = sf::Mouse::getPosition(*video->get_window()).y;
+	m_mouse.x = sf::Mouse::getPosition(*video->getWindow()).x;
+	m_mouse.y = sf::Mouse::getPosition(*video->getWindow()).y;
 }

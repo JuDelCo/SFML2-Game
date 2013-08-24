@@ -1,24 +1,24 @@
 #include "ElementInterface.hpp"
 
 
-IElement::IElement(IntRect rect, GameData* game_data)
+IElement::IElement(IntRect rect, GameData* gameData)
 {
-	this->enabled = true;
-	this->rect = rect;
-	this->game_data = game_data;
+	m_enabled = true;
+	m_rect = rect;
+	m_gameData = gameData;
 }
 
-bool IElement::is_enabled()
+bool IElement::isEnabled()
 {
-	return this->enabled;
+	return m_enabled;
 }
 
-void IElement::Enable()
+void IElement::enable()
 {
-	this->enabled = true;
+	m_enabled = true;
 }
 
-void IElement::Disable()
+void IElement::disable()
 {
-	this->enabled = false;
+	m_enabled = false;
 }

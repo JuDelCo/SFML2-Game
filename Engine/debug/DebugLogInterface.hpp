@@ -13,9 +13,9 @@ class IDebug
 	public:
 		virtual ~IDebug() {};
 
-		virtual bool LoadStrings() = 0;
-		virtual void Write(int target, const char* message, ...) = 0;
-		virtual void Write(int target, unsigned long message_id, ...) = 0;
+		virtual bool loadStrings() = 0;
+		virtual void write(int target, const char* message, ...) = 0;
+		virtual void write(int target, unsigned long messageId, ...) = 0;
 };
 
 

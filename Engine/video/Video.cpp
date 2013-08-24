@@ -2,21 +2,21 @@
 #include "../Defines.hpp"
 
 
-Video::Video(unsigned int size_x, unsigned int size_y)
+Video::Video(unsigned int sizeX, unsigned int sizeY)
 {
-	this->init(size_x, size_y);
+	init(sizeX, sizeY);
 }
 
 
 Video::~Video()
 {
-	this->end();
+	end();
 }
 
 
-void Video::init(unsigned int size_x, unsigned int size_y)
+void Video::init(unsigned int sizeX, unsigned int sizeY)
 {
-	this->init_window(size_x, size_y);
+	initWindow(sizeX, sizeY);
 
 	/*glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
@@ -31,8 +31,8 @@ void Video::init(unsigned int size_x, unsigned int size_y)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();*/
 
-	this->window_.setKeyRepeatEnabled(false);
-	this->window_.clear();
+	m_window.setKeyRepeatEnabled(false);
+	m_window.clear();
 
 	//texture_Init();
 	//sprite_Init();
@@ -42,20 +42,20 @@ void Video::init(unsigned int size_x, unsigned int size_y)
 }
 
 
-void Video::init_window(unsigned int size_x, unsigned int size_y)
+void Video::initWindow(unsigned int sizeX, unsigned int sizeY)
 {
-	this->window_.create(sf::VideoMode(size_x, size_y), "Demo");
+	m_window.create(sf::VideoMode(sizeX, sizeY), "Demo");
 
-	this->window_.setFramerateLimit(FPS_LIMIT);
-	//this->window.setVerticalSyncEnabled(true);
+	m_window.setFramerateLimit(FPS_LIMIT);
+	//m_window.setVerticalSyncEnabled(true);
 
-	if(!this->window_.isOpen())
+	if (!m_window.isOpen())
 	{
 		//DEBUG.error(__LINE__, "Error at Init Window");
 		exit(ERROR_INIT);
 	}
 
-	//this->debugDraw.LinkTarget(this->window);
+	//this->debugDraw.LinkTarget(m_window);
 }
 
 
@@ -66,17 +66,17 @@ void Video::end()
 	//sprite_End();
 	//texture_End();
 
-	this->window_.close();
+	m_window.close();
 }
 
 
-void Video::SwapBuffers()
+void Video::swapBuffers()
 {
-	this->window_.display();
+	m_window.display();
 }
 
 
-/*void Video::set_zBuffer(bool set)
+/*void Video::setZBuffer(bool set)
 {
 	if (set)
 	{
@@ -89,7 +89,7 @@ void Video::SwapBuffers()
 }*/
 
 
-/*void Video::setRender_2D()
+/*void Video::setRender2D()
 {
 	glClear(GL_DEPTH_BUFFER_BIT);
 	glDisable(GL_CULL_FACE);
@@ -105,7 +105,7 @@ void Video::SwapBuffers()
 }*/
 
 
-/*void Video::setRender_3D()
+/*void Video::setRender3D()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_CULL_FACE);
@@ -121,41 +121,41 @@ void Video::SwapBuffers()
 }*/
 
 
-sf::Vector2u Video::get_size()
+sf::Vector2u Video::getSize()
 {
-	return this->window_.getSize();
+	return m_window.getSize();
 }
 
 
-sf::RenderWindow* Video::get_window()
+sf::RenderWindow* Video::getWindow()
 {
-	return &this->window_;
+	return &m_window;
 }
 
 
-sf::Vector2f* Video::get_camera_position()
+sf::Vector2f* Video::getCameraPosition()
 {
-	return &this->camera_position_;
+	return &m_cameraPosition;
 }
 
 
-static sf::CircleShape circle_draw_point;
-void Video::DrawPoint(const float position_x, const float position_y, const sf::Color color)
+static sf::CircleShape circleDrawPoint;
+void Video::drawPoint(const float positionX, const float positionY, const sf::Color color)
 {
-	circle_draw_point.setRadius(1);
-	circle_draw_point.setFillColor(color);
-	circle_draw_point.setPosition(position_x, position_y);
+	circleDrawPoint.setRadius(1);
+	circleDrawPoint.setFillColor(color);
+	circleDrawPoint.setPosition(positionX, positionY);
 
-	this->window_.draw(circle_draw_point);
+	m_window.draw(circleDrawPoint);
 }
 
 
-static sf::RectangleShape rectangle_draw_rectangle;
-void Video::DrawRectangle(const Vector2f position, const Vector2f size, const sf::Color color)
+static sf::RectangleShape rectangleDrawRectangle;
+void Video::drawRectangle(const Vector2f position, const Vector2f size, const sf::Color color)
 {
-	rectangle_draw_rectangle.setPosition(position.x, position.y);
-	rectangle_draw_rectangle.setSize(sf::Vector2f(size.x, size.y));
-	rectangle_draw_rectangle.setFillColor(color);
+	rectangleDrawRectangle.setPosition(position.x, position.y);
+	rectangleDrawRectangle.setSize(sf::Vector2f(size.x, size.y));
+	rectangleDrawRectangle.setFillColor(color);
 
-	this->window_.draw(rectangle_draw_rectangle);
+	m_window.draw(rectangleDrawRectangle);
 }

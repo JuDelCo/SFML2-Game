@@ -9,26 +9,26 @@ class SpriteAnimated : public sf::Sprite
 {
 	public:
 		SpriteAnimated();
-		SpriteAnimated(const std::string location, const int num_frames, const int delay);
+		SpriteAnimated(const std::string location, const int numFrames, const int delay);
 		~SpriteAnimated();
-		void LoadTexture(const std::string location, const int num_frames);
-		void Update(const int& milliseconds_last_frame);
-		void set_current_frame(const int current_frame);
-		void set_frame_width(const int frame_width);
-		void set_num_of_frames(const int num_frames);
-		void set_delay(const int delay);
-		int get_current_frame();
-		int get_frame_width();
-		int get_num_of_frames();
-		int get_delay();
+		void loadTexture(const std::string location, const int numFrames);
+		void update(const int& msLastFrame);
+		void setCurrentFrame(const int currentFrame);
+		void setFrameWidth(const int frameWidth);
+		void setNumOfFrames(const int numFrames);
+		void setDelay(const int delay);
+		int getCurrentFrame();
+		int getFrameWidth();
+		int getNumOfFrames();
+		int getDelay();
 
 	private:
-		sf::Texture image_;
-		unsigned int current_frame_;
-		unsigned int num_frames_;
-		int time_remain_;
-		unsigned int frame_width_;
-		float frame_time_;
+		sf::Texture m_image;
+		unsigned int m_currentFrame;
+		unsigned int m_numFrames;
+		int m_timeRemain;
+		unsigned int m_frameWidth;
+		float m_frameTime;
 };
 
 

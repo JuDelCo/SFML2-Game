@@ -7,144 +7,144 @@
 #include "helpers/Timer.hpp"
 
 
-GameBase::GameBase(unsigned int size_x, unsigned int size_y) : event_listener_(this, &GameBase::OnEvent)
+GameBase::GameBase(unsigned int sizeX, unsigned int sizeY) : m_eventListener(this, &GameBase::onEvent)
 {
-	IDebug* debug_service = new Debug();
-	ServiceProvider::Provide(debug_service);
+	IDebug* debugService = new Debug();
+	ServiceProvider::provide(debugService);
 
-	IVideo* video_service = new Video(size_x, size_y);
-	ServiceProvider::Provide(video_service);
+	IVideo* videoService = new Video(sizeX, sizeY);
+	ServiceProvider::provide(videoService);
 
-	IInput* input_service = new Input();
-	input_service->event_handler_.Add(&this->event_listener_);
+	IInput* inputService = new Input();
+	inputService->m_eventHandler.add(&m_eventListener);
 
-	//input_service->event_handler_.Add(EventListenerBase3<ReturnT, ParamT1, ParamT2, ParamT3> *slot)
-	//input_service->event_handler_.Attach(ListenerT *object, ReturnT (ListenerT::*member)(ParamT1, ParamT2, ParamT3));
-	//input_service->event_handler_.Detach(int id);
+	//input_service->event_handler_.add(EventListenerBase3<ReturnT, ParamT1, ParamT2, ParamT3> *slot)
+	//input_service->event_handler_.attach(ListenerT *object, ReturnT (ListenerT::*member)(ParamT1, ParamT2, ParamT3));
+	//input_service->event_handler_.detach(int id);
 
-	//event_listener_.Add(Event3<void, int, int, int> *cpp_event);
-	//event_listener_.Remove();
+	//event_listener_.add(Event3<void, int, int, int> *cpp_event);
+	//event_listener_.remove();
 
-	ServiceProvider::Provide(input_service);
+	ServiceProvider::provide(inputService);
 
-	this->running_timer_ = new Timer();
-	this->fps_timer_ = new Timer();
-	this->update_timer_ = new Timer();
+	m_runningTimer = new Timer();
+	m_fpsTimer = new Timer();
+	m_updateTimer = new Timer();
 }
 
 
 GameBase::~GameBase()
 {
-	delete this->running_timer_;
-	delete this->fps_timer_;
-	delete this->update_timer_;
+	delete m_runningTimer;
+	delete m_fpsTimer;
+	delete m_updateTimer;
 }
 
 
-void GameBase::Start()
+void GameBase::start()
 {
-	this->run_ = true;
+	m_run = true;
 
-	this->Loop();
+	loop();
 }
 
 
-void GameBase::Stop()
+void GameBase::stop()
 {
-	this->run_ = false;
+	m_run = false;
 }
 
 
-unsigned int GameBase::get_time_running()
+unsigned int GameBase::getTimeRunning()
 {
-	return this->running_timer_->get_ticks();
+	return m_runningTimer->getTicks();
 }
 
 
-unsigned int GameBase::get_tick_count()
+unsigned int GameBase::getTickCount()
 {
-	return this->tick_count_;
+	return m_tickCount;
 }
 
 
-unsigned int GameBase::get_fps()
+unsigned int GameBase::getFps()
 {
-	return this->fps_;
+	return m_fps;
 }
 
 
-unsigned int GameBase::get_milliseconds_last_frame()
+unsigned int GameBase::getMsLastFrame()
 {
-	return this->milliseconds_last_frame_;
+	return m_msLastFrame;
 }
 
 
-void GameBase::DelayMilliseconds(const unsigned int delay_milliseconds)
+void GameBase::delayMs(const unsigned int delayMs)
 {
-	sf::sleep(sf::milliseconds(delay_milliseconds));
+	sf::sleep(sf::milliseconds(delayMs));
 }
 
 
-void GameBase::Loop()
+void GameBase::loop()
 {
-	this->SystemInit();
+	systemInit();
 
-	IInput* input = ServiceProvider::get_input();
+	IInput* input = ServiceProvider::getInput();
 
-	while(this->run_)
+	while (m_run)
 	{
-		this->milliseconds_last_frame_ = this->fps_timer_->get_ticks();
+		m_msLastFrame = m_fpsTimer->getTicks();
 
-		if(this->milliseconds_last_frame_ > 1000.0f / FPS_LIMIT)
+		if (m_msLastFrame > 1000.0f / FPS_LIMIT)
 		{
-			this->milliseconds_last_frame_ = (int)(1000.0f / FPS_LIMIT);
+			m_msLastFrame = (int)(1000.0f / FPS_LIMIT);
 		}
 
-		this->fps_timer_->Start();
+		m_fpsTimer->start();
 
-		input->OnTick();
-		this->OnTick();
-		++this->tick_count_;
+		input->onTick();
+		onTick();
+		++m_tickCount;
 
-		this->OnRender();
+		onRender();
 
-		if(this->update_timer_->get_ticks() >= 1000)
+		if (m_updateTimer->getTicks() >= 1000)
 		{
-			this->fps_ = this->fps_counter_;
-			this->fps_counter_ = 0;
-			this->update_timer_->Start();
+			m_fps = m_fpsCounter;
+			m_fpsCounter = 0;
+			m_updateTimer->start();
 		}
 
-		++this->fps_counter_;
+		++m_fpsCounter;
 
-		if(this->fps_timer_->get_ticks() < 17)  //59fps
+		if (m_fpsTimer->getTicks() < 17)  //59fps
 		{
-			this->DelayMilliseconds(17 - this->fps_timer_->get_ticks());
+			delayMs(17 - m_fpsTimer->getTicks());
 		}
 	}
 
-	this->SystemEnd();
+	systemEnd();
 }
 
 
-void GameBase::SystemInit()
+void GameBase::systemInit()
 {
-	this->fps_counter_ = 0;
-	this->fps_ = FPS_LIMIT;
-	this->milliseconds_last_frame_ = 0;
+	m_fpsCounter = 0;
+	m_fps = FPS_LIMIT;
+	m_msLastFrame = 0;
 
-	this->Init();
+	init();
 
-	this->running_timer_->Start();
-	this->update_timer_->Start();
+	m_runningTimer->start();
+	m_updateTimer->start();
 }
 
 
-void GameBase::SystemEnd()
+void GameBase::systemEnd()
 {
-	this->End();
+	end();
 
-	this->update_timer_->Stop();
-	this->fps_timer_->Stop();
-	this->running_timer_->Stop();
+	m_updateTimer->stop();
+	m_fpsTimer->stop();
+	m_runningTimer->stop();
 }

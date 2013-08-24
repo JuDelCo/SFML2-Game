@@ -9,17 +9,17 @@
 class GameController : public GameBase
 {
 	public:
-		EventManager1<void, int> event_handler_;
+		EventManager1<void, int> m_eventHandler;
 		GameController() {}
 		~GameController() {}
 
 	private:
-		void Init();
-		void OnTick();
-		void OnRender();
-		void OnEvent(const int event_type, const int param_1, const int param_2);
-		void Reset();
-		void End();
+		void init();
+		void onTick();
+		void onRender();
+		void onEvent(const int eventType, const int param1, const int param2);
+		void reset();
+		void end();
 };
 
 

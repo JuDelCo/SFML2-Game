@@ -9,7 +9,7 @@ typedef struct
 {
 	bool value;
 	char ascii;
-	int sdl_key;
+	int sdlKey;
 } Key;
 
 
@@ -338,8 +338,8 @@ typedef struct
 	bool left;
 	bool middle;
 	bool right;
-	bool wheel_up;
-	bool wheel_down;
+	bool wheelUp;
+	bool wheelDown;
 } MouseKey;
 
 
@@ -347,8 +347,8 @@ typedef struct
 {
 	int x;
 	int y;
-	int x_rel;
-	int y_rel;
+	int xRel;
+	int yRel;
 	MouseKey press;
 	MouseKey held;
 	MouseKey up;

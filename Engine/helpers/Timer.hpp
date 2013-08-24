@@ -13,20 +13,20 @@ class Timer
 	public:
 		Timer();
 		~Timer();
-		void Start();
-		void Pause();
-		void Continue();
-		void Stop();
-		bool is_started();
-		bool is_paused();
-		unsigned int get_ticks();
+		void start();
+		void pause();
+		void resume();
+		void stop();
+		bool isStarted();
+		bool isPaused();
+		unsigned int getTicks();
 
 	private:
-		sf::Clock* clock_;
-		unsigned int start_ticks_;
-		unsigned int paused_ticks_;
-		bool paused_;
-		bool started_;
+		sf::Clock* m_clock;
+		unsigned int m_startTicks;
+		unsigned int m_pausedTicks;
+		bool m_paused;
+		bool m_started;
 };
 
 

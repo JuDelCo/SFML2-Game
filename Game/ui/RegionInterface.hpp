@@ -8,11 +8,11 @@
 class IRegion : public IElement
 {
 	public:
-		IRegion(IntRect rect, GameData* game_data);
+		IRegion(IntRect rect, GameData* gameData);
 		~IRegion();
-		void OnTick();
-		void OnRender();
-		void OnEvent(int eventType, int param1, int param2);
+		void onTick();
+		void onRender();
+		void onEvent(int eventType, int param1, int param2);
 };
 
 

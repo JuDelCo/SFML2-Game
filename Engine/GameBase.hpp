@@ -9,34 +9,34 @@ class Timer;
 class GameBase
 {
 	public:
-		GameBase(unsigned int size_x = 1024, unsigned int size_y = 768);
+		GameBase(unsigned int sizeX = 1024, unsigned int sizeY = 768); // Por defecto
 		~GameBase();
-		void Start();
-		void Stop();
-		unsigned int get_time_running();
-		unsigned int get_tick_count();
-		unsigned int get_fps();
-		unsigned int get_milliseconds_last_frame();
+		void start();
+		void stop();
+		unsigned int getTimeRunning();
+		unsigned int getTickCount();
+		unsigned int getFps();
+		unsigned int getMsLastFrame();
 
 	private:
-		void DelayMilliseconds(const unsigned int delay_milliseconds);
-		void Loop();
-		void SystemInit();
-		void SystemEnd();
-		virtual void Init() = 0;
-		virtual void OnTick() = 0;
-		virtual void OnRender() = 0;
-		virtual void OnEvent(const int event_type, const int param_1, const int param_2) = 0;
-		virtual void End() = 0;
-		EventListener3<GameBase, void, int, int, int> event_listener_;
-		bool run_;
-		unsigned int fps_counter_;
-		Timer* fps_timer_;
-		Timer* update_timer_;
-		Timer* running_timer_;
-		unsigned int tick_count_;
-		unsigned int fps_;
-		unsigned int milliseconds_last_frame_;
+		void delayMs(const unsigned int delayMs);
+		void loop();
+		void systemInit();
+		void systemEnd();
+		virtual void init() = 0;
+		virtual void onTick() = 0;
+		virtual void onRender() = 0;
+		virtual void onEvent(const int eventType, const int param1, const int param2) = 0;
+		virtual void end() = 0;
+		EventListener3<GameBase, void, int, int, int> m_eventListener;
+		bool m_run;
+		unsigned int m_fpsCounter;
+		Timer* m_fpsTimer;
+		Timer* m_updateTimer;
+		Timer* m_runningTimer;
+		unsigned int m_tickCount;
+		unsigned int m_fps;
+		unsigned int m_msLastFrame;
 };
 
 

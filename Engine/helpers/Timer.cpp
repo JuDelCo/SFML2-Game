@@ -7,68 +7,68 @@
 
 Timer::Timer()
 {
-	this->clock_ = new sf::Clock();
+	m_clock = new sf::Clock();
 
-	this->start_ticks_ = 0;
-	this->paused_ticks_ = 0;
-	this->paused_ = false;
-	this->started_ = false;
+	m_startTicks = 0;
+	m_pausedTicks = 0;
+	m_paused = false;
+	m_started = false;
 }
 
 
 Timer::~Timer()
 {
-	delete this->clock_;
+	delete m_clock;
 }
 
 
-void Timer::Start()
+void Timer::start()
 {
-	this->started_ = true;
-	this->paused_ = false;
-	this->start_ticks_ = this->clock_->getElapsedTimeMs();
+	m_started = true;
+	m_paused = false;
+	m_startTicks = m_clock->getElapsedTimeMs();
 }
 
 
-void Timer::Pause()
+void Timer::pause()
 {
-	if((this->started_ == true) && (this->paused_ == false))
+	if ((m_started == true) && (m_paused == false))
 	{
-		this->paused_ = true;
-		this->paused_ticks_ = this->clock_->getElapsedTimeMs() - this->start_ticks_;
+		m_paused = true;
+		m_pausedTicks = m_clock->getElapsedTimeMs() - m_startTicks;
 	}
 }
 
 
-void Timer::Continue()
+void Timer::resume()
 {
-	if(this->paused_ == true)
+	if (m_paused == true)
 	{
-		this->paused_ = false;
-		this->start_ticks_ = this->clock_->getElapsedTimeMs() - this->paused_ticks_;
-		this->paused_ticks_ = 0;
+		m_paused = false;
+		m_startTicks = m_clock->getElapsedTimeMs() - m_pausedTicks;
+		m_pausedTicks = 0;
 	}
 }
 
 
-void Timer::Stop()
+void Timer::stop()
 {
-	this->started_ = false;
-	this->paused_ = false;
+	m_started = false;
+	m_paused = false;
 }
 
 
-unsigned int Timer::get_ticks()
+unsigned int Timer::getTicks()
 {
-	if(this->started_ == true)
+	if (m_started == true)
 	{
-		if(this->paused_ == true)
+		if (m_paused == true)
 		{
-			return this->paused_ticks_;
+			return m_pausedTicks;
 		}
 		else
 		{
-			return this->clock_->getElapsedTimeMs() - this->start_ticks_;
+			return m_clock->getElapsedTimeMs() - m_startTicks;
 		}
 	}
 
@@ -76,13 +76,13 @@ unsigned int Timer::get_ticks()
 }
 
 
-bool Timer::is_started()
+bool Timer::isStarted()
 {
-	return this->started_;
+	return m_started;
 }
 
 
-bool Timer::is_paused()
+bool Timer::isPaused()
 {
-	return this->paused_;
+	return m_paused;
 }
