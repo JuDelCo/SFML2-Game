@@ -25,28 +25,6 @@
         motherShip.shootHandler.trigger(50);
         delete ship2; // Ka-boom !
         motherShip.shootHandler.trigger(100);
-
-    //--------------------------------------
-
-    #include <algorithm>
-
-    class ResponseAccumulator
-    {
-    public:
-        typedef int return_type;
-
-        template <typename iterator>
-        int operator () (iterator begin, iterator end)
-        {
-            int sum = 0;
-            for (iterator it=begin; it!=end; ++it)
-            {
-                sum+=*it;
-            }
-
-            return sum;
-        }
-    };
 */
 
 
@@ -65,11 +43,11 @@ class EventListener1 : public EventListenerBase1<ReturnT, ParamT1>
 	public:
 		typedef ReturnT(ListenerT::*MemberPtr)(ParamT1);
 
-		EventListener1(ListenerT* object, MemberPtr member) : m_object(object), m_member(member), m_cppEvent(NULL) {}
+		EventListener1(ListenerT* object, MemberPtr member) : m_object(object), m_member(member), m_cppEvent(nullptr) {}
 
 		virtual ~EventListener1()
 		{
-			if (m_cppEvent != NULL)
+			if (m_cppEvent != nullptr)
 			{
 				m_cppEvent->Detach(m_handle);
 			}
@@ -85,7 +63,7 @@ class EventListener1 : public EventListenerBase1<ReturnT, ParamT1>
 
 		bool remove()
 		{
-			m_cppEvent = NULL;
+			m_cppEvent = nullptr;
 
 			return true;
 		}
@@ -106,11 +84,11 @@ class EventManager1 : private Event1<ReturnT, ParamT1>
 
 		virtual ~EventManager1()
 		{
-			for (typename SlotHandlersMap::iterator it = m_slots.begin(); it != m_slots.end(); ++it)
+			for (auto it : m_slots)
 			{
-				if (this->isAttached(it->first))
+				if (this->isAttached(it.first))
 				{
-					it->second->remove();
+					it.second->remove();
 				}
 			}
 		}
@@ -159,11 +137,11 @@ class EventListener2 : public EventListenerBase2<ReturnT, ParamT1, ParamT2>
 	public:
 		typedef ReturnT(ListenerT::*MemberPtr)(ParamT1, ParamT2);
 
-		EventListener2(ListenerT* object, MemberPtr member) : m_object(object), m_member(member), m_cppEvent(NULL) {}
+		EventListener2(ListenerT* object, MemberPtr member) : m_object(object), m_member(member), m_cppEvent(nullptr) {}
 
 		virtual ~EventListener2()
 		{
-			if (m_cppEvent != NULL)
+			if (m_cppEvent != nullptr)
 			{
 				m_cppEvent->detach(m_handle);
 			}
@@ -179,7 +157,7 @@ class EventListener2 : public EventListenerBase2<ReturnT, ParamT1, ParamT2>
 
 		bool remove()
 		{
-			m_cppEvent = NULL;
+			m_cppEvent = nullptr;
 
 			return true;
 		}
@@ -200,11 +178,11 @@ class EventManager2 : private Event2<ReturnT, ParamT1, ParamT2>
 
 		virtual ~EventManager2()
 		{
-			for (typename SlotHandlersMap::iterator it = m_slots.begin(); it != m_slots.end(); ++it)
+			for (auto it : m_slots)
 			{
-				if (this->isAttached(it->first))
+				if (this->isAttached(it.first))
 				{
-					it->second->remove();
+					it.second->remove();
 				}
 			}
 		}
@@ -253,11 +231,11 @@ class EventListener3 : public EventListenerBase3<ReturnT, ParamT1, ParamT2, Para
 	public:
 		typedef ReturnT(ListenerT::*MemberPtr)(ParamT1, ParamT2, ParamT3);
 
-		EventListener3(ListenerT* object, MemberPtr member) : m_object(object), m_member(member), m_cppEvent(NULL) {}
+		EventListener3(ListenerT* object, MemberPtr member) : m_object(object), m_member(member), m_cppEvent(nullptr) {}
 
 		virtual ~EventListener3()
 		{
-			if (m_cppEvent != NULL)
+			if (m_cppEvent != nullptr)
 			{
 				m_cppEvent->detach(m_handle);
 			}
@@ -273,7 +251,7 @@ class EventListener3 : public EventListenerBase3<ReturnT, ParamT1, ParamT2, Para
 
 		bool remove()
 		{
-			m_cppEvent = NULL;
+			m_cppEvent = nullptr;
 
 			return true;
 		}
@@ -294,11 +272,11 @@ class EventManager3 : private Event3<ReturnT, ParamT1, ParamT2, ParamT3>
 
 		virtual ~EventManager3()
 		{
-			for (typename SlotHandlersMap::iterator it = m_slots.begin(); it != m_slots.end(); ++it)
+			for (auto it : m_slots)
 			{
-				if (this->isAttached(it->first))
+				if (this->isAttached(it.first))
 				{
-					it->second->remove();
+					it.second->remove();
 				}
 			}
 		}

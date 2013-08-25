@@ -77,9 +77,9 @@ void Input::releaseMouse()
 }
 
 
-Key* Input::getKey(const KeyInfo* key_struct, unsigned int numberId)
+Key* Input::getKey(const KeyInfo* keyStruct, unsigned int numberId)
 {
-	return (((Key*)key_struct) + numberId);
+	return (((Key*)keyStruct) + numberId);
 }
 
 

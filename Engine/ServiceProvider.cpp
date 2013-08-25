@@ -4,9 +4,9 @@
 #include "debug/DebugLogInterface.hpp"
 
 
-IInput* ServiceProvider::m_inputService = NULL;
-IVideo* ServiceProvider::m_videoService = NULL;
-IDebug* ServiceProvider::m_debugService = NULL;
+IInput* ServiceProvider::m_inputService = nullptr;
+IVideo* ServiceProvider::m_videoService = nullptr;
+IDebug* ServiceProvider::m_debugService = nullptr;
 
 
 void ServiceProvider::provide(IInput* inputService)

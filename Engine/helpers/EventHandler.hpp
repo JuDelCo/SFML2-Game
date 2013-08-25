@@ -47,9 +47,9 @@ class Event1
 
 		virtual ~Event1()
 		{
-			for (typename HandlersMap::iterator it = m_handlers.begin(); it != m_handlers.end(); ++it)
+			for (auto it : m_handlers)
 			{
-				delete it->second;
+				delete it.second;
 			}
 		}
 
@@ -65,7 +65,7 @@ class Event1
 
 		bool detach(int id)
 		{
-			typename HandlersMap::iterator it = m_handlers.find(id);
+			auto it = m_handlers.find(id);
 
 			if (it == m_handlers.end())
 			{
@@ -85,9 +85,9 @@ class Event1
 
 		void notify(ParamT1 param1)
 		{
-			for (typename HandlersMap::iterator it = m_handlers.begin(); it != m_handlers.end(); ++it)
+			for (auto it : m_handlers)
 			{
-				it->second->notify(param1);
+				it.second->notify(param1);
 			}
 		}
 
@@ -96,7 +96,7 @@ class Event1
 		{
 			std::vector<ReturnT> results;
 
-			for (typename HandlersMap::iterator it = m_handlers.begin(); it != m_handlers.end(); ++it)
+			for (auto it : m_handlers)
 			{
 				results.push_back(it->second->notify(param1));
 			}
@@ -150,9 +150,9 @@ class Event2
 
 		virtual ~Event2()
 		{
-			for (typename HandlersMap::iterator it = m_handlers.begin(); it != m_handlers.end(); ++it)
+			for (auto it : m_handlers)
 			{
-				delete it->second;
+				delete it.second;
 			}
 		}
 
@@ -168,7 +168,7 @@ class Event2
 
 		bool detach(int id)
 		{
-			typename HandlersMap::iterator it = m_handlers.find(id);
+			auto it = m_handlers.find(id);
 
 			if (it == m_handlers.end())
 			{
@@ -188,9 +188,9 @@ class Event2
 
 		void notify(ParamT1 param1, ParamT2 param2)
 		{
-			for (typename HandlersMap::iterator it = m_handlers.begin(); it != m_handlers.end(); ++it)
+			for (auto it : m_handlers)
 			{
-				it->second->notify(param1, param2);
+				it.second->notify(param1, param2);
 			}
 		}
 
@@ -199,9 +199,9 @@ class Event2
 		{
 			std::vector<ReturnT> results;
 
-			for (typename HandlersMap::iterator it = m_handlers.begin(); it != m_handlers.end(); ++it)
+			for (auto it : m_handlers)
 			{
-				results.push_back(it->second->notify(param1, param2));
+				results.push_back(it.second->notify(param1, param2));
 			}
 
 			return collect(results.begin(), results.end());
@@ -253,9 +253,9 @@ class Event3
 
 		virtual ~Event3()
 		{
-			for (typename HandlersMap::iterator it = m_handlers.begin(); it != m_handlers.end(); ++it)
+			for (auto it : m_handlers)
 			{
-				delete it->second;
+				delete it.second;
 			}
 		}
 
@@ -271,7 +271,7 @@ class Event3
 
 		bool detach(int id)
 		{
-			typename HandlersMap::iterator it = m_handlers.find(id);
+			auto it = m_handlers.find(id);
 
 			if (it == m_handlers.end())
 			{
@@ -291,9 +291,9 @@ class Event3
 
 		void notify(ParamT1 param1, ParamT2 param2, ParamT3 param3)
 		{
-			for (typename HandlersMap::iterator it = m_handlers.begin(); it != m_handlers.end(); ++it)
+			for (auto it : m_handlers)
 			{
-				it->second->notify(param1, param2, param3);
+				it.second->notify(param1, param2, param3);
 			}
 		}
 
@@ -302,9 +302,9 @@ class Event3
 		{
 			std::vector<ReturnT> results;
 
-			for (typename HandlersMap::iterator it = m_handlers.begin(); it != m_handlers.end(); ++it)
+			for (auto it : m_handlers)
 			{
-				results.push_back(it->second->notify(param1, param2, param3));
+				results.push_back(it.second->notify(param1, param2, param3));
 			}
 
 			return collect(results.begin(), results.end());

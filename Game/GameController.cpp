@@ -78,7 +78,7 @@ void GameController::init()
 	// Definir funciones para gestionar el array ( ->add(new algo()) ->delete(algo) )
 	// Convertir en vector STL ?
 	gameData = new GameData();
-	focusIElement = NULL;
+	focusIElement = nullptr;
 	arrayIElement[0] = new GameMap(IntRect(0, 0, 0, 0), gameData);
 	arrayIElement[1] = new IRegion(IntRect(0, 0, 0, 0), gameData);
 	arrayIElement[0]->onTick();
