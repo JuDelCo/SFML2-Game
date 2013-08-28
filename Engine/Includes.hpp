@@ -11,6 +11,7 @@
 #include "input/InputInterface.hpp"
 #include "video/VideoInterface.hpp"
 #include "video/SpriteAnimated.hpp"
+#include "video/TileMap.hpp"
 #include "debug/DebugLogInterface.hpp"
 #include "helpers/Timer.hpp"
 #include "helpers/Event.hpp"
