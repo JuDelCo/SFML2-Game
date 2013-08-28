@@ -1,3 +1,4 @@
+#pragma once
 #ifndef VIDEO_HPP
 #define VIDEO_HPP
 
@@ -16,7 +17,7 @@ class Video : public IVideo
 		sf::RenderWindow* getWindow();
 		sf::Vector2f* getCameraPosition();
 		void drawPoint(const float positionX, const float positionY, const sf::Color color);
-		void drawRectangle(const Vector2f position, const Vector2f size, const sf::Color color);
+		void drawRectangle(const sf::Vector2f position, const sf::Vector2f size, const sf::Color color);
 
 	private:
 		void init(unsigned int sizeX, unsigned int sizeY);

@@ -1,3 +1,4 @@
+#pragma once
 #ifndef ELEMENT_INTERFACE_HPP
 #define ELEMENT_INTERFACE_HPP
 
@@ -9,7 +10,7 @@
 class IElement
 {
 	public:
-		IElement(IntRect rect, GameData* gameData);
+		IElement(sf::IntRect rect, GameData* gameData);
 		virtual ~IElement() {};
 		bool isEnabled();
 		void enable();
@@ -20,7 +21,7 @@ class IElement
 
 	protected:
 		GameData* m_gameData;
-		IntRect m_rect;
+		sf::IntRect m_rect;
 		bool m_enabled;
 };
 

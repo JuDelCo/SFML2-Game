@@ -79,8 +79,8 @@ void GameController::init()
 	// Convertir en vector STL ?
 	gameData = new GameData();
 	focusIElement = nullptr;
-	arrayIElement[0] = new GameMap(IntRect(0, 0, 0, 0), gameData);
-	arrayIElement[1] = new IRegion(IntRect(0, 0, 0, 0), gameData);
+	arrayIElement[0] = new GameMap(sf::IntRect(0, 0, 0, 0), gameData);
+	arrayIElement[1] = new IRegion(sf::IntRect(0, 0, 0, 0), gameData);
 	arrayIElement[0]->onTick();
 	arrayIElement[1]->onTick();
 
@@ -157,9 +157,9 @@ void GameController::onRender()
 		}
 	}
 
-	VIDEO->drawRectangle(Vector2f(10,  12), Vector2f(250, 275), sf::Color::Black);
-	VIDEO->drawRectangle(Vector2f(270, 12), Vector2f(450, 100), sf::Color::Black);
-	VIDEO->drawRectangle(Vector2f(280, 22), Vector2f(430,  80), sf::Color(100, 100, 100));
+	VIDEO->drawRectangle(sf::Vector2f(10,  12), sf::Vector2f(250, 275), sf::Color::Black);
+	VIDEO->drawRectangle(sf::Vector2f(270, 12), sf::Vector2f(450, 100), sf::Color::Black);
+	VIDEO->drawRectangle(sf::Vector2f(280, 22), sf::Vector2f(430,  80), sf::Color(100, 100, 100));
 
 	for (int x = 0; x < 430; x++)
 	{

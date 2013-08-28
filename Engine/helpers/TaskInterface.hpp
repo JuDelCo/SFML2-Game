@@ -1,3 +1,4 @@
+#pragma once
 #ifndef TASK_INTERFACE_HPP
 #define TASK_INTERFACE_HPP
 

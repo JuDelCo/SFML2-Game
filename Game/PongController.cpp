@@ -140,9 +140,9 @@ void Pong::onRender()
 	m_marcador.setPosition(450, 20);
 	window->draw(m_marcador);
 
-	VIDEO->drawRectangle(Vector2f(m_ballPos.x, m_ballPos.y), Vector2f(20, 20), sf::Color::White);
-	VIDEO->drawRectangle(Vector2f(m_playerPos.x, m_playerPos.y), Vector2f(20, 100), sf::Color::White);
-	VIDEO->drawRectangle(Vector2f(m_cpuPos.x, m_cpuPos.y), Vector2f(20, 100), sf::Color::White);
+	VIDEO->drawRectangle(sf::Vector2f(m_ballPos.x, m_ballPos.y), sf::Vector2f(20, 20), sf::Color::White);
+	VIDEO->drawRectangle(sf::Vector2f(m_playerPos.x, m_playerPos.y), sf::Vector2f(20, 100), sf::Color::White);
+	VIDEO->drawRectangle(sf::Vector2f(m_cpuPos.x, m_cpuPos.y), sf::Vector2f(20, 100), sf::Color::White);
 
 	VIDEO->swapBuffers();
 }

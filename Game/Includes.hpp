@@ -1,3 +1,4 @@
+#pragma once
 #ifndef GAME_INCLUDES_HPP
 #define GAME_INCLUDES_HPP
 

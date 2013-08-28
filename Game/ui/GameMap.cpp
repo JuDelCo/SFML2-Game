@@ -1,7 +1,7 @@
 #include "GameMap.hpp"
 
 
-GameMap::GameMap(IntRect rect, GameData* gameData) : IElement(rect, gameData)
+GameMap::GameMap(sf::IntRect rect, GameData* gameData) : IElement(rect, gameData)
 {
 }
 

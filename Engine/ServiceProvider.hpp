@@ -1,3 +1,4 @@
+#pragma once
 #ifndef SERVICE_PROVIDER_HPP
 #define SERVICE_PROVIDER_HPP
 

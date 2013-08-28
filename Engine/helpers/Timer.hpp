@@ -1,3 +1,4 @@
+#pragma once
 #ifndef TIMER_HPP
 #define TIMER_HPP
 

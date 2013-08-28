@@ -1,7 +1,7 @@
 #include "ElementInterface.hpp"
 
 
-IElement::IElement(IntRect rect, GameData* gameData)
+IElement::IElement(sf::IntRect rect, GameData* gameData)
 {
 	m_enabled = true;
 	m_rect = rect;

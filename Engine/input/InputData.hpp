@@ -1,3 +1,4 @@
+#pragma once
 #ifndef INPUT_DATA_HPP
 #define INPUT_DATA_HPP
 

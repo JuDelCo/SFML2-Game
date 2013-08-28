@@ -1,3 +1,4 @@
+#pragma once
 #ifndef GAME_CONTROLLER_HPP
 #define GAME_CONTROLLER_HPP
 

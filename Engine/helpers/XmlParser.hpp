@@ -21,6 +21,7 @@ must not be misrepresented as being the original software.
 distribution.
 */
 
+#pragma once
 #ifndef TINYXML2_INCLUDED
 #define TINYXML2_INCLUDED
 

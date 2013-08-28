@@ -1,3 +1,4 @@
+#pragma once
 #ifndef PONG_CONTROLLER_HPP
 #define PONG_CONTROLLER_HPP
 
@@ -20,10 +21,10 @@ class Pong : public GameBase
 		void reset();
 		void end();
 
-		Vector2f m_ballPos;
-		Vector2u m_ballMov;
-		Vector2f m_playerPos;
-		Vector2f m_cpuPos;
+		sf::Vector2f m_ballPos;
+		sf::Vector2u m_ballMov;
+		sf::Vector2f m_playerPos;
+		sf::Vector2f m_cpuPos;
 		unsigned int m_playerScore;
 		unsigned int m_cpuScore;
 		sf::Font m_fuente = sf::Font();

@@ -1,3 +1,4 @@
+#pragma once
 #ifndef EVENT_HANDLER_HPP
 #define EVENT_HANDLER_HPP
 

@@ -1,3 +1,4 @@
+#pragma once
 #ifndef SPRITE_ANIMATED_HPP
 #define SPRITE_ANIMATED_HPP
 

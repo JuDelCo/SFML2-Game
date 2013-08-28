@@ -1,3 +1,4 @@
+#pragma once
 #ifndef GAME_BASE_HPP
 #define GAME_BASE_HPP
 

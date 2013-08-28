@@ -1,7 +1,7 @@
 #include "RegionInterface.hpp"
 
 
-IRegion::IRegion(IntRect rect, GameData* gameData) : IElement(rect, gameData)
+IRegion::IRegion(sf::IntRect rect, GameData* gameData) : IElement(rect, gameData)
 {
 }
 

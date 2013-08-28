@@ -1,3 +1,4 @@
+#pragma once
 #ifndef REGION_INTERFACE_HPP
 #define REGION_INTERFACE_HPP
 
@@ -8,7 +9,7 @@
 class IRegion : public IElement
 {
 	public:
-		IRegion(IntRect rect, GameData* gameData);
+		IRegion(sf::IntRect rect, GameData* gameData);
 		~IRegion();
 		void onTick();
 		void onRender();

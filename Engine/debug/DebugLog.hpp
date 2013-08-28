@@ -1,3 +1,4 @@
+#pragma once
 #ifndef DEBUG_LOG_HPP
 #define DEBUG_LOG_HPP
 

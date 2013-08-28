@@ -1,3 +1,4 @@
+#pragma once
 #ifndef GAME_MAP_HPP
 #define GAME_MAP_HPP
 
@@ -8,7 +9,7 @@
 class GameMap : public IElement
 {
 	public:
-		GameMap(IntRect rect, GameData* gameData);
+		GameMap(sf::IntRect rect, GameData* gameData);
 		~GameMap();
 		void onTick();
 		void onRender();

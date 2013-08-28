@@ -1,3 +1,4 @@
+#pragma once
 #ifndef TASK_MANAGER_HPP
 #define TASK_MANAGER_HPP
 

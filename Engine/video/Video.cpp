@@ -151,7 +151,7 @@ void Video::drawPoint(const float positionX, const float positionY, const sf::Co
 
 
 static sf::RectangleShape rectangleDrawRectangle;
-void Video::drawRectangle(const Vector2f position, const Vector2f size, const sf::Color color)
+void Video::drawRectangle(const sf::Vector2f position, const sf::Vector2f size, const sf::Color color)
 {
 	rectangleDrawRectangle.setPosition(position.x, position.y);
 	rectangleDrawRectangle.setSize(sf::Vector2f(size.x, size.y));
