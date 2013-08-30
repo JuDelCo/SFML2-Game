@@ -17,7 +17,6 @@
 #include "helpers/Event.hpp"
 #include "helpers/Motion.hpp"
 #include "helpers/TaskManager.hpp"
-#include "helpers/XmlParser.hpp"
 
 
 #endif // INCLUDES_HPP
