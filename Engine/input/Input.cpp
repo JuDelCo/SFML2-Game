@@ -112,6 +112,12 @@ MouseInfo* Input::getMouse()
 }
 
 
+sf::Vector2u Input::getMousePos()
+{
+	return sf::Vector2u(m_mouse.x, m_mouse.y);
+}
+
+
 void Input::pollEvents(sf::RenderWindow* window)
 {
 	sf::Event event;

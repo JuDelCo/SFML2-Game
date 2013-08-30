@@ -3,14 +3,9 @@
 #define INPUT_HPP
 
 
+#include <SFML/Graphics.hpp>
 #include "InputData.hpp"
 #include "../helpers/Event.hpp"
-
-
-namespace sf
-{
-    class RenderWindow;
-}
 
 
 class Input
@@ -28,10 +23,11 @@ class Input
 		KeyInfo* getKeyHeld();
 		KeyInfo* getKeyUp();
 		MouseInfo* getMouse();
+		sf::Vector2u getMousePos();
 
-        EventManager3<void, int, int, int> m_eventHandler;
+		EventManager3<void, int, int, int> m_eventHandler;
 
-    protected:
+	protected:
 		bool m_windowClosed;
 		KeyInfo m_keyPress;
 		KeyInfo m_keyHeld;

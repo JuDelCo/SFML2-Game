@@ -144,13 +144,13 @@ void Video::viewResetToCamera()
 
 void Video::clear(sf::Color color)
 {
-    m_window.clear(color);
+	m_window.clear(color);
 }
 
 
 void Video::draw(sf::Drawable& drawable)
 {
-    m_window.draw(drawable);
+	m_window.draw(drawable);
 }
 
 

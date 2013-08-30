@@ -15,8 +15,8 @@ class Video
 		sf::Vector2u getSize();
 		sf::RenderWindow* getWindow();
 		sf::Vector2f* getCameraPosition();
-        void viewReset(sf::FloatRect rect);
-        void viewResetToCamera();
+		void viewReset(sf::FloatRect rect);
+		void viewResetToCamera();
 		void clear(sf::Color color);
 		void draw(sf::Drawable& drawable);
 		void drawPoint(const float positionX, const float positionY, const sf::Color color);

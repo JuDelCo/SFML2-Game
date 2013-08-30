@@ -21,7 +21,7 @@ class TechDemo : public GameBase
 		void reset();
 		void end();
 
-        TileMap* m_tileMap;
+		TileMap* m_tileMap;
 };
 
 

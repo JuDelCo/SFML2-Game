@@ -24,7 +24,7 @@ class GameBase
 		unsigned int getFps();
 		unsigned int getMsLastFrame();
 
-    protected:
+	protected:
 		Input* m_input;
 		Video* m_video;
 		Debug* m_debug;

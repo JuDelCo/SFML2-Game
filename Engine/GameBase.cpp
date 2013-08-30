@@ -8,9 +8,9 @@
 
 GameBase::GameBase(unsigned int sizeX, unsigned int sizeY) : m_eventListener(this, &GameBase::onEvent)
 {
-    m_debug = new Debug();
-    m_video = new Video(sizeX, sizeY);
-    m_input = new Input();
+	m_debug = new Debug();
+	m_video = new Video(sizeX, sizeY);
+	m_input = new Input();
 	m_input->m_eventHandler.add(&m_eventListener);
 
 	m_runningTimer = new Timer();
@@ -21,13 +21,13 @@ GameBase::GameBase(unsigned int sizeX, unsigned int sizeY) : m_eventListener(thi
 
 GameBase::~GameBase()
 {
-    delete m_input;
-    delete m_video;
-    delete m_debug;
+	delete m_input;
+	delete m_video;
+	delete m_debug;
 
-    delete m_runningTimer;
-    delete m_fpsTimer;
-    delete m_updateTimer;
+	delete m_runningTimer;
+	delete m_fpsTimer;
+	delete m_updateTimer;
 }
 
 

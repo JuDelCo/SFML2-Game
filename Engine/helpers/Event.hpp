@@ -8,24 +8,24 @@
 
 
 /*
-    (In MotherShip Class)
-        EventManager1<int,int> shootHandler;
+	(In MotherShip Class)
+		EventManager1<int,int> shootHandler;
 
-    (In Ships Classes)
-        EventListener1<Ship_Type1,int,int> shootListener;
-    (... and ...)
-        Ship_Type1() : shootListener(this, &Ship_Type1::onShootCommand) {}
+	(In Ships Classes)
+		EventListener1<Ship_Type1,int,int> shootListener;
+	(... and ...)
+		Ship_Type1() : shootListener(this, &Ship_Type1::onShootCommand) {}
 
-    (Later in Code...)
-        MotherShipClass motherShip;
-        Ship_Type1 ship1;
-        Ship_Type2* ship2 = new Ship_Type2();
+	(Later in Code...)
+		MotherShipClass motherShip;
+		Ship_Type1 ship1;
+		Ship_Type2* ship2 = new Ship_Type2();
 
-        motherShip.shootHandler.add(&ship1.shootListener);
-        motherShip.shootHandler.add(&ship2->shootListener);
-        motherShip.shootHandler.trigger(50);
-        delete ship2; // Ka-boom !
-        motherShip.shootHandler.trigger(100);
+		motherShip.shootHandler.add(&ship1.shootListener);
+		motherShip.shootHandler.add(&ship2->shootListener);
+		motherShip.shootHandler.trigger(50);
+		delete ship2; // Ka-boom !
+		motherShip.shootHandler.trigger(100);
 */
 
 
