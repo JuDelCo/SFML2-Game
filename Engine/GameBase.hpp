@@ -4,8 +4,8 @@
 
 
 #include "helpers/Event.hpp"
+#include "input/Input.hpp"
 class Timer;
-class IInput;
 class IVideo;
 class IDebug;
 
@@ -23,7 +23,7 @@ class GameBase
 		unsigned int getMsLastFrame();
 
     protected:
-		IInput* m_input;
+		Input* m_input;
 		IVideo* m_video;
 		IDebug* m_debug;
 

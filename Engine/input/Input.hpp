@@ -3,13 +3,17 @@
 #define INPUT_HPP
 
 
-#include "InputInterface.hpp"
+#include "InputData.hpp"
+#include "../helpers/Event.hpp"
 
 
+namespace sf
+{
+    class RenderWindow;
+}
 
 
-
-class Input : public IInput
+class Input
 {
 	public:
 		Input();
@@ -24,6 +28,15 @@ class Input : public IInput
 		KeyInfo* getKeyHeld();
 		KeyInfo* getKeyUp();
 		MouseInfo* getMouse();
+
+        EventManager3<void, int, int, int> m_eventHandler;
+
+    protected:
+		bool m_windowClosed;
+		KeyInfo m_keyPress;
+		KeyInfo m_keyHeld;
+		KeyInfo m_keyUp;
+		MouseInfo m_mouse;
 
 	private:
 		void pollEvents(sf::RenderWindow* window);
