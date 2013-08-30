@@ -1,7 +1,7 @@
 #include "Input.hpp"
 #include <string.h>
 #include "../Defines.hpp"
-#include "../video/VideoInterface.hpp"
+#include "../video/Video.hpp"
 
 
 Input::Input()

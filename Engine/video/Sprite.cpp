@@ -1,4 +1,4 @@
-#include "SpriteAnimated.hpp"
+#include "Sprite.hpp"
 #include "../debug/DebugLog.hpp"
 #include "../Defines.hpp"
 

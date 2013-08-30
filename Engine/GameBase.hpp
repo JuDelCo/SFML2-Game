@@ -4,9 +4,10 @@
 
 
 #include "helpers/Event.hpp"
-#include "input/Input.hpp"
+
+class Input;
+class Video;
 class Timer;
-class IVideo;
 class IDebug;
 
 
@@ -24,7 +25,7 @@ class GameBase
 
     protected:
 		Input* m_input;
-		IVideo* m_video;
+		Video* m_video;
 		IDebug* m_debug;
 
 	private:

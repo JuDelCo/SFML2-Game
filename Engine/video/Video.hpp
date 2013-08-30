@@ -3,11 +3,10 @@
 #define VIDEO_HPP
 
 
-#include "VideoInterface.hpp"
-#include "SpriteAnimated.hpp"
+#include <SFML/Graphics.hpp>
 
 
-class Video : public IVideo
+class Video
 {
 	public:
 		Video(unsigned int sizeX, unsigned int sizeY);
@@ -18,6 +17,10 @@ class Video : public IVideo
 		sf::Vector2f* getCameraPosition();
 		void drawPoint(const float positionX, const float positionY, const sf::Color color);
 		void drawRectangle(const sf::Vector2f position, const sf::Vector2f size, const sf::Color color);
+
+	protected:
+		sf::RenderWindow m_window;
+		sf::Vector2f m_cameraPosition;
 
 	private:
 		void init(unsigned int sizeX, unsigned int sizeY);
