@@ -1,6 +1,5 @@
 #include "GameBase.hpp"
 #include "Defines.hpp"
-#include "ServiceProvider.hpp"
 #include "debug/DebugLog.hpp"
 #include "input/Input.hpp"
 #include "video/Video.hpp"
@@ -9,23 +8,17 @@
 
 GameBase::GameBase(unsigned int sizeX, unsigned int sizeY) : m_eventListener(this, &GameBase::onEvent)
 {
-	IDebug* debugService = new Debug();
-	ServiceProvider::provide(debugService);
+    m_debug = new Debug();
+    m_video = new Video(sizeX, sizeY);
+    m_input = new Input();
+	m_input->m_eventHandler.add(&m_eventListener);
 
-	IVideo* videoService = new Video(sizeX, sizeY);
-	ServiceProvider::provide(videoService);
-
-	IInput* inputService = new Input();
-	inputService->m_eventHandler.add(&m_eventListener);
-
-	//input_service->event_handler_.add(EventListenerBase3<ReturnT, ParamT1, ParamT2, ParamT3> *slot)
-	//input_service->event_handler_.attach(ListenerT *object, ReturnT (ListenerT::*member)(ParamT1, ParamT2, ParamT3));
-	//input_service->event_handler_.detach(int id);
+	//m_input->event_handler_.add(EventListenerBase3<ReturnT, ParamT1, ParamT2, ParamT3> *slot)
+	//m_input->event_handler_.attach(ListenerT *object, ReturnT (ListenerT::*member)(ParamT1, ParamT2, ParamT3));
+	//m_input->event_handler_.detach(int id);
 
 	//event_listener_.add(Event3<void, int, int, int> *cpp_event);
 	//event_listener_.remove();
-
-	ServiceProvider::provide(inputService);
 
 	m_runningTimer = new Timer();
 	m_fpsTimer = new Timer();
@@ -89,8 +82,6 @@ void GameBase::loop()
 {
 	systemInit();
 
-	IInput* input = ServiceProvider::getInput();
-
 	while (m_run)
 	{
 		m_msLastFrame = m_fpsTimer->getTicks();
@@ -102,7 +93,7 @@ void GameBase::loop()
 
 		m_fpsTimer->start();
 
-		input->onTick();
+		m_input->onTick(m_video->getWindow());
 		onTick();
 		++m_tickCount;
 

@@ -7,5 +7,5 @@ GameData::GameData()
 
 void GameData::testFunction()
 {
-	DEBUG->write(LOG_FILE, "Line: %u - GameData | TestFunction Called!", __LINE__);
+	//m_debug->write(LOG_FILE, "Line: %u - GameData | TestFunction Called!", __LINE__);
 }

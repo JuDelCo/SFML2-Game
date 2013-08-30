@@ -7,7 +7,6 @@
 
 #include "Defines.hpp"
 #include "GameBase.hpp"
-#include "ServiceProvider.hpp"
 #include "input/InputInterface.hpp"
 #include "video/VideoInterface.hpp"
 #include "video/SpriteAnimated.hpp"

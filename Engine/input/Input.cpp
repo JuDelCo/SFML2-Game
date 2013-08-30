@@ -1,7 +1,6 @@
 #include "Input.hpp"
 #include <string.h>
 #include "../Defines.hpp"
-#include "../ServiceProvider.hpp"
 #include "../video/VideoInterface.hpp"
 
 
@@ -18,7 +17,7 @@ Input::~Input()
 }
 
 
-void Input::onTick()
+void Input::onTick(sf::RenderWindow* window)
 {
 	m_mouse.xRel = 0;
 	m_mouse.yRel = 0;
@@ -36,7 +35,7 @@ void Input::onTick()
 	memcpy(&m_keyPress, &KEY::KEY_CONFIG, sizeof(KeyInfo));
 	memcpy(&m_keyUp, &KEY::KEY_CONFIG, sizeof(KeyInfo));
 
-	pollEvents();
+	pollEvents(window);
 }
 
 
@@ -113,13 +112,11 @@ MouseInfo* Input::getMouse()
 }
 
 
-void Input::pollEvents()
+void Input::pollEvents(sf::RenderWindow* window)
 {
 	sf::Event event;
 
-	IVideo* video = ServiceProvider::getVideo();
-
-	while (video->getWindow()->pollEvent(event))
+	while (window->pollEvent(event))
 	{
 		switch (event.type)
 		{
@@ -287,6 +284,6 @@ void Input::pollEvents()
 		}
 	}
 
-	m_mouse.x = sf::Mouse::getPosition(*video->getWindow()).x;
-	m_mouse.y = sf::Mouse::getPosition(*video->getWindow()).y;
+	m_mouse.x = sf::Mouse::getPosition(*window).x;
+	m_mouse.y = sf::Mouse::getPosition(*window).y;
 }

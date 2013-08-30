@@ -7,11 +7,17 @@
 #include "../helpers/Event.hpp"
 
 
+namespace sf
+{
+    class RenderWindow;
+}
+
+
 class IInput
 {
 	public:
 		virtual ~IInput() {};
-		virtual void onTick() = 0;
+		virtual void onTick(sf::RenderWindow* window) = 0;
 		virtual void releaseAll() = 0;
 		virtual void releaseKeys() = 0;
 		virtual void releaseMouse() = 0;

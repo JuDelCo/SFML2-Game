@@ -41,17 +41,17 @@ void TechDemo::onTick()
 
 void TechDemo::onRender()
 {
-	sf::RenderWindow* window = VIDEO->getWindow();
+	sf::RenderWindow* window = m_video->getWindow();
 
     window->clear(sf::Color::Black);
 
     sf::View view = window->getView();
-    view.reset(sf::FloatRect(VIDEO->getCameraPosition()->x, VIDEO->getCameraPosition()->y, VIDEO->getSize().x, VIDEO->getSize().y));
+    view.reset(sf::FloatRect(m_video->getCameraPosition()->x, m_video->getCameraPosition()->y, m_video->getSize().x, m_video->getSize().y));
     window->setView(view);
 
     window->draw(*m_tileMap);
 
-	VIDEO->swapBuffers();
+	m_video->swapBuffers();
 }
 
 
@@ -75,17 +75,17 @@ void TechDemo::onEvent(const int eventType, const int param1, const int param2)
 			break;
 
 		case EVENT_MOUSEMOTION:
-			if (INPUT->getMouse()->held.right)
+			if (m_input->getMouse()->held.right)
 			{
-				VIDEO->getCameraPosition()->x -= (INPUT->getMouse()->xRel);
-				VIDEO->getCameraPosition()->y -= (INPUT->getMouse()->yRel);
+				m_video->getCameraPosition()->x -= (m_input->getMouse()->xRel);
+				m_video->getCameraPosition()->y -= (m_input->getMouse()->yRel);
 			}
 			break;
 
         case EVENT_MOUSEDOWN:
-            if (INPUT->getMouse()->press.left)
+            if (m_input->getMouse()->press.left)
             {
-                m_tileMap->setTile(m_tileMap->getTilePos(sf::Vector2u(INPUT->getMouse()->x, INPUT->getMouse()->y)), 2);
+                m_tileMap->setTile(m_tileMap->getTilePos(sf::Vector2u(m_input->getMouse()->x, m_input->getMouse()->y)), 2);
             }
 
             break;

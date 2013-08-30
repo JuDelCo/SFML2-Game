@@ -6,12 +6,15 @@
 #include "InputInterface.hpp"
 
 
+
+
+
 class Input : public IInput
 {
 	public:
 		Input();
 		~Input();
-		void onTick();
+		void onTick(sf::RenderWindow* window);
 		void releaseAll();
 		void releaseKeys();
 		void releaseMouse();
@@ -23,7 +26,7 @@ class Input : public IInput
 		MouseInfo* getMouse();
 
 	private:
-		void pollEvents();
+		void pollEvents(sf::RenderWindow* window);
 };
 
 

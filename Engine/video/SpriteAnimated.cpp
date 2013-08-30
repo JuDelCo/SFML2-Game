@@ -1,5 +1,4 @@
 #include "SpriteAnimated.hpp"
-#include "../ServiceProvider.hpp"
 #include "../debug/DebugLog.hpp"
 #include "../Defines.hpp"
 
@@ -35,7 +34,7 @@ void SpriteAnimated::loadTexture(const std::string location, const int numFrames
 {
 	if (!m_image.loadFromFile(location))
 	{
-		DEBUG->write(LOG_FILE, "Unable to load sprite from: %s", location.c_str());
+		//m_debug->write(LOG_FILE, "Unable to load sprite from: %s", location.c_str());
 		exit(ERROR_SPRITELOAD);
 	}
 

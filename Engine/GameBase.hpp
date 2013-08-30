@@ -5,6 +5,9 @@
 
 #include "helpers/Event.hpp"
 class Timer;
+class IInput;
+class IVideo;
+class IDebug;
 
 
 class GameBase
@@ -19,6 +22,11 @@ class GameBase
 		unsigned int getFps();
 		unsigned int getMsLastFrame();
 
+    protected:
+		IInput* m_input;
+		IVideo* m_video;
+		IDebug* m_debug;
+
 	private:
 		void delayMs(const unsigned int delayMs);
 		void loop();
@@ -29,6 +37,7 @@ class GameBase
 		virtual void onRender() = 0;
 		virtual void onEvent(const int eventType, const int param1, const int param2) = 0;
 		virtual void end() = 0;
+
 		EventListener3<GameBase, void, int, int, int> m_eventListener;
 		bool m_run;
 		unsigned int m_fpsCounter;
