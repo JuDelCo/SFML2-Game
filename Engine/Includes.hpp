@@ -11,7 +11,7 @@
 #include "video/Video.hpp"
 #include "video/Sprite.hpp"
 #include "video/TileMap.hpp"
-#include "debug/DebugLogInterface.hpp"
+#include "debug/DebugLog.hpp"
 #include "helpers/Timer.hpp"
 #include "helpers/Event.hpp"
 #include "helpers/Motion.hpp"

@@ -8,7 +8,7 @@
 class Input;
 class Video;
 class Timer;
-class IDebug;
+class Debug;
 
 
 class GameBase
@@ -26,7 +26,7 @@ class GameBase
     protected:
 		Input* m_input;
 		Video* m_video;
-		IDebug* m_debug;
+		Debug* m_debug;
 
 	private:
 		void delayMs(const unsigned int delayMs);

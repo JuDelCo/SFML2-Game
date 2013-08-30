@@ -4,11 +4,15 @@
 
 
 #include <fstream>
-#include "DebugLogInterface.hpp"
+#include <string>
 #define MAX_LOG_STRINGS 256
 
 
-class Debug : public IDebug
+const int LOG_FILE = 1;
+const int LOG_CONSOLE = 2;
+
+
+class Debug
 {
 	public:
 		Debug();
