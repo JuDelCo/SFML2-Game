@@ -33,12 +33,6 @@ void Video::init(unsigned int sizeX, unsigned int sizeY)
 
 	m_window.setKeyRepeatEnabled(false);
 	m_window.clear();
-
-	//texture_Init();
-	//sprite_Init();
-	// TILEMAPS SUBSYSTEM
-	// TEXT SUBSYSTEM
-
 }
 
 
@@ -61,11 +55,6 @@ void Video::initWindow(unsigned int sizeX, unsigned int sizeY)
 
 void Video::end()
 {
-	// TEXT SUBSYSTEM
-	// TILEMAPS SUBSYSTEM
-	//sprite_End();
-	//texture_End();
-
 	m_window.close();
 }
 
@@ -93,7 +82,6 @@ void Video::swapBuffers()
 {
 	glClear(GL_DEPTH_BUFFER_BIT);
 	glDisable(GL_CULL_FACE);
-	//texture_Use(-1);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -110,7 +98,6 @@ void Video::swapBuffers()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_CULL_FACE);
 	glDepthFunc(GL_LESS);
-	//texture_Use(-1);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -136,6 +123,34 @@ sf::RenderWindow* Video::getWindow()
 sf::Vector2f* Video::getCameraPosition()
 {
 	return &m_cameraPosition;
+}
+
+
+void Video::viewReset(sf::FloatRect rect)
+{
+	sf::View view = m_window.getView();
+
+	view.reset(rect);
+
+	m_window.setView(view);
+}
+
+
+void Video::viewResetToCamera()
+{
+	viewReset(sf::FloatRect(getCameraPosition()->x, getCameraPosition()->y, getSize().x, getSize().y));
+}
+
+
+void Video::clear(sf::Color color)
+{
+    m_window.clear(color);
+}
+
+
+void Video::draw(sf::Drawable& drawable)
+{
+    m_window.draw(drawable);
 }
 
 

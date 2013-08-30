@@ -3,6 +3,7 @@
 #define GAME_BASE_HPP
 
 
+#include <memory>
 #include "helpers/Event.hpp"
 
 class Input;

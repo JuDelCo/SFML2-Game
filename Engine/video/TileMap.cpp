@@ -24,7 +24,7 @@ TileMap::TileMap(const std::string tileSetPath, sf::Vector2u tileSize, int* tile
 
 TileMap::~TileMap()
 {
-
+    delete m_tiles;
 }
 
 

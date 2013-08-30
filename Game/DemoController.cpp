@@ -13,6 +13,7 @@ int level[] =
     0, 0, 2, 0, 1, 3, 3, 3, 0, 0, 0, 0, 2, 2, 2, 2,
 };
 
+
 TechDemo::TechDemo() : GameBase(1024, 768)
 {
     m_tileMap = new TileMap("resources/tileset.png", sf::Vector2u(32, 32), level, 16, 8);
@@ -23,7 +24,7 @@ TechDemo::TechDemo() : GameBase(1024, 768)
 
 TechDemo::~TechDemo()
 {
-
+    delete m_tileMap;
 }
 
 
@@ -41,15 +42,11 @@ void TechDemo::onTick()
 
 void TechDemo::onRender()
 {
-	sf::RenderWindow* window = m_video->getWindow();
+    m_video->clear(sf::Color::Black);
 
-    window->clear(sf::Color::Black);
+	m_video->viewResetToCamera();
 
-    sf::View view = window->getView();
-    view.reset(sf::FloatRect(m_video->getCameraPosition()->x, m_video->getCameraPosition()->y, m_video->getSize().x, m_video->getSize().y));
-    window->setView(view);
-
-    window->draw(*m_tileMap);
+    m_video->draw(*m_tileMap);
 
 	m_video->swapBuffers();
 }

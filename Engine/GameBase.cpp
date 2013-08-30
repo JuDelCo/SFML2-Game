@@ -13,13 +13,6 @@ GameBase::GameBase(unsigned int sizeX, unsigned int sizeY) : m_eventListener(thi
     m_input = new Input();
 	m_input->m_eventHandler.add(&m_eventListener);
 
-	//m_input->event_handler_.add(EventListenerBase3<ReturnT, ParamT1, ParamT2, ParamT3> *slot)
-	//m_input->event_handler_.attach(ListenerT *object, ReturnT (ListenerT::*member)(ParamT1, ParamT2, ParamT3));
-	//m_input->event_handler_.detach(int id);
-
-	//event_listener_.add(Event3<void, int, int, int> *cpp_event);
-	//event_listener_.remove();
-
 	m_runningTimer = new Timer();
 	m_fpsTimer = new Timer();
 	m_updateTimer = new Timer();
@@ -28,9 +21,13 @@ GameBase::GameBase(unsigned int sizeX, unsigned int sizeY) : m_eventListener(thi
 
 GameBase::~GameBase()
 {
-	delete m_runningTimer;
-	delete m_fpsTimer;
-	delete m_updateTimer;
+    delete m_input;
+    delete m_video;
+    delete m_debug;
+
+    delete m_runningTimer;
+    delete m_fpsTimer;
+    delete m_updateTimer;
 }
 
 
