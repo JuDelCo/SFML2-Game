@@ -86,9 +86,9 @@ void GameController::init()
 
 	// -------------
 
-	DummyClass* dummy_1 = new DummyClass();
-	ReporterClass<DummyClass>* reporter = new ReporterClass<DummyClass>();
-	reporter->showInfoAndCall(dummy_1, &DummyClass::dummyFunction);
+	//DummyClass* dummy_1 = new DummyClass();
+	//ReporterClass<DummyClass>* reporter = new ReporterClass<DummyClass>();
+	//reporter->showInfoAndCall(dummy_1, &DummyClass::dummyFunction);
 }
 
 

@@ -9,14 +9,22 @@
 class TileMap : public sf::Drawable
 {
 	public:
-		TileMap(const std::string tileSetPath, sf::Vector2u tileSize, const int* tiles, unsigned int width, unsigned int height);
+		TileMap(const std::string tileSetPath, sf::Vector2u tileSize, int* tiles, unsigned int width, unsigned int height);
 		~TileMap();
+
         void draw(sf::RenderTarget& rt, sf::RenderStates states) const;
+        void update();
+        int getTile(sf::Vector2u position);
+        void setTile(sf::Vector2u position, int tileValue);
+        sf::Vector2u getTilePos(sf::Vector2u position);
 
 	private:
-
         sf::VertexArray m_vertices;
         sf::Texture m_texture;
+        int* m_tiles;
+		unsigned int m_width;
+		unsigned int m_height;
+		sf::Vector2u m_tileSize;
 };
 
 
