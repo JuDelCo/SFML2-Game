@@ -75,8 +75,7 @@ void TechDemo::onEvent(const int eventType, const int param1, const int param2)
 		case EVENT_MOUSEMOTION:
 			if (m_input->getMouse()->held.right)
 			{
-				m_video->getCameraPosition()->x -= m_input->getMouse()->xRel;
-				m_video->getCameraPosition()->y -= m_input->getMouse()->yRel;
+				m_video->moveCameraPosition(sf::Vector2i(m_input->getMouse()->xRel, m_input->getMouse()->yRel));
 			}
 
 			break;
@@ -84,7 +83,11 @@ void TechDemo::onEvent(const int eventType, const int param1, const int param2)
 		case EVENT_MOUSEDOWN:
 			if (m_input->getMouse()->press.left)
 			{
-				m_tileMap->setTile(m_tileMap->getTilePos(m_input->getMousePos()), 2); // 2 = TEST
+				sf::Vector2i mousePositionWorld = m_input->getMousePos() + m_video->getCameraPosition();
+
+				sf::Vector2u tileMousePointed = m_tileMap->getTilePos(sf::Vector2u(mousePositionWorld));
+
+				m_tileMap->setTile(tileMousePointed, 2); // 2 = Test
 			}
 
 			break;
