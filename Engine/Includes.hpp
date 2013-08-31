@@ -16,6 +16,7 @@
 #include "helpers/Timer.hpp"
 #include "helpers/Event.hpp"
 #include "helpers/Motion.hpp"
+#include "helpers/Interpolator.hpp"
 #include "helpers/TaskManager.hpp"
 
 
