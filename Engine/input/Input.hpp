@@ -23,7 +23,7 @@ class Input
 		KeyInfo* getKeyHeld();
 		KeyInfo* getKeyUp();
 		MouseInfo* getMouse();
-		sf::Vector2u getMousePos();
+		sf::Vector2i getMousePos();
 
 		EventManager3<void, int, int, int> m_eventHandler;
 

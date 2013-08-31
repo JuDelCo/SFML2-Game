@@ -112,9 +112,9 @@ MouseInfo* Input::getMouse()
 }
 
 
-sf::Vector2u Input::getMousePos()
+sf::Vector2i Input::getMousePos()
 {
-	return sf::Vector2u(m_mouse.x, m_mouse.y);
+	return sf::Vector2i(m_mouse.x, m_mouse.y);
 }
 
 
@@ -179,8 +179,8 @@ void Input::pollEvents(sf::RenderWindow* window)
 				break;
 
 			case sf::Event::MouseMoved:
-				m_mouse.xRel = event.mouseMove.x - m_mouse.x;
-				m_mouse.yRel = event.mouseMove.y - m_mouse.y;
+				m_mouse.xRel = m_mouse.x - event.mouseMove.x;
+				m_mouse.yRel = m_mouse.y - event.mouseMove.y;
 				m_mouse.x = event.mouseMove.x;
 				m_mouse.y = event.mouseMove.y;
 				m_eventHandler.trigger(EVENT_MOUSEMOTION, 0, 0);
