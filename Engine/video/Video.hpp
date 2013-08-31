@@ -14,7 +14,9 @@ class Video
 		void swapBuffers();
 		sf::Vector2u getSize();
 		sf::RenderWindow* getWindow();
-		sf::Vector2f* getCameraPosition();
+		sf::Vector2i getCameraPosition();
+		void setCameraPosition(sf::Vector2i position);
+		void moveCameraPosition(sf::Vector2i offset);
 		void viewReset(sf::FloatRect rect);
 		void viewResetToCamera();
 		void clear(sf::Color color);
@@ -24,7 +26,7 @@ class Video
 
 	protected:
 		sf::RenderWindow m_window;
-		sf::Vector2f m_cameraPosition;
+		sf::Vector2i m_cameraPosition;
 
 	private:
 		void init(unsigned int sizeX, unsigned int sizeY);

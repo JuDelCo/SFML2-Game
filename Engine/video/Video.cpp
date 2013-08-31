@@ -120,9 +120,21 @@ sf::RenderWindow* Video::getWindow()
 }
 
 
-sf::Vector2f* Video::getCameraPosition()
+sf::Vector2i Video::getCameraPosition()
 {
-	return &m_cameraPosition;
+	return m_cameraPosition;
+}
+
+
+void Video::setCameraPosition(sf::Vector2i position)
+{
+	m_cameraPosition = position;
+}
+
+
+void Video::moveCameraPosition(sf::Vector2i offset)
+{
+	m_cameraPosition += offset;
 }
 
 
@@ -138,7 +150,7 @@ void Video::viewReset(sf::FloatRect rect)
 
 void Video::viewResetToCamera()
 {
-	viewReset(sf::FloatRect(getCameraPosition()->x, getCameraPosition()->y, getSize().x, getSize().y));
+	viewReset(sf::FloatRect(getCameraPosition().x, getCameraPosition().y, getSize().x, getSize().y));
 }
 
 
