@@ -3,6 +3,7 @@ _TEMP/*
 Resource/*
 bin/obj/*
 bin/*.exe
+bin/*.dll
 bin/*.txt
 
 *.txt
