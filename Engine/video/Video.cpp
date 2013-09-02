@@ -38,7 +38,7 @@ void Video::init(unsigned int sizeX, unsigned int sizeY)
 
 void Video::initWindow(unsigned int sizeX, unsigned int sizeY)
 {
-	m_window.create(sf::VideoMode(sizeX, sizeY), "Demo");
+	m_window.create(sf::VideoMode(sizeX, sizeY), "Demo", sf::Style::Titlebar | sf::Style::Close);
 
 	m_window.setFramerateLimit(FPS_LIMIT);
 	//m_window.setVerticalSyncEnabled(true);
