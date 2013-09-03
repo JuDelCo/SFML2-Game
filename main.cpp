@@ -1,12 +1,12 @@
-#include "Game/pong/PongController.hpp"
+#include "Game/snake/SnakeController.hpp"
 
 
-typedef std::shared_ptr<Pong> gamePtr;
+typedef std::shared_ptr<Snake> gamePtr;
 
 
 int main(const int argc, const char* args[])
 {
-	gamePtr demo(new Pong());
+	gamePtr demo(new Snake());
 	demo->start();
 
 	return 0;
