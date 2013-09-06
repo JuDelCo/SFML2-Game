@@ -17,7 +17,6 @@ class Input
 		void releaseAll();
 		void releaseKeys();
 		void releaseMouse();
-		Key* getKey(const KeyInfo* keyStruct, unsigned int numberId);
 		bool isWindowClosed();
 		KeyInfo* getKeyPress();
 		KeyInfo* getKeyHeld();
@@ -28,6 +27,8 @@ class Input
 		EventManager3<void, int, int, int> m_eventHandler;
 
 	protected:
+		Key* getKey(const KeyInfo* keyStruct, unsigned int numberId);
+
 		bool m_windowClosed;
 		KeyInfo m_keyPress;
 		KeyInfo m_keyHeld;
