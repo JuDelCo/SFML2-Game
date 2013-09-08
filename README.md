@@ -1,7 +1,7 @@
-SFML2 - Game (?) Demo
+SFML2 - Random Games (WIP)
 =================
 
-A very simple (and unfinished) SFML2 project.
+A little collection of simple games made with SFML2. Some of them can be unfinished !
 
 To compile it, you'll need:
 
