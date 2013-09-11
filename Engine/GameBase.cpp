@@ -16,6 +16,8 @@ GameBase::GameBase(unsigned int sizeX, unsigned int sizeY) : m_eventListener(thi
 	m_runningTimer = new Timer();
 	m_fpsTimer = new Timer();
 	m_updateTimer = new Timer();
+
+	m_run = true;
 }
 
 
@@ -33,8 +35,6 @@ GameBase::~GameBase()
 
 void GameBase::start()
 {
-	m_run = true;
-
 	loop();
 }
 
