@@ -1,0 +1,154 @@
+<html>
+	<title>Pacman Editor</title>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+		var seleccion = 1;
+		var click = false;
+		var width = 28;
+		var height = 31;
+
+		$(document).ready(function(){
+			for(var i = 0; i < width; i++)
+			{
+				for(var j = 0; j < height; j++)
+				{
+					$(".gameScreen").append("<div class='tile' id='tile1'></div>");
+				}
+			}
+
+			$(".input").focus(function(){
+		    	   var $this = $(this);
+			    	$this.select();
+			    	$this.mouseup(function() {
+			        $this.unbind("mouseup");
+			        return false;
+    			});
+			});
+
+			$(".tile").mousedown(function(){
+				click = true;
+				cambiarTile($(this));
+			});
+
+			$(".tile").mouseover(function(){
+				if(click)
+				{
+					cambiarTile($(this));
+				}
+			});
+
+			$(".tile").mouseup(function()
+			{
+				click = false;
+			});
+		});
+
+		function cambiarTile(div)
+		{						
+			switch (seleccion)
+			{
+				case 1: $(div).attr("id", "tile1"); break;
+				case 2: $(div).attr("id", "tile2"); break;
+				case 3: $(div).attr("id", "tile3"); break;
+				case 4: $(div).attr("id", "tile4"); break;
+				case 5: $(div).attr("id", "tile5"); break;
+				case 6: $(div).attr("id", "tile6"); break;
+				case 7: $(div).attr("id", "tile7"); break
+			}
+		}	
+
+		function cambiarSeleccion(eID)
+		{
+			var id = eID;
+			seleccion = id;
+
+			switch (id)
+			{
+				case 1: $(".seleccion").html('<div class="tileMuestra" id="tile1"></div> Vacio'); break;
+				case 2: $(".seleccion").html('<div class="tileMuestra" id="tile2"></div> Muro'); break;
+				case 3: $(".seleccion").html('<div class="tileMuestra" id="tile3"></div> Bola'); break;
+				case 4: $(".seleccion").html('<div class="tileMuestra" id="tile4"></div> Bola grande'); break;
+				case 5: $(".seleccion").html('<div class="tileMuestra" id="tile5"></div> Casa fantasma'); break;
+				case 6: $(".seleccion").html('<div class="tileMuestra" id="tile6"></div> Puerta casa fantasma'); break;
+				case 7: $(".seleccion").html('<div class="tileMuestra" id="tile7"></div> Respawn'); break
+			}
+		}	
+
+		function subirMapa()
+		{
+			var mapa = $(".input").val();
+			var aux = mapa.split(",");
+			var id = 0;
+
+			$(".tile").each(function(index) {
+				id = parseInt(aux[index]) + 1;
+				$(this).attr("id", "tile" + id);
+			});
+		}
+
+		function generarMapa()
+		{
+			var mapa = "";
+
+			$(".tile").each(function(index) {
+				switch ($(this).attr("id"))
+				{
+					case "tile1": mapa += "0,"; break;
+					case "tile2": mapa += "1,"; break;
+					case "tile3": mapa += "2,"; break;
+					case "tile4": mapa += "3,"; break;
+					case "tile5": mapa += "4,"; break;
+					case "tile6": mapa += "5,"; break;
+					case "tile7": mapa += "6,"; break;
+				}
+				if((index +1) % width == 0) mapa +="\n"; 
+			});
+
+			$(".input").val(mapa);
+		}
+	</script>
+
+	<style>
+		*{margin:0px; padding:0px; font-family: verdana}
+		body{background:#232325; text-align: center}
+		textarea{font-size:8pt; width:500px; height:500px; padding:10px; resize: none; text-align: center}
+		.seleccion{color:white; width:100%; height:20px;}
+		.menu{width:100%; height: 20px; margin-top:20px;}
+		.menu .tileMuestra{margin:5px;}
+		.gameScreen{width:476px; height:527px; border:1px solid white; display:inline-block; text-align: left}
+		.tile, .tileMuestra{width:15px; height:15px; border:1px solid white; display:inline-block; cursor:pointer; background-image:url(tileset_pacman_map.png);}
+		#tile1{background-position:0px 0px;}
+		#tile2{background-position:45px 0px;}
+		#tile3{background-position:75px 0px;}
+		#tile4{background-position:60px 0px;}
+		#tile5{background:red;}
+		#tile6{background-position:30px 0px;}
+		#tile7{background:yellow;}
+	</style>
+
+	<body>
+		<div class="menu">
+			<div class="tileMuestra" onclick="cambiarSeleccion(1);" id="tile1"></div>
+			<div class="tileMuestra" onclick="cambiarSeleccion(2);" id="tile2"></div>
+			<div class="tileMuestra" onclick="cambiarSeleccion(3);" id="tile3"></div>
+			<div class="tileMuestra" onclick="cambiarSeleccion(4);" id="tile4"></div>
+			<div class="tileMuestra" onclick="cambiarSeleccion(5);" id="tile5"></div>
+			<div class="tileMuestra" onclick="cambiarSeleccion(6);" id="tile6"></div>
+			<div class="tileMuestra" onclick="cambiarSeleccion(7);" id="tile7"></div>
+		</div>
+		<br>
+		<div class="seleccion">
+			<div class="tileMuestra" id="tile1"></div> Vacio
+		</div>
+		<br>
+		<div class="gameScreen">
+		</div>
+		<br><br>
+		<div class="result">
+			<input class="button" value="Generar" type="button" onclick="generarMapa()"></input> 			<input class="button" value="Subir" type="button" onclick="subirMapa()"></input>
+
+			<br><br>
+			<textarea class="input"></textarea><br><br>
+		</div>
+	</body>
+</html>

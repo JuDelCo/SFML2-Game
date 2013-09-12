@@ -1,12 +1,12 @@
-#include "Game/tetris/TetrisController.hpp"
+#include "Game/pacman/PacmanController.hpp"
 
 
-typedef std::shared_ptr<Tetris> gamePtr;
+typedef std::shared_ptr<Pacman> gamePtr;
 
 
 int main(const int argc, const char* args[])
 {
-	gamePtr demo(new Tetris());
+	gamePtr demo(new Pacman());
 	demo->start();
 
 	return 0;
