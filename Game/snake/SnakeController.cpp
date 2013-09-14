@@ -33,18 +33,6 @@ Snake::Snake() : GameBase(640, 480)
 }
 
 
-Snake::~Snake()
-{
-
-}
-
-
-void Snake::init()
-{
-
-}
-
-
 void Snake::onTick()
 {
 	if(m_timingTimer.getTicks() - m_lastUpdateTime < 200)
@@ -289,12 +277,6 @@ void Snake::reset()
 	m_lastUpdateTime = m_timingTimer.getTicks();
 
 	createNewFood();
-}
-
-
-void Snake::end()
-{
-
 }
 
 

@@ -89,9 +89,6 @@ Tetris::Tetris() : GameBase(640, 480)
 		stop();
 	}
 
-	// Semilla aleatoria para el rand()
-	srand(time(NULL));
-
 	m_screenSize = sf::Vector2i(640, 480);
 	m_blockSize = sf::Vector2i(16, 16);
 	m_blockStackSize = sf::Vector2i(10, 28);
@@ -116,18 +113,6 @@ Tetris::Tetris() : GameBase(640, 480)
 	m_hardMode = false;
 
 	reset();
-}
-
-
-Tetris::~Tetris()
-{
-
-}
-
-
-void Tetris::init()
-{
-
 }
 
 
@@ -397,12 +382,6 @@ void Tetris::reset()
 
 	m_timingTimer.start();
 	m_lastUpdateTime = m_timingTimer.getTicks();
-}
-
-
-void Tetris::end()
-{
-
 }
 
 

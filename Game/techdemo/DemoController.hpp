@@ -14,12 +14,9 @@ class TechDemo : public GameBase
 		~TechDemo();
 
 	private:
-		void init();
 		void onTick();
 		void onRender();
 		void onEvent(const int eventType, const int param1, const int param2);
-		void reset();
-		void end();
 
 		TileMap* m_tileMap;
 };

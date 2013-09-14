@@ -17,20 +17,12 @@ int level[] =
 TechDemo::TechDemo() : GameBase(1024, 768)
 {
 	m_tileMap = new TileMap("resources/tileset.png", sf::Vector2u(32, 32), level, 16, 8);
-
-	reset();
 }
 
 
 TechDemo::~TechDemo()
 {
 	delete m_tileMap;
-}
-
-
-void TechDemo::init()
-{
-
 }
 
 
@@ -64,10 +56,6 @@ void TechDemo::onEvent(const int eventType, const int param1, const int param2)
 				case KeyId::Escape:
 					stop();
 					break;
-
-				case KeyId::F1:
-					reset();
-					break;
 			}
 
 			break;
@@ -97,16 +85,4 @@ void TechDemo::onEvent(const int eventType, const int param1, const int param2)
 
 			break;
 	}
-}
-
-
-void TechDemo::reset()
-{
-
-}
-
-
-void TechDemo::end()
-{
-
 }

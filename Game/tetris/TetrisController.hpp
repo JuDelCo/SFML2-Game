@@ -12,15 +12,13 @@ class Tetris : public GameBase
 	public:
 		EventManager1<void, int> m_eventHandler;
 		Tetris();
-		~Tetris();
+		~Tetris() {};
 
 	private:
-		void init();
 		void onTick();
 		void onRender();
 		void onEvent(const int eventType, const int param1, const int param2);
 		void reset();
-		void end();
 		sf::Color getColor(unsigned int colorId);
 		void changeNextBlock();
 		bool checkCollision(sf::Vector2i playerPosition);

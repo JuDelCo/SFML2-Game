@@ -12,15 +12,13 @@ class Snake : public GameBase
 	public:
 		EventManager1<void, int> m_eventHandler;
 		Snake();
-		~Snake();
+		~Snake() {};
 
 	private:
-		void init();
 		void onTick();
 		void onRender();
 		void onEvent(const int eventType, const int param1, const int param2);
 		void reset();
-		void end();
 		void createNewFood();
 
 		enum

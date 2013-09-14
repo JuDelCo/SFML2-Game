@@ -29,18 +29,6 @@ Pong::Pong() : GameBase(640, 480)
 }
 
 
-Pong::~Pong()
-{
-
-}
-
-
-void Pong::init()
-{
-
-}
-
-
 void Pong::onTick()
 {
 	if(m_input->getKeyHeld()->Up.value)
@@ -211,10 +199,4 @@ void Pong::reset()
 	m_cpuSize = sf::Vector2f(10, 50);
 	m_cpuPosition = sf::Vector2f(620, m_screenSize.y / 2 - m_cpuSize.y / 2);
 	m_cpuScore = 0;
-}
-
-
-void Pong::end()
-{
-
 }

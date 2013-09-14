@@ -46,8 +46,6 @@ Pacman::Pacman() : GameBase(640, 480)
 		return;
 	}
 
-	srand(time(NULL));
-
 	m_screenSize = sf::Vector2i(640, 480);
 	m_mapSize = sf::Vector2i(28, 31);
 	m_tileSize = sf::Vector2i(15, 15);
@@ -94,18 +92,6 @@ Pacman::Pacman() : GameBase(640, 480)
 	{
 		stop();
 	}
-}
-
-
-Pacman::~Pacman()
-{
-	// Nada (No hay ningun puntero a objeto en la clase)
-}
-
-
-void Pacman::init()
-{
-	// Nada
 }
 
 
@@ -648,12 +634,6 @@ void Pacman::reset()
 	m_gameScore = 0;
 
 	resetGame();
-}
-
-
-void Pacman::end()
-{
-	// Nada
 }
 
 

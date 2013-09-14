@@ -8,6 +8,8 @@
 
 GameBase::GameBase(unsigned int sizeX, unsigned int sizeY) : m_eventListener(this, &GameBase::onEvent)
 {
+	srand(time(NULL));
+
 	m_debug = new Debug();
 	m_video = new Video(sizeX, sizeY);
 	m_input = new Input();

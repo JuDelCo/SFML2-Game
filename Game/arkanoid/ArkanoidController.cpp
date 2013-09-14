@@ -32,18 +32,6 @@ Arkanoid::Arkanoid() : GameBase(640, 480)
 }
 
 
-Arkanoid::~Arkanoid()
-{
-
-}
-
-
-void Arkanoid::init()
-{
-
-}
-
-
 void Arkanoid::onTick()
 {
 	if(m_input->getKeyHeld()->Left.value)
@@ -266,10 +254,4 @@ void Arkanoid::reset()
 			m_blockStack[x+(y*9)].position = sf::Vector2f(6.4+(x*6.4)+(x*64), 8+(y*8)+(y*16)); // Separacion 6.4 | 8
 		}
 	}
-}
-
-
-void Arkanoid::end()
-{
-
 }

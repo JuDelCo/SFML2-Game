@@ -34,11 +34,11 @@ class GameBase
 		void loop();
 		void systemInit();
 		void systemEnd();
-		virtual void init() = 0;
+		virtual void init() {};
 		virtual void onTick() = 0;
 		virtual void onRender() = 0;
 		virtual void onEvent(const int eventType, const int param1, const int param2) = 0;
-		virtual void end() = 0;
+		virtual void end() {};
 
 		EventListener3<GameBase, void, int, int, int> m_eventListener;
 		bool m_run;
