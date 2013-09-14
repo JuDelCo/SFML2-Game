@@ -42,4 +42,7 @@ class Arkanoid : public GameBase
 };
 
 
+typedef std::shared_ptr<Arkanoid> ArkanoidPtr;
+
+
 #endif // ARKANOID_CONTROLLER_HPP

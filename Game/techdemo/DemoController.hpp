@@ -25,4 +25,7 @@ class TechDemo : public GameBase
 };
 
 
+typedef std::shared_ptr<TechDemo> TechDemoPtr;
+
+
 #endif // TECH_DEMO_CONTROLLER_HPP

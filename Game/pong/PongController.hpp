@@ -39,4 +39,7 @@ class Pong : public GameBase
 };
 
 
+typedef std::shared_ptr<Pong> PongPtr;
+
+
 #endif // PONG_CONTROLLER_HPP

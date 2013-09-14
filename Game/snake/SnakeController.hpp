@@ -52,4 +52,7 @@ class Snake : public GameBase
 };
 
 
+typedef std::shared_ptr<Snake> SnakePtr;
+
+
 #endif // SNAKE_CONTROLLER_HPP

@@ -136,4 +136,7 @@ class Pacman : public GameBase
 };
 
 
+typedef std::shared_ptr<Pacman> PacmanPtr;
+
+
 #endif // PACMAN_CONTROLLER_HPP

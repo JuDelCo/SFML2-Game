@@ -59,4 +59,7 @@ class Tetris : public GameBase
 };
 
 
+typedef std::shared_ptr<Tetris> TetrisPtr;
+
+
 #endif // TETRIS_CONTROLLER_HPP
