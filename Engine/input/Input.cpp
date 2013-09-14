@@ -166,167 +166,151 @@ void Input::pollEvents(sf::RenderWindow* window)
 
 	while (window->pollEvent(event))
 	{
-		switch (event.type)
+		if(event.type == sf::Event::MouseMoved)
 		{
-			case sf::Event::GainedFocus:
-				m_eventHandler.trigger(EVENT_KEYFOCUS, 0, 0);
-				break;
+			m_mouse.xRel = m_mouse.x - event.mouseMove.x;
+			m_mouse.yRel = m_mouse.y - event.mouseMove.y;
+			m_mouse.x = event.mouseMove.x;
+			m_mouse.y = event.mouseMove.y;
+			m_eventHandler.trigger(EVENT_MOUSEMOTION, 0, 0);
+		}
+		else if(event.type == sf::Event::KeyPressed)
+		{
+			for (unsigned int x = 0; x < NUMBER_OF_KEYS; ++x)
+			{
+				KeyPtr keyDown = getKey(getKeyPress(), x);
+				KeyPtr keyHeld = getKey(getKeyHeld(), x);
 
-			case sf::Event::LostFocus:
-				releaseKeys();
-				m_eventHandler.trigger(EVENT_KEYBLUR, 0, 0);
-				break;
-
-			case sf::Event::KeyPressed:
-				for (unsigned int x = 0; x < NUMBER_OF_KEYS; ++x)
+				if (keyDown->sdlKey == event.key.code)
 				{
-					KeyPtr keyDown = getKey(getKeyPress(), x);
-					KeyPtr keyHeld = getKey(getKeyHeld(), x);
+					keyDown->value = true;
+					keyHeld->value = true;
 
-					if (keyDown->sdlKey == event.key.code)
-					{
-						keyDown->value = true;
-						keyHeld->value = true;
-
-						m_eventHandler.trigger(EVENT_KEYDOWN, keyDown->sdlKey, 0);
-					}
+					m_eventHandler.trigger(EVENT_KEYDOWN, keyDown->sdlKey, 0);
 				}
+			}
+		}
+		else if(event.type == sf::Event::KeyReleased)
+		{
+			for (unsigned int x = 0; x < NUMBER_OF_KEYS; ++x)
+			{
+				KeyPtr keyUp = getKey(getKeyUp(), x);
+				KeyPtr keyHeld = getKey(getKeyHeld(), x);
 
-				break;
-
-			case sf::Event::KeyReleased:
-				for (unsigned int x = 0; x < NUMBER_OF_KEYS; ++x)
+				if (keyUp->sdlKey == event.key.code)
 				{
-					KeyPtr keyUp = getKey(getKeyUp(), x);
-					KeyPtr keyHeld = getKey(getKeyHeld(), x);
+					keyUp->value = true;
+					keyHeld->value = false;
 
-					if (keyUp->sdlKey == event.key.code)
-					{
-						keyUp->value = true;
-						keyHeld->value = false;
-
-						m_eventHandler.trigger(EVENT_KEYUP, keyUp->sdlKey, 0);
-					}
+					m_eventHandler.trigger(EVENT_KEYUP, keyUp->sdlKey, 0);
 				}
+			}
+		}
+		else if(event.type == sf::Event::MouseButtonPressed)
+		{
+			if(event.mouseButton.button == sf::Mouse::Left)
+			{
+				m_mouse.press.left = true;
+				m_mouse.held.left = true;
+				m_mouse.x = event.mouseButton.x;
+				m_mouse.y = event.mouseButton.y;
+			}
+			else if(event.mouseButton.button == sf::Mouse::Middle)
+			{
+				m_mouse.press.middle = true;
+				m_mouse.held.middle = true;
+				m_mouse.x = event.mouseButton.x;
+				m_mouse.y = event.mouseButton.y;
+			}
+			else if(event.mouseButton.button == sf::Mouse::Right)
+			{
+				m_mouse.press.right = true;
+				m_mouse.held.right = true;
+				m_mouse.x = event.mouseButton.x;
+				m_mouse.y = event.mouseButton.y;
+			}
 
-				break;
+			m_eventHandler.trigger(EVENT_MOUSEDOWN, 0, 0);
+		}
+		else if(event.type == sf::Event::MouseButtonReleased)
+		{
+			if(event.mouseButton.button == sf::Mouse::Left)
+			{
+				m_mouse.up.left = true;
+				m_mouse.held.left = false;
+				m_mouse.x = event.mouseButton.x;
+				m_mouse.y = event.mouseButton.y;
+			}
+			else if(event.mouseButton.button == sf::Mouse::Middle)
+			{
+				m_mouse.up.middle = true;
+				m_mouse.held.middle = false;
+				m_mouse.x = event.mouseButton.x;
+				m_mouse.y = event.mouseButton.y;
+			}
+			else if(event.mouseButton.button == sf::Mouse::Right)
+			{
+				m_mouse.up.right = true;
+				m_mouse.held.right = false;
+				m_mouse.x = event.mouseButton.x;
+				m_mouse.y = event.mouseButton.y;
+			}
 
-			case sf::Event::MouseEntered:
-				m_eventHandler.trigger(EVENT_MOUSEFOCUS, 0, 0);
-				break;
+			m_eventHandler.trigger(EVENT_MOUSEUP, 0, 0);
+		}
+		else if(event.type == sf::Event::TextEntered)
+		{
+			m_eventHandler.trigger(EVENT_TEXTENTERED, event.text.unicode, 0);
+		}
+		else if(event.type == sf::Event::MouseWheelMoved)
+		{
+			if (event.mouseWheel.delta > 0)
+			{
+				m_mouse.press.wheelUp = true;
+				m_mouse.held.wheelUp = false;
+				m_mouse.up.wheelUp = false;
+			}
+			else
+			{
+				m_mouse.press.wheelDown = true;
+				m_mouse.held.wheelDown = false;
+				m_mouse.up.wheelDown = false;
+			}
 
-			case sf::Event::MouseLeft:
-				releaseMouse();
-				m_eventHandler.trigger(EVENT_MOUSEBLUR, 0, 0);
-				break;
+			m_eventHandler.trigger(EVENT_MOUSEWHEEL, 0, 0);
 
-			case sf::Event::MouseMoved:
-				m_mouse.xRel = m_mouse.x - event.mouseMove.x;
-				m_mouse.yRel = m_mouse.y - event.mouseMove.y;
-				m_mouse.x = event.mouseMove.x;
-				m_mouse.y = event.mouseMove.y;
-				m_eventHandler.trigger(EVENT_MOUSEMOTION, 0, 0);
-				break;
+			// Unset "KeyPress" of mouse wheel after the event because doesn't have a "KeyUp"
+			m_mouse.press.wheelUp = false;
+			m_mouse.press.wheelDown = false;
+		}
+		else if(event.type == sf::Event::MouseEntered)
+		{
+			m_eventHandler.trigger(EVENT_MOUSEFOCUS, 0, 0);
+		}
+		else if(event.type == sf::Event::MouseLeft)
+		{
+			releaseMouse();
+			m_eventHandler.trigger(EVENT_MOUSEBLUR, 0, 0);
+		}
+		else if(event.type == sf::Event::GainedFocus)
+		{
+			m_eventHandler.trigger(EVENT_KEYFOCUS, 0, 0);
+		}
+		else if(event.type == sf::Event::LostFocus)
+		{
+			releaseKeys();
+			m_eventHandler.trigger(EVENT_KEYBLUR, 0, 0);
+		}
+		else if(event.type == sf::Event::Resized)
+		{
+			m_eventHandler.trigger(EVENT_VIDEORESIZE, event.size.width, event.size.height);
+		}
+		else if(event.type == sf::Event::Closed)
+		{
+			m_windowClosed = true;
+			m_eventHandler.trigger(EVENT_QUIT, 0, 0);
 
-			case sf::Event::MouseButtonPressed:
-				switch (event.mouseButton.button)
-				{
-					case sf::Mouse::Left:
-						m_mouse.press.left = true;
-						m_mouse.held.left = true;
-						m_mouse.x = event.mouseButton.x;
-						m_mouse.y = event.mouseButton.y;
-						break;
-
-					case sf::Mouse::Middle:
-						m_mouse.press.middle = true;
-						m_mouse.held.middle = true;
-						m_mouse.x = event.mouseButton.x;
-						m_mouse.y = event.mouseButton.y;
-						break;
-
-					case sf::Mouse::Right:
-						m_mouse.press.right = true;
-						m_mouse.held.right = true;
-						m_mouse.x = event.mouseButton.x;
-						m_mouse.y = event.mouseButton.y;
-						break;
-
-					default:
-						break;
-				}
-
-				m_eventHandler.trigger(EVENT_MOUSEDOWN, 0, 0);
-				break;
-
-			case sf::Event::MouseButtonReleased:
-				switch (event.mouseButton.button)
-				{
-					case sf::Mouse::Left:
-						m_mouse.up.left = true;
-						m_mouse.held.left = false;
-						m_mouse.x = event.mouseButton.x;
-						m_mouse.y = event.mouseButton.y;
-						break;
-
-					case sf::Mouse::Middle:
-						m_mouse.up.middle = true;
-						m_mouse.held.middle = false;
-						m_mouse.x = event.mouseButton.x;
-						m_mouse.y = event.mouseButton.y;
-						break;
-
-					case sf::Mouse::Right:
-						m_mouse.up.right = true;
-						m_mouse.held.right = false;
-						m_mouse.x = event.mouseButton.x;
-						m_mouse.y = event.mouseButton.y;
-						break;
-
-					default:
-						break;
-				}
-
-				m_eventHandler.trigger(EVENT_MOUSEUP, 0, 0);
-				break;
-
-			case sf::Event::MouseWheelMoved:
-				if (event.mouseWheel.delta > 0)
-				{
-					m_mouse.press.wheelUp = true;
-					m_mouse.held.wheelUp = false;
-					m_mouse.up.wheelUp = false;
-				}
-				else
-				{
-					m_mouse.press.wheelDown = true;
-					m_mouse.held.wheelDown = false;
-					m_mouse.up.wheelDown = false;
-				}
-
-				m_eventHandler.trigger(EVENT_MOUSEWHEEL, 0, 0);
-
-				// Unset "KeyPress" of mouse wheel after the event because doesn't have a "KeyUp"
-				m_mouse.press.wheelUp = false;
-				m_mouse.press.wheelDown = false;
-				break;
-
-			case sf::Event::TextEntered:
-				m_eventHandler.trigger(EVENT_TEXTENTERED, event.text.unicode, 0);
-				break;
-
-			case sf::Event::Resized:
-				m_eventHandler.trigger(EVENT_VIDEORESIZE, event.size.width, event.size.height);
-				break;
-
-			case sf::Event::Closed:
-				m_windowClosed = true;
-				m_eventHandler.trigger(EVENT_QUIT, 0, 0);
-				return;
-				break;
-
-			default:
-				break;
+			return;
 		}
 	}
 
