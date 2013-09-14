@@ -229,27 +229,27 @@ void Snake::onEvent(const int eventType, const int param1, const int param2)
 		case EVENT_KEYDOWN:
 			switch (param1)
 			{
-				case KEY::Up:
+				case KeyId::Up:
 					m_snakeDirection = TopDirection;
 					break;
 
-				case KEY::Right:
+				case KeyId::Right:
 					m_snakeDirection = RightDirection;
 					break;
 
-				case KEY::Down:
+				case KeyId::Down:
 					m_snakeDirection = BottomDirection;
 					break;
 
-				case KEY::Left:
+				case KeyId::Left:
 					m_snakeDirection = LeftDirection;
 					break;
 
-				case KEY::Escape:
+				case KeyId::Escape:
 					stop();
 					break;
 
-				case KEY::F1:
+				case KeyId::F1:
 					reset();
 					break;
 			}

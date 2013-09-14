@@ -61,11 +61,11 @@ void TechDemo::onEvent(const int eventType, const int param1, const int param2)
 		case EVENT_KEYDOWN:
 			switch (param1)
 			{
-				case KEY::Escape:
+				case KeyId::Escape:
 					stop();
 					break;
 
-				case KEY::F1:
+				case KeyId::F1:
 					reset();
 					break;
 			}

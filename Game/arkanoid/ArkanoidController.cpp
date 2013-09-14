@@ -218,7 +218,7 @@ void Arkanoid::onEvent(const int eventType, const int param1, const int param2)
 		case EVENT_KEYDOWN:
 			switch (param1)
 			{
-				case KEY::F2:
+				case KeyId::F2:
 					if(m_sound.getVolume() > 0)
 					{
 						m_sound.setVolume(0);
@@ -228,11 +228,11 @@ void Arkanoid::onEvent(const int eventType, const int param1, const int param2)
 						m_sound.setVolume(100);
 					}
 					break;
-				case KEY::Escape:
+				case KeyId::Escape:
 					stop();
 					break;
 
-				case KEY::F1:
+				case KeyId::F1:
 					reset();
 					break;
 			}

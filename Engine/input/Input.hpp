@@ -18,16 +18,23 @@ class Input
 		void releaseKeys();
 		void releaseMouse();
 		bool isWindowClosed();
-		KeyInfo* getKeyPress();
-		KeyInfo* getKeyHeld();
-		KeyInfo* getKeyUp();
-		MouseInfo* getMouse();
+		KeyInfoPtr getKeyPress();
+		KeyInfoPtr getKeyHeld();
+		KeyInfoPtr getKeyUp();
+		bool isKeyPress(KeyId key);
+		bool isKeyHeld(KeyId key);
+		bool isKeyUp(KeyId key);
+		MouseInfoPtr getMouse();
+		MouseKeyPtr getMousePress();
+		MouseKeyPtr getMouseHeld();
+		MouseKeyPtr getMouseUp();
 		sf::Vector2i getMousePos();
+		sf::Vector2i getMousePosRel();
 
 		EventManager3<void, int, int, int> m_eventHandler;
 
 	protected:
-		Key* getKey(const KeyInfo* keyStruct, unsigned int numberId);
+		KeyPtr getKey(KeyInfoPtr keyStruct, unsigned int numberId);
 
 		bool m_windowClosed;
 		KeyInfo m_keyPress;

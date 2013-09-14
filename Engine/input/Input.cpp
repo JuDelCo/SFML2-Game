@@ -32,8 +32,8 @@ void Input::onTick(sf::RenderWindow* window)
 	m_mouse.up.wheelUp = false;
 	m_mouse.up.wheelDown = false;
 
-	memcpy(&m_keyPress, &KEY::KEY_CONFIG, sizeof(KeyInfo));
-	memcpy(&m_keyUp, &KEY::KEY_CONFIG, sizeof(KeyInfo));
+	memcpy(&m_keyPress, &KEY_CONFIG, sizeof(KeyInfo));
+	memcpy(&m_keyUp, &KEY_CONFIG, sizeof(KeyInfo));
 
 	pollEvents(window);
 }
@@ -48,9 +48,9 @@ void Input::releaseAll()
 
 void Input::releaseKeys()
 {
-	memcpy(&m_keyPress, &KEY::KEY_CONFIG, sizeof(KeyInfo));
-	memcpy(&m_keyHeld, &KEY::KEY_CONFIG, sizeof(KeyInfo));
-	memcpy(&m_keyUp, &KEY::KEY_CONFIG, sizeof(KeyInfo));
+	memcpy(&m_keyPress, &KEY_CONFIG, sizeof(KeyInfo));
+	memcpy(&m_keyHeld, &KEY_CONFIG, sizeof(KeyInfo));
+	memcpy(&m_keyUp, &KEY_CONFIG, sizeof(KeyInfo));
 }
 
 
@@ -76,9 +76,9 @@ void Input::releaseMouse()
 }
 
 
-Key* Input::getKey(const KeyInfo* keyStruct, unsigned int numberId)
+KeyPtr Input::getKey(KeyInfoPtr keyStruct, unsigned int numberId)
 {
-	return (((Key*)keyStruct) + numberId);
+	return KeyPtr(((Key*)(&*keyStruct)) + numberId);
 }
 
 
@@ -88,33 +88,75 @@ bool Input::isWindowClosed()
 }
 
 
-KeyInfo* Input::getKeyPress()
+KeyInfoPtr Input::getKeyPress()
 {
-	return &m_keyPress;
+	return KeyInfoPtr(&m_keyPress);
 }
 
 
-KeyInfo* Input::getKeyHeld()
+KeyInfoPtr Input::getKeyHeld()
 {
-	return &m_keyHeld;
+	return KeyInfoPtr(&m_keyHeld);
 }
 
 
-KeyInfo* Input::getKeyUp()
+KeyInfoPtr Input::getKeyUp()
 {
-	return &m_keyUp;
+	return KeyInfoPtr(&m_keyUp);
 }
 
 
-MouseInfo* Input::getMouse()
+bool Input::isKeyPress(KeyId key)
 {
-	return &m_mouse;
+	return getKey(getKeyPress(), key)->value;
+}
+
+
+bool Input::isKeyHeld(KeyId key)
+{
+	return getKey(getKeyHeld(), key)->value;
+}
+
+
+bool Input::isKeyUp(KeyId key)
+{
+	return getKey(getKeyUp(), key)->value;
+}
+
+
+MouseInfoPtr Input::getMouse()
+{
+	return MouseInfoPtr(&m_mouse);
+}
+
+
+MouseKeyPtr Input::getMousePress()
+{
+	return MouseKeyPtr(&m_mouse.press);
+}
+
+
+MouseKeyPtr Input::getMouseHeld()
+{
+	return MouseKeyPtr(&m_mouse.held);
+}
+
+
+MouseKeyPtr Input::getMouseUp()
+{
+	return MouseKeyPtr(&m_mouse.up);
 }
 
 
 sf::Vector2i Input::getMousePos()
 {
 	return sf::Vector2i(m_mouse.x, m_mouse.y);
+}
+
+
+sf::Vector2i Input::getMousePosRel()
+{
+	return sf::Vector2i(m_mouse.xRel, m_mouse.yRel);
 }
 
 
@@ -138,8 +180,8 @@ void Input::pollEvents(sf::RenderWindow* window)
 			case sf::Event::KeyPressed:
 				for (unsigned int x = 0; x < NUMBER_OF_KEYS; ++x)
 				{
-					Key* keyDown = getKey(&m_keyPress, x);
-					Key* keyHeld = getKey(&m_keyHeld, x);
+					KeyPtr keyDown = getKey(getKeyPress(), x);
+					KeyPtr keyHeld = getKey(getKeyHeld(), x);
 
 					if (keyDown->sdlKey == event.key.code)
 					{
@@ -155,8 +197,8 @@ void Input::pollEvents(sf::RenderWindow* window)
 			case sf::Event::KeyReleased:
 				for (unsigned int x = 0; x < NUMBER_OF_KEYS; ++x)
 				{
-					Key* keyUp = getKey(&m_keyUp, x);
-					Key* keyHeld = getKey(&m_keyHeld, x);
+					KeyPtr keyUp = getKey(getKeyUp(), x);
+					KeyPtr keyHeld = getKey(getKeyHeld(), x);
 
 					if (keyUp->sdlKey == event.key.code)
 					{
@@ -254,21 +296,19 @@ void Input::pollEvents(sf::RenderWindow* window)
 					m_mouse.press.wheelUp = true;
 					m_mouse.held.wheelUp = false;
 					m_mouse.up.wheelUp = false;
-					m_mouse.x = event.mouseWheel.x; // ???
-					m_mouse.y = event.mouseWheel.y; // ???
 				}
 				else
 				{
 					m_mouse.press.wheelDown = true;
 					m_mouse.held.wheelDown = false;
 					m_mouse.up.wheelDown = false;
-					m_mouse.x = event.mouseWheel.x; // ???
-					m_mouse.y = event.mouseWheel.y; // ???
 				}
 
 				m_eventHandler.trigger(EVENT_MOUSEWHEEL, 0, 0);
-				m_mouse.press.wheelUp = false; // ?
-				m_mouse.press.wheelDown = false; // ?
+
+				// Unset "KeyPress" of mouse wheel after the event because doesn't have a "KeyUp"
+				m_mouse.press.wheelUp = false;
+				m_mouse.press.wheelDown = false;
 				break;
 
 			case sf::Event::TextEntered:
