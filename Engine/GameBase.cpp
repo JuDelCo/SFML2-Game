@@ -83,9 +83,9 @@ void GameBase::loop()
 	{
 		m_msLastFrame = m_fpsTimer->getTicks();
 
-		if (m_msLastFrame > 1000.0f / FPS_LIMIT)
+		if (m_msLastFrame > 1000.0f / m_video->getFpsLimit())
 		{
-			m_msLastFrame = (int)(1000.0f / FPS_LIMIT);
+			m_msLastFrame = (int)(1000.0f / m_video->getFpsLimit());
 		}
 
 		m_fpsTimer->start();
@@ -118,7 +118,7 @@ void GameBase::loop()
 void GameBase::systemInit()
 {
 	m_fpsCounter = 0;
-	m_fps = FPS_LIMIT;
+	m_fps = m_video->getFpsLimit();
 	m_msLastFrame = 0;
 
 	init();

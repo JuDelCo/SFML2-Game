@@ -15,6 +15,8 @@ class Video
 		sf::Vector2u getSize();
 		sf::RenderWindow* getWindow();
 		sf::Vector2i getCameraPosition();
+		float getFpsLimit();
+		void setFpsLimit(float fpsLimit);
 		void setCameraPosition(sf::Vector2i position);
 		void moveCameraPosition(sf::Vector2i offset);
 		void viewReset(sf::FloatRect rect);
@@ -27,6 +29,7 @@ class Video
 	protected:
 		sf::RenderWindow m_window;
 		sf::Vector2i m_cameraPosition;
+		float m_fpsLimit;
 
 	private:
 		void init(unsigned int sizeX, unsigned int sizeY);

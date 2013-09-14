@@ -3,11 +3,6 @@
 #define DEFINES_HPP
 
 
-#define FPS_LIMIT			(60)
-#define PIX_METTER			(16.0f)
-#define RADEGREES			(57.2957795f)
-
-
 #define LOG_ALL             (0)
 #define LOG_FILE            (1)
 #define LOG_CONSOLE         (2)

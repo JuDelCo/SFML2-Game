@@ -5,6 +5,8 @@
 Video::Video(unsigned int sizeX, unsigned int sizeY)
 {
 	init(sizeX, sizeY);
+
+	m_fpsLimit = 60.0;
 }
 
 
@@ -40,7 +42,7 @@ void Video::initWindow(unsigned int sizeX, unsigned int sizeY)
 {
 	m_window.create(sf::VideoMode(sizeX, sizeY), "Demo", sf::Style::Titlebar | sf::Style::Close);
 
-	m_window.setFramerateLimit(FPS_LIMIT);
+	m_window.setFramerateLimit(m_fpsLimit);
 	//m_window.setVerticalSyncEnabled(true);
 
 	if (!m_window.isOpen())
@@ -123,6 +125,21 @@ sf::RenderWindow* Video::getWindow()
 sf::Vector2i Video::getCameraPosition()
 {
 	return m_cameraPosition;
+}
+
+
+float Video::getFpsLimit()
+{
+	return m_fpsLimit;
+}
+
+
+void Video::setFpsLimit(float fpsLimit)
+{
+	if(fpsLimit > 0)
+	{
+		m_fpsLimit = fpsLimit;
+	}
 }
 
 
