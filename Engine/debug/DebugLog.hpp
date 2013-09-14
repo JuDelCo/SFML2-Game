@@ -4,12 +4,8 @@
 
 
 #include <fstream>
+#include <vector>
 #include <string>
-#define MAX_LOG_STRINGS 256
-
-
-const int LOG_FILE = 1;
-const int LOG_CONSOLE = 2;
 
 
 class Debug
@@ -18,12 +14,14 @@ class Debug
 		Debug();
 		~Debug();
 
-		bool loadStrings();
+		bool openFile(std::string fileName);
+		void closeFile();
+		bool loadStrings(std::string fileName);
 		void write(int target, const char* message, ...);
-		void write(int target, unsigned long messageId, ...);
+		bool write(int target, unsigned long messageId, ...);
 
 	private:
-		std::string m_logStrings[MAX_LOG_STRINGS];
+		std::vector<std::string> m_logStrings;
 		std::ofstream m_logger;
 };
 

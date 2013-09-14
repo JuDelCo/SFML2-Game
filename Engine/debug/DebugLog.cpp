@@ -1,4 +1,5 @@
 #include "DebugLog.hpp"
+#include "../Defines.hpp"
 #include <iostream>
 #include <fstream>
 #include <stdarg.h>
@@ -6,13 +7,64 @@
 
 Debug::Debug()
 {
-	m_logger.open("log.txt", std::ios_base::trunc);
+	m_logStrings.clear();
 }
 
 
 Debug::~Debug()
 {
-	m_logger.close();
+	closeFile();
+}
+
+
+bool Debug::openFile(std::string fileName)
+{
+	closeFile();
+
+	try
+	{
+		m_logger.open(fileName, std::ios_base::trunc);
+	}
+	catch (std::ifstream::failure e)
+	{
+		return false;
+	}
+
+	if(m_logger.is_open())
+	{
+		return true;
+	}
+
+	return false;
+}
+
+
+void Debug::closeFile()
+{
+	if(m_logger.is_open())
+	{
+		m_logger.close();
+	}
+}
+
+
+bool Debug::loadStrings(std::string fileName)
+{
+	std::ifstream fileInput(fileName);
+
+	if (!fileInput.is_open())
+	{
+		return false;
+	}
+
+	std::string stringLine;
+
+	while(getline(fileInput, stringLine))
+	{
+		m_logStrings.push_back(std::string(stringLine));
+	}
+
+	return true;
 }
 
 
@@ -23,13 +75,13 @@ void Debug::write(int target, const char* message, ...)
 	char buffer[1024];
 	vsprintf(buffer, message, args);
 
-	if (target & LOG_FILE)
+	if (target == LOG_FILE || target == LOG_ALL)
 	{
 		m_logger << buffer << "\n";
 		m_logger.flush();
 	}
 
-	if (target & LOG_CONSOLE)
+	if (target == LOG_CONSOLE || target == LOG_ALL)
 	{
 		std::cout << message << std::endl;
 	}
@@ -38,8 +90,13 @@ void Debug::write(int target, const char* message, ...)
 }
 
 
-void Debug::write(int target, unsigned long messageId, ...)
+bool Debug::write(int target, unsigned long messageId, ...)
 {
+	if(m_logStrings.empty() || m_logStrings.size() <= messageId)
+	{
+		return false;
+	}
+
 	va_list args;
 	va_start(args, messageId);
 	char buffer[1024];
@@ -48,26 +105,6 @@ void Debug::write(int target, unsigned long messageId, ...)
 	write(target, buffer);
 
 	va_end(args);
-}
-
-
-bool Debug::loadStrings()
-{
-	std::ifstream in("strings.txt");
-
-	if (!in.is_open())
-	{
-		return false;
-	}
-
-	unsigned long index = 0;
-
-	while (!in.eof())
-	{
-		char buffer[1024];
-		in.getline(buffer, 1024);
-		m_logStrings[index++] = buffer;
-	}
 
 	return true;
 }
