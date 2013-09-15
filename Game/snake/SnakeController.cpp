@@ -23,9 +23,9 @@ Snake::Snake()
 	{
 		for(int x = 0; x < 38; ++x)
 		{
-			m_cellSprite.push_back(sf::Sprite(m_squareTexture));
+			m_cellSprite.emplace_back(sf::Sprite(m_squareTexture));
 			m_cellSprite[x+(y*38)].setPosition((x*16) + 16,(y*16) + 16);
-			m_cellState.push_back(CellStatus());
+			m_cellState.emplace_back(CellStatus());
 		}
 	}
 

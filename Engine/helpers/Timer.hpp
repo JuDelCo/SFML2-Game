@@ -19,6 +19,7 @@ class Timer
 		Timer();
 		~Timer() {};
 		void start();
+		void reset();
 		void pause();
 		void resume();
 		void stop();

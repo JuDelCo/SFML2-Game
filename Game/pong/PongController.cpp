@@ -110,7 +110,7 @@ void Pong::onTick()
 
 	if(m_ballPosition.x < 5)
 	{
-		m_cpuScore++;
+		++m_cpuScore;
 		m_ballVelocity = sf::Vector2f(4, 0);
 		m_playerPosition = sf::Vector2f(10, m_screenSize.y / 2 - m_playerSize.y / 2);
 		m_cpuPosition = sf::Vector2f(620, m_screenSize.y / 2 - m_cpuSize.y / 2);
@@ -119,7 +119,7 @@ void Pong::onTick()
 
 	if(m_ballPosition.x > m_screenSize.x - 5)
 	{
-		m_playerScore++;
+		++m_playerScore;
 		m_ballVelocity = sf::Vector2f(-4, 0);
 		m_playerPosition = sf::Vector2f(10, m_screenSize.y / 2 - m_playerSize.y / 2);
 		m_cpuPosition = sf::Vector2f(620, m_screenSize.y / 2 - m_cpuSize.y / 2);

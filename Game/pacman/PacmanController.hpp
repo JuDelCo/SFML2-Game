@@ -80,7 +80,7 @@ class Pacman : public GameBase
 			unsigned int Index;
 			Node* ParentNode;
 			unsigned int Range; // ( xAxis + yAxis )
-			unsigned int Cost; 	// (*ParentNode.Cost++)
+			unsigned int Cost; 	// (*ParentNode.Cost+1)
 
 			Node()
 			{

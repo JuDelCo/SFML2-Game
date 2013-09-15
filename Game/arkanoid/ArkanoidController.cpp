@@ -18,7 +18,7 @@ Arkanoid::Arkanoid()
 	{
 		for(int x = 0; x < 9; ++x)
 		{
-			m_blockStack.push_back(BlockInfo());
+			m_blockStack.emplace_back(BlockInfo());
 		}
 	}
 

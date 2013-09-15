@@ -18,9 +18,7 @@ class GameBase
 		void start();
 		void stop();
 		unsigned int getTimeRunning();
-		unsigned int getTickCount();
 		unsigned int getFps();
-		unsigned int getMsLastFrame();
 
 	protected:
 		InputPtr m_input;
@@ -41,12 +39,11 @@ class GameBase
 		EventListener3<GameBase, void, int, int, int> m_eventListener;
 		bool m_run;
 		unsigned int m_fpsCounter;
+		unsigned int m_msFrameDuration;
 		Timer m_fpsTimer;
 		Timer m_updateTimer;
 		Timer m_runningTimer;
-		unsigned int m_tickCount;
 		unsigned int m_fps;
-		unsigned int m_msLastFrame;
 };
 
 

@@ -40,21 +40,9 @@ unsigned int GameBase::getTimeRunning()
 }
 
 
-unsigned int GameBase::getTickCount()
-{
-	return m_tickCount;
-}
-
-
 unsigned int GameBase::getFps()
 {
 	return m_fps;
-}
-
-
-unsigned int GameBase::getMsLastFrame()
-{
-	return m_msLastFrame;
 }
 
 
@@ -70,19 +58,10 @@ void GameBase::loop()
 
 	while (m_run)
 	{
-		m_msLastFrame = m_fpsTimer.getTicks();
-
-		if (m_msLastFrame > 1000.0f / m_video->getFpsLimit())
-		{
-			m_msLastFrame = (int)(1000.0f / m_video->getFpsLimit());
-		}
-
 		m_fpsTimer.start();
 
 		m_input->onTick(m_video->getWindow());
 		onTick();
-		++m_tickCount;
-
 		onRender();
 
 		if (m_updateTimer.getTicks() >= 1000)
@@ -94,9 +73,11 @@ void GameBase::loop()
 
 		++m_fpsCounter;
 
-		if (m_fpsTimer.getTicks() < 17)  //59fps
+		m_msFrameDuration = ceil(1000.0 / m_video->getFpsLimit());
+
+		if (m_fpsTimer.getTicks() < m_msFrameDuration)
 		{
-			delayMs(17 - m_fpsTimer.getTicks());
+			delayMs(m_msFrameDuration - m_fpsTimer.getTicks());
 		}
 	}
 
@@ -108,7 +89,6 @@ void GameBase::systemInit()
 {
 	m_fpsCounter = 0;
 	m_fps = m_video->getFpsLimit();
-	m_msLastFrame = 0;
 
 	init();
 

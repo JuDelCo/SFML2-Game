@@ -98,7 +98,7 @@ Tetris::Tetris()
 	{
 		for(int x = 0; x < m_blockStackSize.x; ++x)
 		{
-			m_blockStack.push_back(BlockInfo());
+			m_blockStack.emplace_back(BlockInfo());
 		}
 	}
 
@@ -106,7 +106,7 @@ Tetris::Tetris()
 	{
 		for(int x = 0; x < m_blockPlayerStackSize.x; ++x)
 		{
-			m_blockPlayerStack.push_back(BlockInfo());
+			m_blockPlayerStack.emplace_back(BlockInfo());
 		}
 	}
 

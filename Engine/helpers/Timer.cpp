@@ -9,24 +9,38 @@ Timer::Timer()
 {
 	m_clock = ClockPtr(new sf::Clock());
 
+	m_started = false;
+	m_paused = false;
+
 	m_startTicks = 0;
 	m_pausedTicks = 0;
-	m_paused = false;
-	m_started = false;
 }
 
 
 void Timer::start()
 {
-	m_started = true;
-	m_paused = false;
-	m_startTicks = m_clock->getElapsedTimeMs();
+	if (!isStarted())
+	{
+		m_started = true;
+		m_paused = false;
+	}
+
+	reset();
+}
+
+
+void Timer::reset()
+{
+	if(isStarted())
+	{
+		m_startTicks = m_clock->getElapsedTimeMs() - m_pausedTicks;
+	}
 }
 
 
 void Timer::pause()
 {
-	if ((m_started == true) && (m_paused == false))
+	if (isStarted() && !isPaused())
 	{
 		m_paused = true;
 		m_pausedTicks = m_clock->getElapsedTimeMs() - m_startTicks;
@@ -36,27 +50,30 @@ void Timer::pause()
 
 void Timer::resume()
 {
-	if (m_paused == true)
+	if (isPaused())
 	{
 		m_paused = false;
-		m_startTicks = m_clock->getElapsedTimeMs() - m_pausedTicks;
-		m_pausedTicks = 0;
+
+		reset();
 	}
 }
 
 
 void Timer::stop()
 {
-	m_started = false;
-	m_paused = false;
+	if(isStarted())
+	{
+		m_started = false;
+		m_paused = false;
+	}
 }
 
 
 unsigned int Timer::getTicks()
 {
-	if (m_started == true)
+	if (isStarted())
 	{
-		if (m_paused == true)
+		if (isPaused())
 		{
 			return m_pausedTicks;
 		}

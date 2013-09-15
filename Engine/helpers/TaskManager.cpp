@@ -12,7 +12,7 @@ bool ITaskManager::addTask(taskPtr& task)
 
 	auto it = m_taskList.begin();
 
-	for (; it != m_taskList.end(); it++)
+	for (; it != m_taskList.end(); ++it)
 	{
 		taskPtr& comp = (*it);
 
@@ -59,7 +59,7 @@ void ITaskManager::suspendTask(taskPtr& task)
 	{
 		task->onSuspend();
 		m_taskList.remove(task);
-		m_pausedTaskList.push_back(task);
+		m_pausedTaskList.emplace_back(task);
 	}
 }
 
@@ -73,7 +73,7 @@ void ITaskManager::resumeTask(taskPtr& task)
 
 		auto it = m_taskList.begin();
 
-		for (; it != m_taskList.end(); it++)
+		for (; it != m_taskList.end(); ++it)
 		{
 			taskPtr& comp = (*it);
 

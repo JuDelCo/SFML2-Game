@@ -156,7 +156,7 @@ void Pacman::onTick()
 	{
 		if(m_player.Moving)
 		{
-			m_player.CurrentFrame++;
+			++m_player.CurrentFrame;
 
 			if(m_player.CurrentFrame > 3)
 			{
@@ -170,7 +170,7 @@ void Pacman::onTick()
 
 		for(unsigned int x = 0; x < m_ghostCount; ++x)
 		{
-			m_ghost[x].CurrentFrame++;
+			++m_ghost[x].CurrentFrame;
 
 			if(m_ghost[x].CurrentFrame > 1)
 			{
@@ -349,7 +349,7 @@ void Pacman::onTick()
 
 					if(tempIndex != ignoreCell && m_mapInfo[tempIndex] != CellType::Wall)
 					{
-						possibleCells.push_back(tempIndex);
+						possibleCells.emplace_back(tempIndex);
 					}
 				}
 
@@ -359,7 +359,7 @@ void Pacman::onTick()
 
 					if(tempIndex != ignoreCell && m_mapInfo[tempIndex] != CellType::Wall)
 					{
-						possibleCells.push_back(tempIndex);
+						possibleCells.emplace_back(tempIndex);
 					}
 				}
 
@@ -369,7 +369,7 @@ void Pacman::onTick()
 
 					if(tempIndex != ignoreCell && m_mapInfo[tempIndex] != CellType::Wall)
 					{
-						possibleCells.push_back(tempIndex);
+						possibleCells.emplace_back(tempIndex);
 					}
 				}
 
@@ -379,7 +379,7 @@ void Pacman::onTick()
 
 					if(tempIndex != ignoreCell && m_mapInfo[tempIndex] != CellType::Wall)
 					{
-						possibleCells.push_back(tempIndex);
+						possibleCells.emplace_back(tempIndex);
 					}
 				}
 
@@ -669,11 +669,11 @@ void Pacman::resetGame()
 
 			if(m_mapInfo[index] == CellType::Ball)
 			{
-				m_ballPosition.push_back(sf::Vector2i(x, y));
+				m_ballPosition.emplace_back(sf::Vector2i(x, y));
 			}
 			else if(m_mapInfo[index] == CellType::BallBig)
 			{
-				m_ballBigPosition.push_back(sf::Vector2i(x, y));
+				m_ballBigPosition.emplace_back(sf::Vector2i(x, y));
 			}
 			else if(m_mapInfo[index] == CellType::GhostStartPosition)
 			{
@@ -1051,14 +1051,14 @@ Pacman::ViewDirection Pacman::getNextDirection(unsigned int startIndex, unsigned
 	std::list<Node> ClosedNodeList;
 
 	// Guardamos en la lista de Nodos Abiertos el Nodo correspondiente a startIndex
-	OpenNodeList.push_back(Node());
+	OpenNodeList.emplace_back(Node());
 	OpenNodeList.back().Index = startIndex;
 	OpenNodeList.back().Range = abs((startIndex % m_mapSize.x) - (searchIndex % m_mapSize.x)) + abs(floor(startIndex / m_mapSize.y) - floor(searchIndex / m_mapSize.y));
 
 	if(ignoreCell == m_mapNullCell)
 	{
 		// Guardamos en la lista de Nodos Cerrados el Nodo correspondiente a la casilla a ignorar
-		ClosedNodeList.push_back(Node());
+		ClosedNodeList.emplace_back(Node());
 		ClosedNodeList.back().Index = ignoreCell;
 	}
 
@@ -1093,7 +1093,7 @@ Pacman::ViewDirection Pacman::getNextDirection(unsigned int startIndex, unsigned
 		{
 			if (openNodeIt->Index == preferentNode->Index)
 			{
-				ClosedNodeList.push_back(*preferentNode);
+				ClosedNodeList.emplace_back(*preferentNode);
 
 				// Actualizamos los punteros
 				for (Node openNode : OpenNodeList)
@@ -1117,19 +1117,19 @@ Pacman::ViewDirection Pacman::getNextDirection(unsigned int startIndex, unsigned
 		// Añadimos a nextIndex CADA UNA de las 4 direcciones si es posible su tránsito
 		if (!checkCollision(preferentNode->Index, ViewDirection::Left, false))
 		{
-			nextIndex.push_back(getMapIndex(preferentNode->Index, ViewDirection::Left));
+			nextIndex.emplace_back(getMapIndex(preferentNode->Index, ViewDirection::Left));
 		}
 		if (!checkCollision(preferentNode->Index, ViewDirection::Right, false))
 		{
-			nextIndex.push_back(getMapIndex(preferentNode->Index, ViewDirection::Right));
+			nextIndex.emplace_back(getMapIndex(preferentNode->Index, ViewDirection::Right));
 		}
 		if (!checkCollision(preferentNode->Index, ViewDirection::Up, false))
 		{
-			nextIndex.push_back(getMapIndex(preferentNode->Index, ViewDirection::Up));
+			nextIndex.emplace_back(getMapIndex(preferentNode->Index, ViewDirection::Up));
 		}
 		if (!checkCollision(preferentNode->Index, ViewDirection::Down, false))
 		{
-			nextIndex.push_back(getMapIndex(preferentNode->Index, ViewDirection::Down));
+			nextIndex.emplace_back(getMapIndex(preferentNode->Index, ViewDirection::Down));
 		}
 
 		if (!nextIndex.empty())
@@ -1173,7 +1173,7 @@ Pacman::ViewDirection Pacman::getNextDirection(unsigned int startIndex, unsigned
 				}
 
 				// Si NO existe en ninguna de las listas anteriores, añadimos el nodo a la lista de nodos abiertos
-				OpenNodeList.push_back(Node());
+				OpenNodeList.emplace_back(Node());
 				OpenNodeList.back().Index = Index;
 				OpenNodeList.back().ParentNode = previousNode;
 				OpenNodeList.back().Cost = (previousNode->Cost + 1);
@@ -1250,7 +1250,7 @@ Pacman::ViewDirection Pacman::getRandomDirection(unsigned int cellIndex, unsigne
 		{
 			if(ignoreDirection != ViewDirection::Right)
 			{
-				randomDirection.push_back(ViewDirection::Right);
+				randomDirection.emplace_back(ViewDirection::Right);
 			}
 		}
 
@@ -1258,7 +1258,7 @@ Pacman::ViewDirection Pacman::getRandomDirection(unsigned int cellIndex, unsigne
 		{
 			if(ignoreDirection != ViewDirection::Left)
 			{
-				randomDirection.push_back(ViewDirection::Left);
+				randomDirection.emplace_back(ViewDirection::Left);
 			}
 		}
 
@@ -1266,7 +1266,7 @@ Pacman::ViewDirection Pacman::getRandomDirection(unsigned int cellIndex, unsigne
 		{
 			if(ignoreDirection != ViewDirection::Up)
 			{
-				randomDirection.push_back(ViewDirection::Up);
+				randomDirection.emplace_back(ViewDirection::Up);
 			}
 		}
 
@@ -1274,7 +1274,7 @@ Pacman::ViewDirection Pacman::getRandomDirection(unsigned int cellIndex, unsigne
 		{
 			if(ignoreDirection != ViewDirection::Down)
 			{
-				randomDirection.push_back(ViewDirection::Down);
+				randomDirection.emplace_back(ViewDirection::Down);
 			}
 		}
 	}
@@ -1282,22 +1282,22 @@ Pacman::ViewDirection Pacman::getRandomDirection(unsigned int cellIndex, unsigne
 	{
 		if(getMapInfo(cellIndex, ViewDirection::Right) != CellType::Wall)
 		{
-			randomDirection.push_back(ViewDirection::Right);
+			randomDirection.emplace_back(ViewDirection::Right);
 		}
 
 		if(getMapInfo(cellIndex, ViewDirection::Left) != CellType::Wall)
 		{
-			randomDirection.push_back(ViewDirection::Left);
+			randomDirection.emplace_back(ViewDirection::Left);
 		}
 
 		if(getMapInfo(cellIndex, ViewDirection::Up) != CellType::Wall)
 		{
-			randomDirection.push_back(ViewDirection::Up);
+			randomDirection.emplace_back(ViewDirection::Up);
 		}
 
 		if(getMapInfo(cellIndex, ViewDirection::Down) != CellType::Wall)
 		{
-			randomDirection.push_back(ViewDirection::Down);
+			randomDirection.emplace_back(ViewDirection::Down);
 		}
 	}
 
