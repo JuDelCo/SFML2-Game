@@ -6,38 +6,25 @@
 #include "helpers/Timer.hpp"
 
 
-GameBase::GameBase(unsigned int sizeX, unsigned int sizeY) : m_eventListener(this, &GameBase::onEvent)
+GameBase::GameBase() : m_eventListener(this, &GameBase::onEvent)
 {
 	srand(time(NULL));
 
-	m_debug = new Debug();
-	m_video = new Video(sizeX, sizeY);
-	m_input = new Input();
+	m_debug = DebugPtr(new Debug());
+	m_video = VideoPtr(new Video());
+	m_input = InputPtr(new Input());
 	m_input->m_eventHandler.add(&m_eventListener);
-
-	m_runningTimer = new Timer();
-	m_fpsTimer = new Timer();
-	m_updateTimer = new Timer();
 
 	m_run = true;
 }
 
 
-GameBase::~GameBase()
-{
-	delete m_input;
-	delete m_video;
-	delete m_debug;
-
-	delete m_runningTimer;
-	delete m_fpsTimer;
-	delete m_updateTimer;
-}
-
-
 void GameBase::start()
 {
-	loop();
+	if(m_video->init())
+	{
+		loop();
+	}
 }
 
 
@@ -49,7 +36,7 @@ void GameBase::stop()
 
 unsigned int GameBase::getTimeRunning()
 {
-	return m_runningTimer->getTicks();
+	return m_runningTimer.getTicks();
 }
 
 
@@ -83,14 +70,14 @@ void GameBase::loop()
 
 	while (m_run)
 	{
-		m_msLastFrame = m_fpsTimer->getTicks();
+		m_msLastFrame = m_fpsTimer.getTicks();
 
 		if (m_msLastFrame > 1000.0f / m_video->getFpsLimit())
 		{
 			m_msLastFrame = (int)(1000.0f / m_video->getFpsLimit());
 		}
 
-		m_fpsTimer->start();
+		m_fpsTimer.start();
 
 		m_input->onTick(m_video->getWindow());
 		onTick();
@@ -98,18 +85,18 @@ void GameBase::loop()
 
 		onRender();
 
-		if (m_updateTimer->getTicks() >= 1000)
+		if (m_updateTimer.getTicks() >= 1000)
 		{
 			m_fps = m_fpsCounter;
 			m_fpsCounter = 0;
-			m_updateTimer->start();
+			m_updateTimer.start();
 		}
 
 		++m_fpsCounter;
 
-		if (m_fpsTimer->getTicks() < 17)  //59fps
+		if (m_fpsTimer.getTicks() < 17)  //59fps
 		{
-			delayMs(17 - m_fpsTimer->getTicks());
+			delayMs(17 - m_fpsTimer.getTicks());
 		}
 	}
 
@@ -125,8 +112,8 @@ void GameBase::systemInit()
 
 	init();
 
-	m_runningTimer->start();
-	m_updateTimer->start();
+	m_runningTimer.start();
+	m_updateTimer.start();
 }
 
 
@@ -134,7 +121,7 @@ void GameBase::systemEnd()
 {
 	end();
 
-	m_updateTimer->stop();
-	m_fpsTimer->stop();
-	m_runningTimer->stop();
+	m_updateTimer.stop();
+	m_fpsTimer.stop();
+	m_runningTimer.stop();
 }

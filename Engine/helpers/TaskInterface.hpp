@@ -6,8 +6,8 @@
 class ITask
 {
 	public:
-		ITask(unsigned int priority = 10000) : m_isFinished(false), m_priority(priority) {}
-		~ITask() {}
+		ITask(unsigned int priority = 10000) : m_isFinished(false), m_priority(priority) {};
+		~ITask() {};
 
 		virtual bool start() = 0;
 		virtual void update() = 0;

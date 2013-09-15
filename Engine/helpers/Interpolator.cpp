@@ -1,23 +1,11 @@
 #include "Interpolator.hpp"
-#include <algorithm>
-
-
-inline float clamp(float value, float minValue, float maxValue)
-{
-	return std::min(std::max(value, minValue), maxValue);
-}
+#include "Util.hpp"
 
 
 IInterpolator::IInterpolator()
 {
 	m_value = 0;
 	m_finished = false;
-}
-
-
-IInterpolator::~IInterpolator()
-{
-
 }
 
 

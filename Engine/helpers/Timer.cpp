@@ -7,18 +7,12 @@
 
 Timer::Timer()
 {
-	m_clock = new sf::Clock();
+	m_clock = ClockPtr(new sf::Clock());
 
 	m_startTicks = 0;
 	m_pausedTicks = 0;
 	m_paused = false;
 	m_started = false;
-}
-
-
-Timer::~Timer()
-{
-	delete m_clock;
 }
 
 

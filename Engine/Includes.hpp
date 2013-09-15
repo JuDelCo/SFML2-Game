@@ -15,6 +15,7 @@
 #include "helpers/Motion.hpp"
 #include "helpers/Interpolator.hpp"
 #include "helpers/TaskManager.hpp"
+#include "helpers/Util.hpp"
 
 
 #endif // INCLUDES_HPP

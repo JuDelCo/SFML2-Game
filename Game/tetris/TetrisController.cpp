@@ -72,7 +72,7 @@ int Tetris::blockInfo[10][4*4] =
 };
 
 
-Tetris::Tetris() : GameBase(640, 480)
+Tetris::Tetris()
 {
 	if (!m_scoreFont.loadFromFile("resources/arial.ttf"))
 	{
@@ -111,6 +111,8 @@ Tetris::Tetris() : GameBase(640, 480)
 	}
 
 	m_hardMode = false;
+
+	m_video->changeTitle("Tetris");
 
 	reset();
 }

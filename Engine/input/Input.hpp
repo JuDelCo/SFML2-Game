@@ -7,13 +7,15 @@
 #include "InputData.hpp"
 #include "../helpers/Event.hpp"
 
+typedef std::shared_ptr<sf::RenderWindow> RenderWindowPtr;
+
 
 class Input
 {
 	public:
 		Input();
-		~Input();
-		void onTick(sf::RenderWindow* window);
+		~Input() {};
+		void onTick(RenderWindowPtr window);
 		void releaseAll();
 		void releaseKeys();
 		void releaseMouse();
@@ -43,8 +45,11 @@ class Input
 		MouseInfo m_mouse;
 
 	private:
-		void pollEvents(sf::RenderWindow* window);
+		void pollEvents(RenderWindowPtr window);
 };
+
+
+typedef std::shared_ptr<Input> InputPtr;
 
 
 #endif // INPUT_HPP

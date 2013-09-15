@@ -2,123 +2,79 @@
 #include "../Defines.hpp"
 
 
-Video::Video(unsigned int sizeX, unsigned int sizeY)
+Video::Video()
 {
-	init(sizeX, sizeY);
-
+	m_resolution = sf::Vector2u(640, 480);
+	m_title = "Demo";
 	m_fpsLimit = 60.0;
+
+	m_window = RenderWindowPtr(new sf::RenderWindow());
 }
 
 
 Video::~Video()
 {
-	end();
+	endWindow();
 }
 
 
-void Video::init(unsigned int sizeX, unsigned int sizeY)
+bool Video::init()
 {
-	initWindow(sizeX, sizeY);
-
-	/*glEnable(GL_TEXTURE_2D);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); //Normal blending
-
-	glClearColor(0, 0, 0, 0);
-
-	glMatrixMode(GL_TEXTURE);
-	glLoadIdentity();
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();*/
-
-	m_window.setKeyRepeatEnabled(false);
-	m_window.clear();
-}
-
-
-void Video::initWindow(unsigned int sizeX, unsigned int sizeY)
-{
-	m_window.create(sf::VideoMode(sizeX, sizeY), "Demo", sf::Style::Titlebar | sf::Style::Close);
-
-	m_window.setFramerateLimit(m_fpsLimit);
-	//m_window.setVerticalSyncEnabled(true);
-
-	if (!m_window.isOpen())
+	if(!m_window->isOpen())
 	{
-		//DEBUG.error(__LINE__, "Error at Init Window");
-		exit(ERROR_INIT);
+		initWindow();
+
+		m_window->setKeyRepeatEnabled(false);
+		m_window->clear();
+
+		if(m_window->isOpen())
+		{
+			return true;
+		}
 	}
 
-	//this->debugDraw.LinkTarget(m_window);
+	return false;
 }
 
 
-void Video::end()
+void Video::initWindow()
 {
-	m_window.close();
+	m_window->create(sf::VideoMode(m_resolution.x, m_resolution.y), m_title, sf::Style::Titlebar | sf::Style::Close);
+
+	m_window->setFramerateLimit(m_fpsLimit);
+	m_window->setVerticalSyncEnabled(true);
+
+	if (!m_window->isOpen())
+	{
+		exit(ERROR_INIT);
+	}
+}
+
+
+void Video::endWindow()
+{
+	if(m_window->isOpen())
+	{
+		m_window->close();
+	}
 }
 
 
 void Video::swapBuffers()
 {
-	m_window.display();
+	m_window->display();
 }
-
-
-/*void Video::setZBuffer(bool set)
-{
-	if (set)
-	{
-		glEnable(GL_DEPTH_TEST);
-	}
-	else
-	{
-		glDisable(GL_DEPTH_TEST);
-	}
-}*/
-
-
-/*void Video::setRender2D()
-{
-	glClear(GL_DEPTH_BUFFER_BIT);
-	glDisable(GL_CULL_FACE);
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0, 640, 480, 0, -1000.0, 1000.0);
-	//glOrtho(0, GAME_SCREEN_X, GAME_SCREEN_Y, 0, -1000.0, 1000.0);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-}*/
-
-
-/*void Video::setRender3D()
-{
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glEnable(GL_CULL_FACE);
-	glDepthFunc(GL_LESS);
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	//gluPerspective(45.0f, (GLfloat)GAME_SCREEN_X / (GLfloat)GAME_SCREEN_Y, 0.1f, 100.0f);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-}*/
 
 
 sf::Vector2u Video::getSize()
 {
-	return m_window.getSize();
+	return m_window->getSize();
 }
 
 
-sf::RenderWindow* Video::getWindow()
+RenderWindowPtr Video::getWindow()
 {
-	return &m_window;
+	return m_window;
 }
 
 
@@ -143,6 +99,28 @@ void Video::setFpsLimit(float fpsLimit)
 }
 
 
+void Video::changeTitle(std::string title)
+{
+	m_title = title;
+
+	if(m_window->isOpen())
+	{
+		m_window->setTitle(m_title);
+	}
+}
+
+
+void Video::changeResolution(sf::Vector2u resolution)
+{
+	m_resolution = resolution;
+
+	if(m_window->isOpen())
+	{
+		initWindow();
+	}
+}
+
+
 void Video::setCameraPosition(sf::Vector2i position)
 {
 	m_cameraPosition = position;
@@ -157,11 +135,11 @@ void Video::moveCameraPosition(sf::Vector2i offset)
 
 void Video::viewReset(sf::FloatRect rect)
 {
-	sf::View view = m_window.getView();
+	sf::View view = m_window->getView();
 
 	view.reset(rect);
 
-	m_window.setView(view);
+	m_window->setView(view);
 }
 
 
@@ -173,13 +151,13 @@ void Video::viewResetToCamera()
 
 void Video::clear(sf::Color color)
 {
-	m_window.clear(color);
+	m_window->clear(color);
 }
 
 
 void Video::draw(sf::Drawable& drawable)
 {
-	m_window.draw(drawable);
+	m_window->draw(drawable);
 }
 
 
@@ -190,7 +168,7 @@ void Video::drawPoint(const float positionX, const float positionY, const sf::Co
 	circleDrawPoint.setFillColor(color);
 	circleDrawPoint.setPosition(positionX, positionY);
 
-	m_window.draw(circleDrawPoint);
+	m_window->draw(circleDrawPoint);
 }
 
 
@@ -201,5 +179,5 @@ void Video::drawRectangle(const sf::Vector2f position, const sf::Vector2f size, 
 	rectangleDrawRectangle.setSize(sf::Vector2f(size.x, size.y));
 	rectangleDrawRectangle.setFillColor(color);
 
-	m_window.draw(rectangleDrawRectangle);
+	m_window->draw(rectangleDrawRectangle);
 }

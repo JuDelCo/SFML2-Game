@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 
-Pacman::Pacman() : GameBase(640, 480)
+Pacman::Pacman()
 {
 	bool errorLoading = false;
 
@@ -83,6 +83,8 @@ Pacman::Pacman() : GameBase(640, 480)
 			m_mapVertexArray[index + 3] = quad[3];
 		}
 	}
+
+	m_video->changeTitle("Pacman");
 
 	if(loadMap())
 	{

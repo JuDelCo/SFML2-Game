@@ -6,6 +6,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <memory>
 
 
 class Debug
@@ -17,13 +18,16 @@ class Debug
 		bool openFile(std::string fileName);
 		void closeFile();
 		bool loadStrings(std::string fileName);
-		void write(int target, const char* message, ...);
+		void write(int target, std::string message, ...);
 		bool write(int target, unsigned long messageId, ...);
 
 	private:
 		std::vector<std::string> m_logStrings;
 		std::ofstream m_logger;
 };
+
+
+typedef std::shared_ptr<Debug> DebugPtr;
 
 
 #endif // DEBUG_LOG_HPP

@@ -3,20 +3,18 @@
 #define GAME_BASE_HPP
 
 
-#include <memory>
 #include "helpers/Event.hpp"
-
-class Input;
-class Video;
-class Timer;
-class Debug;
+#include "helpers/Timer.hpp"
+#include "input/Input.hpp"
+#include "video/Video.hpp"
+#include "debug/DebugLog.hpp"
 
 
 class GameBase
 {
 	public:
-		GameBase(unsigned int sizeX = 1024, unsigned int sizeY = 768); // Por defecto
-		~GameBase();
+		GameBase();
+		~GameBase() {};
 		void start();
 		void stop();
 		unsigned int getTimeRunning();
@@ -25,9 +23,9 @@ class GameBase
 		unsigned int getMsLastFrame();
 
 	protected:
-		Input* m_input;
-		Video* m_video;
-		Debug* m_debug;
+		InputPtr m_input;
+		VideoPtr m_video;
+		DebugPtr m_debug;
 
 	private:
 		void delayMs(const unsigned int delayMs);
@@ -43,9 +41,9 @@ class GameBase
 		EventListener3<GameBase, void, int, int, int> m_eventListener;
 		bool m_run;
 		unsigned int m_fpsCounter;
-		Timer* m_fpsTimer;
-		Timer* m_updateTimer;
-		Timer* m_runningTimer;
+		Timer m_fpsTimer;
+		Timer m_updateTimer;
+		Timer m_runningTimer;
 		unsigned int m_tickCount;
 		unsigned int m_fps;
 		unsigned int m_msLastFrame;

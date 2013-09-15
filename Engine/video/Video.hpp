@@ -4,19 +4,25 @@
 
 
 #include <SFML/Graphics.hpp>
+#include <memory>
+
+typedef std::shared_ptr<sf::RenderWindow> RenderWindowPtr;
 
 
 class Video
 {
 	public:
-		Video(unsigned int sizeX, unsigned int sizeY);
+		Video();
 		~Video();
+		bool init();
 		void swapBuffers();
 		sf::Vector2u getSize();
-		sf::RenderWindow* getWindow();
+		RenderWindowPtr getWindow();
 		sf::Vector2i getCameraPosition();
 		float getFpsLimit();
 		void setFpsLimit(float fpsLimit);
+		void changeTitle(std::string title);
+		void changeResolution(sf::Vector2u resolution);
 		void setCameraPosition(sf::Vector2i position);
 		void moveCameraPosition(sf::Vector2i offset);
 		void viewReset(sf::FloatRect rect);
@@ -27,15 +33,19 @@ class Video
 		void drawRectangle(const sf::Vector2f position, const sf::Vector2f size, const sf::Color color);
 
 	protected:
-		sf::RenderWindow m_window;
+		sf::Vector2u m_resolution;
+		RenderWindowPtr m_window;
 		sf::Vector2i m_cameraPosition;
+		std::string m_title;
 		float m_fpsLimit;
 
 	private:
-		void init(unsigned int sizeX, unsigned int sizeY);
-		void initWindow(unsigned int sizeX, unsigned int sizeY);
-		void end();
+		void initWindow();
+		void endWindow();
 };
+
+
+typedef std::shared_ptr<Video> VideoPtr;
 
 
 #endif // VIDEO_HPP

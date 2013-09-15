@@ -14,9 +14,11 @@ int level[] =
 };
 
 
-TechDemo::TechDemo() : GameBase(1024, 768)
+TechDemo::TechDemo()
 {
 	m_tileMap = new TileMap("resources/tileset.png", sf::Vector2u(32, 32), level, 16, 8);
+
+	m_video->changeTitle("TechDemo");
 }
 
 

@@ -12,12 +12,7 @@ Input::Input()
 }
 
 
-Input::~Input()
-{
-}
-
-
-void Input::onTick(sf::RenderWindow* window)
+void Input::onTick(RenderWindowPtr window)
 {
 	m_mouse.xRel = 0;
 	m_mouse.yRel = 0;
@@ -160,7 +155,7 @@ sf::Vector2i Input::getMousePosRel()
 }
 
 
-void Input::pollEvents(sf::RenderWindow* window)
+void Input::pollEvents(RenderWindowPtr window)
 {
 	sf::Event event;
 

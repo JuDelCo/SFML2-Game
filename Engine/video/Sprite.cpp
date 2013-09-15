@@ -25,16 +25,10 @@ SpriteAnimated::SpriteAnimated(const std::string location, const int numFrames, 
 }
 
 
-SpriteAnimated::~SpriteAnimated()
-{
-}
-
-
 void SpriteAnimated::loadTexture(const std::string location, const int numFrames)
 {
 	if (!m_image.loadFromFile(location))
 	{
-		//m_debug->write(LOG_FILE, "Unable to load sprite from: %s", location.c_str());
 		exit(ERROR_SPRITELOAD);
 	}
 

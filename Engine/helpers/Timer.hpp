@@ -2,18 +2,22 @@
 #ifndef TIMER_HPP
 #define TIMER_HPP
 
+#include <memory>
+
 
 namespace sf
 {
 	class Clock;
 }
 
+typedef std::shared_ptr<sf::Clock> ClockPtr;
+
 
 class Timer
 {
 	public:
 		Timer();
-		~Timer();
+		~Timer() {};
 		void start();
 		void pause();
 		void resume();
@@ -23,7 +27,7 @@ class Timer
 		unsigned int getTicks();
 
 	private:
-		sf::Clock* m_clock;
+		ClockPtr m_clock;
 		unsigned int m_startTicks;
 		unsigned int m_pausedTicks;
 		bool m_paused;

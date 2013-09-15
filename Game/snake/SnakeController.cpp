@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 
-Snake::Snake() : GameBase(640, 480)
+Snake::Snake()
 {
 	if (!m_squareTexture.loadFromFile("resources/square_shiny.png"))
 	{
@@ -28,6 +28,8 @@ Snake::Snake() : GameBase(640, 480)
 			m_cellState.push_back(CellStatus());
 		}
 	}
+
+	m_video->changeTitle("Snake");
 
 	reset();
 }

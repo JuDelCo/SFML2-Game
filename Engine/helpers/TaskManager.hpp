@@ -7,14 +7,14 @@
 #include <list>
 #include "TaskInterface.hpp"
 
-#define taskPtr std::shared_ptr<ITask>
+typedef std::shared_ptr<ITask> taskPtr;
 
 
 class ITaskManager : public ITask
 {
 	public:
-		ITaskManager(unsigned int priority = 10000) : ITask(priority) {}
-		~ITaskManager() {}
+		ITaskManager(unsigned int priority = 10000) : ITask(priority) {};
+		~ITaskManager() {};
 
 		bool addTask(taskPtr& task);
 		void updateTaskList();

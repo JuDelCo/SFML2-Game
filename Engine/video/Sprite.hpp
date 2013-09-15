@@ -11,7 +11,7 @@ class SpriteAnimated : public sf::Sprite
 	public:
 		SpriteAnimated();
 		SpriteAnimated(const std::string location, const int numFrames, const int delay);
-		~SpriteAnimated();
+		~SpriteAnimated() {};
 		void loadTexture(const std::string location, const int numFrames);
 		void update(const int& msLastFrame);
 		void setCurrentFrame(const int currentFrame);

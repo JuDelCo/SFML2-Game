@@ -12,11 +12,6 @@ Motion::Motion(const float initialValue, const float maxVelocity, const float ac
 }
 
 
-Motion::~Motion()
-{
-}
-
-
 void Motion::newValue(const float newValue, const float timeStart)
 {
 	if (m_value != newValue)

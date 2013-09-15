@@ -68,12 +68,12 @@ bool Debug::loadStrings(std::string fileName)
 }
 
 
-void Debug::write(int target, const char* message, ...)
+void Debug::write(int target, std::string message, ...)
 {
 	va_list args;
 	va_start(args, message);
 	char buffer[1024];
-	vsprintf(buffer, message, args);
+	vsprintf(buffer, message.c_str(), args);
 
 	if (target == LOG_FILE || target == LOG_ALL)
 	{
