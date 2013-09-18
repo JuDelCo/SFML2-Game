@@ -9,14 +9,16 @@
 class TechDemo : public GameBase
 {
 	public:
-		EventManager1<void, int> m_eventHandler;
 		TechDemo();
 		~TechDemo();
 
 	private:
 		void onTick();
 		void onRender();
-		void onEvent(const int eventType, const int param1, const int param2);
+		void onKeyDown(int keyCode);
+		void onMouseMotion(sf::Vector2i mousePosition);
+		void onMouseDown(sf::Mouse::Button mouseButton);
+		void onQuit();
 
 		TileMap* m_tileMap;
 };

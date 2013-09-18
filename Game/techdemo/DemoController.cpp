@@ -19,6 +19,11 @@ TechDemo::TechDemo()
 	m_tileMap = new TileMap("resources/tileset.png", sf::Vector2u(32, 32), level, 16, 8);
 
 	m_video->changeTitle("TechDemo");
+
+	m_input->EventKeyDown += Event::CreateCallBack(this, &TechDemo::onKeyDown);
+	m_input->EventMouseMotion += Event::CreateCallBack(this, &TechDemo::onMouseMotion);
+	m_input->EventMouseDown += Event::CreateCallBack(this, &TechDemo::onMouseDown);
+	m_input->EventQuit += Event::CreateCallBack(this, &TechDemo::onQuit);
 }
 
 
@@ -46,45 +51,38 @@ void TechDemo::onRender()
 }
 
 
-void TechDemo::onEvent(const int eventType, const int param1, const int param2)
+void TechDemo::onKeyDown(int keyCode)
 {
-	m_eventHandler.trigger(eventType);
-
-	switch (eventType)
+	if(keyCode == KeyId::Escape)
 	{
-		case EVENT_KEYDOWN:
-			switch (param1)
-			{
-				case KeyId::Escape:
-					stop();
-					break;
-			}
-
-			break;
-
-		case EVENT_MOUSEMOTION:
-			if (m_input->getMouse()->held.right)
-			{
-				m_video->moveCameraPosition(sf::Vector2i(m_input->getMouse()->xRel, m_input->getMouse()->yRel));
-			}
-
-			break;
-
-		case EVENT_MOUSEDOWN:
-			if (m_input->getMouse()->press.left)
-			{
-				sf::Vector2i mousePositionWorld = m_input->getMousePos() + m_video->getCameraPosition();
-
-				sf::Vector2u tileMousePointed = m_tileMap->getTilePos(sf::Vector2u(mousePositionWorld));
-
-				m_tileMap->setTile(tileMousePointed, 2); // 2 = Test
-			}
-
-			break;
-
-		case EVENT_QUIT:
-			stop();
-
-			break;
+		stop();
 	}
+}
+
+
+void TechDemo::onMouseMotion(sf::Vector2i mousePosition)
+{
+	if (m_input->getMouse()->held.right)
+	{
+		m_video->moveCameraPosition(sf::Vector2i(m_input->getMouse()->xRel, m_input->getMouse()->yRel));
+	}
+}
+
+
+void TechDemo::onMouseDown(sf::Mouse::Button mouseButton)
+{
+	if (m_input->getMouse()->press.left)
+	{
+		sf::Vector2i mousePositionWorld = m_input->getMousePos() + m_video->getCameraPosition();
+
+		sf::Vector2u tileMousePointed = m_tileMap->getTilePos(sf::Vector2u(mousePositionWorld));
+
+		m_tileMap->setTile(tileMousePointed, 2); // 2 = Test
+	}
+}
+
+
+void TechDemo::onQuit()
+{
+	stop();
 }

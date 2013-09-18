@@ -32,6 +32,9 @@ Snake::Snake()
 	m_video->changeTitle("Snake");
 
 	reset();
+
+	m_input->EventKeyDown += Event::CreateCallBack(this, &Snake::onKeyDown);
+	m_input->EventQuit += Event::CreateCallBack(this, &Snake::onQuit);
 }
 
 
@@ -210,46 +213,40 @@ void Snake::onRender()
 }
 
 
-void Snake::onEvent(const int eventType, const int param1, const int param2)
+void Snake::onKeyDown(int keyCode)
 {
-	m_eventHandler.trigger(eventType);
-
-	switch (eventType)
+	switch (keyCode)
 	{
-		case EVENT_KEYDOWN:
-			switch (param1)
-			{
-				case KeyId::Up:
-					m_snakeDirection = TopDirection;
-					break;
-
-				case KeyId::Right:
-					m_snakeDirection = RightDirection;
-					break;
-
-				case KeyId::Down:
-					m_snakeDirection = BottomDirection;
-					break;
-
-				case KeyId::Left:
-					m_snakeDirection = LeftDirection;
-					break;
-
-				case KeyId::Escape:
-					stop();
-					break;
-
-				case KeyId::F1:
-					reset();
-					break;
-			}
+		case KeyId::Up:
+			m_snakeDirection = TopDirection;
 			break;
 
-		case EVENT_QUIT:
-			stop();
+		case KeyId::Right:
+			m_snakeDirection = RightDirection;
+			break;
 
+		case KeyId::Down:
+			m_snakeDirection = BottomDirection;
+			break;
+
+		case KeyId::Left:
+			m_snakeDirection = LeftDirection;
+			break;
+
+		case KeyId::Escape:
+			stop();
+			break;
+
+		case KeyId::F1:
+			reset();
 			break;
 	}
+}
+
+
+void Snake::onQuit()
+{
+	stop();
 }
 
 

@@ -22,6 +22,9 @@ Pong::Pong()
 	m_video->changeTitle("Pong");
 
 	reset();
+
+	m_input->EventKeyDown += Event::CreateCallBack(this, &Pong::onKeyDown);
+	m_input->EventQuit += Event::CreateCallBack(this, &Pong::onQuit);
 }
 
 
@@ -153,30 +156,24 @@ void Pong::onRender()
 }
 
 
-void Pong::onEvent(const int eventType, const int param1, const int param2)
+void Pong::onKeyDown(int keyCode)
 {
-	m_eventHandler.trigger(eventType);
-
-	switch (eventType)
+	switch (keyCode)
 	{
-		case EVENT_KEYDOWN:
-			switch (param1)
-			{
-				case KeyId::Escape:
-					stop();
-					break;
-
-				case KeyId::F1:
-					reset();
-					break;
-			}
+		case KeyId::Escape:
+			stop();
 			break;
 
-		case EVENT_QUIT:
-			stop();
-
+		case KeyId::F1:
+			reset();
 			break;
 	}
+}
+
+
+void Pong::onQuit()
+{
+	stop();
 }
 
 

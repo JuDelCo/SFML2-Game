@@ -3,309 +3,352 @@
 #define EVENT_HPP
 
 
-#include "EventHandler.hpp"
-#include <cstddef>
+#include <stddef.h>
+#include <assert.h>
+#include <stdint.h>
+#include <functional>
+#include <vector>
 
 
-/*
-	(In MotherShip Class)
-		EventManager1<int,int> shootHandler;
-
-	(In Ships Classes)
-		EventListener1<Ship_Type1,int,int> shootListener;
-	(... and ...)
-		Ship_Type1() : shootListener(this, &Ship_Type1::onShootCommand) {}
-
-	(Later in Code...)
-		MotherShipClass motherShip;
-		Ship_Type1 ship1;
-		Ship_Type2* ship2 = new Ship_Type2();
-
-		motherShip.shootHandler.add(&ship1.shootListener);
-		motherShip.shootHandler.add(&ship2->shootListener);
-		motherShip.shootHandler.trigger(50);
-		delete ship2; // Ka-boom !
-		motherShip.shootHandler.trigger(100);
-*/
+#define EventManager Event::Manager
 
 
-template <typename ReturnT, typename ParamT1>
-class EventListenerBase1
+namespace Event
 {
-	public:
-		virtual int add(Event1<ReturnT, ParamT1>* cppEvent) = 0;
-		virtual bool remove() = 0;
-};
+	namespace Lib
+	{
+		/// ProtoSignal is the template implementation for callback list.
+		template<typename,typename> class ProtoSignal; // undefined
 
+		/// CollectorInvocation invokes signal handlers differently depending on return type.
+		template<typename,typename> class CollectorInvocation;
 
-template <typename ListenerT, typename ReturnT, typename ParamT1>
-class EventListener1 : public EventListenerBase1<ReturnT, ParamT1>
-{
-	public:
-		typedef ReturnT(ListenerT::*MemberPtr)(ParamT1);
-
-		EventListener1(ListenerT* object, MemberPtr member) : m_object(object), m_member(member), m_cppEvent(nullptr) {}
-
-		virtual ~EventListener1()
+		/// CollectorLast returns the result of the last signal handler from a signal emission.
+		template<typename Result>
+		struct CollectorLast
 		{
-			if (m_cppEvent != nullptr)
-			{
-				m_cppEvent->Detach(m_handle);
-			}
-		}
-
-		int add(Event1<ReturnT, ParamT1>* cppEvent)
-		{
-			m_cppEvent = cppEvent;
-			m_handle = m_cppEvent->Attach(m_object, m_member);
-
-			return m_handle;
-		}
-
-		bool remove()
-		{
-			m_cppEvent = nullptr;
-
-			return true;
-		}
-
-	private:
-		ListenerT* m_object;
-		MemberPtr m_member;
-		int m_handle;
-		Event1<ReturnT, ParamT1>* m_cppEvent;
-};
-
-
-template <typename ReturnT, typename ParamT1>
-class EventManager1 : private Event1<ReturnT, ParamT1>
-{
-	public:
-		typedef std::map<int, EventListenerBase1<ReturnT, ParamT1>*> SlotHandlersMap;
-
-		virtual ~EventManager1()
-		{
-			for (auto it : m_slots)
-			{
-				if (this->isAttached(it.first))
+			public:
+				typedef Result CollectorResult;
+				explicit CollectorLast () : last_() {}
+				inline bool operator () (Result r)
 				{
-					it.second->remove();
+					last_ = r;
+					return true;
 				}
-			}
-		}
-
-		bool add(EventListenerBase1<ReturnT, ParamT1>* slot)
-		{
-			int handle = slot->add(this);
-			m_slots[handle] = slot;
-
-			return true;
-		}
-
-		bool trigger(ParamT1 param1)
-		{
-			this->notify(param1);
-
-			return true;
-		}
-
-		template <class CollectorT>
-		typename CollectorT::return_type Trigger(ParamT1 param1, CollectorT& collect)
-		{
-			return notify(param1, collect);
-		}
-
-	private:
-		SlotHandlersMap m_slots;
-};
-
-
-//--------------------
-
-
-template <typename ReturnT, typename ParamT1, typename ParamT2>
-class EventListenerBase2
-{
-	public:
-		virtual int add(Event2<ReturnT, ParamT1, ParamT2>* cppEvent) = 0;
-		virtual bool remove() = 0;
-};
-
-
-template <typename ListenerT, typename ReturnT, typename ParamT1, typename ParamT2>
-class EventListener2 : public EventListenerBase2<ReturnT, ParamT1, ParamT2>
-{
-	public:
-		typedef ReturnT(ListenerT::*MemberPtr)(ParamT1, ParamT2);
-
-		EventListener2(ListenerT* object, MemberPtr member) : m_object(object), m_member(member), m_cppEvent(nullptr) {}
-
-		virtual ~EventListener2()
-		{
-			if (m_cppEvent != nullptr)
-			{
-				m_cppEvent->detach(m_handle);
-			}
-		}
-
-		int add(Event2<ReturnT, ParamT1, ParamT2>* cppEvent)
-		{
-			m_cppEvent = cppEvent;
-			m_handle = m_cppEvent->attach(m_object, m_member);
-
-			return m_handle;
-		}
-
-		bool remove()
-		{
-			m_cppEvent = nullptr;
-
-			return true;
-		}
-
-	private:
-		ListenerT* m_object;
-		MemberPtr m_member;
-		int m_handle;
-		Event2<ReturnT, ParamT1, ParamT2>* m_cppEvent;
-};
-
-
-template <typename ReturnT, typename ParamT1, typename ParamT2>
-class EventManager2 : private Event2<ReturnT, ParamT1, ParamT2>
-{
-	public:
-		typedef std::map<int, EventListenerBase2<ReturnT, ParamT1, ParamT2>*> SlotHandlersMap;
-
-		virtual ~EventManager2()
-		{
-			for (auto it : m_slots)
-			{
-				if (this->isAttached(it.first))
+				CollectorResult result ()
 				{
-					it.second->remove();
+					return last_;
 				}
-			}
-		}
+			private:
+				Result last_;
+		};
 
-		bool add(EventListenerBase2<ReturnT, ParamT1, ParamT2>* slot)
+		/// CollectorDefault implements the default signal handler collection behaviour.
+		template<typename Result>
+		struct CollectorDefault : CollectorLast<Result> {};
+
+		/// CollectorDefault specialisation for signals with void return type.
+		template<>
+		struct CollectorDefault<void>
 		{
-			int handle = slot->add(this);
-			m_slots[handle] = slot;
-
-			return true;
-		}
-
-		bool trigger(ParamT1 param1, ParamT2 param2)
-		{
-			this->notify(param1, param2);
-
-			return true;
-		}
-
-		template <class CollectorT>
-		typename CollectorT::return_type Trigger(ParamT1 param1, ParamT2 param2, CollectorT& collect)
-		{
-			return notify(param1, param2, collect);
-		}
-
-	private:
-		SlotHandlersMap m_slots;
-};
-
-
-//--------------------
-
-
-template <typename ReturnT, typename ParamT1, typename ParamT2, typename ParamT3>
-class EventListenerBase3
-{
-	public:
-		virtual int add(Event3<ReturnT, ParamT1, ParamT2, ParamT3>* cppEvent) = 0;
-		virtual bool remove() = 0;
-};
-
-
-template <typename ListenerT, typename ReturnT, typename ParamT1, typename ParamT2, typename ParamT3>
-class EventListener3 : public EventListenerBase3<ReturnT, ParamT1, ParamT2, ParamT3>
-{
-	public:
-		typedef ReturnT(ListenerT::*MemberPtr)(ParamT1, ParamT2, ParamT3);
-
-		EventListener3(ListenerT* object, MemberPtr member) : m_object(object), m_member(member), m_cppEvent(nullptr) {}
-
-		virtual ~EventListener3()
-		{
-			if (m_cppEvent != nullptr)
+			typedef void CollectorResult;
+			void result () {}
+			inline bool operator () (void)
 			{
-				m_cppEvent->detach(m_handle);
+				return true;
 			}
-		}
+		};
 
-		int add(Event3<ReturnT, ParamT1, ParamT2, ParamT3>* cppEvent)
+		/// CollectorInvocation specialisation for regular signals.
+		template<class Collector, class R, class... Args>
+		struct CollectorInvocation<Collector, R (Args...)>
 		{
-			m_cppEvent = cppEvent;
-			m_handle = m_cppEvent->attach(m_object, m_member);
-
-			return m_handle;
-		}
-
-		bool remove()
-		{
-			m_cppEvent = nullptr;
-
-			return true;
-		}
-
-	private:
-		ListenerT* m_object;
-		MemberPtr m_member;
-		int m_handle;
-		Event3<ReturnT, ParamT1, ParamT2, ParamT3>* m_cppEvent;
-};
-
-
-template <typename ReturnT, typename ParamT1, typename ParamT2, typename ParamT3>
-class EventManager3 : private Event3<ReturnT, ParamT1, ParamT2, ParamT3>
-{
-	public:
-		typedef std::map<int, EventListenerBase3<ReturnT, ParamT1, ParamT2, ParamT3>*> SlotHandlersMap;
-
-		virtual ~EventManager3()
-		{
-			for (auto it : m_slots)
+			inline bool invoke (Collector& collector, const std::function<R (Args...)>& cbf, Args... args)
 			{
-				if (this->isAttached(it.first))
+				return collector(cbf(args...));
+			}
+		};
+
+		/// CollectorInvocation specialisation for signals with void return type.
+		template<class Collector, class... Args>
+		struct CollectorInvocation<Collector, void (Args...)>
+		{
+			inline bool invoke (Collector& collector, const std::function<void (Args...)>& cbf, Args... args)
+			{
+				cbf(args...);
+				return collector();
+			}
+		};
+
+		/// ProtoSignal template specialised for the callback signature and collector.
+		template<class Collector, class R, class... Args>
+		class ProtoSignal<R (Args...), Collector> : private CollectorInvocation<Collector, R (Args...)>
+		{
+			protected:
+				typedef std::function<R (Args...)> CbFunction;
+				typedef typename CbFunction::result_type Result;
+				typedef typename Collector::CollectorResult CollectorResult;
+			private:
+				/// SignalLink implements a doubly-linked ring with ref-counted nodes containing the signal handlers.
+				struct SignalLink
 				{
-					it.second->remove();
+					SignalLink* next;
+					SignalLink* prev;
+					CbFunction function;
+					int ref_count;
+					explicit SignalLink (const CbFunction& cbf) : next(NULL), prev(NULL), function(cbf), ref_count(1) {}
+					~SignalLink ()
+					{
+						assert(ref_count == 0);
+					}
+					void incref ()
+					{
+						ref_count += 1;
+						assert(ref_count > 0);
+					}
+					void decref ()
+					{
+						ref_count -= 1;
+						if (!ref_count)
+						{
+							delete this;
+						}
+						else
+						{
+							assert(ref_count > 0);
+						}
+					}
+					void unlink ()
+					{
+						function = NULL;
+						if (next)
+						{
+							next->prev = prev;
+						}
+						if (prev)
+						{
+							prev->next = next;
+						}
+						decref();
+						// leave intact ->next, ->prev for stale iterators
+					}
+					size_t add_before (const CbFunction& cb)
+					{
+						SignalLink* link = new SignalLink(cb);
+						link->prev = prev; // link to last
+						link->next = this;
+						prev->next = link; // link from last
+						prev = link;
+						static_assert(sizeof(link) == sizeof(size_t), "sizeof size_t");
+						return size_t(link);
+					}
+					bool deactivate (const CbFunction& cbf)
+					{
+						if (cbf == function)
+						{
+							function = NULL; // deactivate static head
+							return true;
+						}
+						for (SignalLink* link = this->next ? this->next : this; link != this; link = link->next)
+						{
+							if (cbf == link->function)
+							{
+								link->unlink(); // deactivate and unlink sibling
+								return true;
+							}
+						}
+						return false;
+					}
+					bool remove_sibling (size_t id)
+					{
+						for (SignalLink* link = this->next ? this->next : this; link != this; link = link->next)
+						{
+							if (id == size_t(link))
+							{
+								link->unlink(); // deactivate and unlink sibling
+								return true;
+							}
+						}
+						return false;
+					}
+				};
+				SignalLink* callback_ring_; // linked ring of callback nodes
+				/*copy-ctor*/ ProtoSignal (const ProtoSignal&) = delete;
+				ProtoSignal& operator= (const ProtoSignal&) = delete;
+				void ensure_ring ()
+				{
+					if (!callback_ring_)
+					{
+						callback_ring_ = new SignalLink(CbFunction()); // ref_count = 1
+						callback_ring_->incref(); // ref_count = 2, head of ring, can be deactivated but not removed
+						callback_ring_->next = callback_ring_; // ring head initialization
+						callback_ring_->prev = callback_ring_; // ring tail initialization
+					}
 				}
+			public:
+				/// ProtoSignal constructor, connects default callback if non-NULL.
+				ProtoSignal (const CbFunction& method) : callback_ring_(NULL)
+				{
+					if (method != NULL)
+					{
+						ensure_ring();
+						callback_ring_->function = method;
+					}
+				}
+				/// ProtoSignal destructor releases all resources associated with this signal.
+				~ProtoSignal ()
+				{
+					if (callback_ring_)
+					{
+						while (callback_ring_->next != callback_ring_)
+						{
+							callback_ring_->next->unlink();
+						}
+						assert(callback_ring_->ref_count >= 2);
+						callback_ring_->decref();
+						callback_ring_->decref();
+					}
+				}
+				/// Operator to add a new function or lambda as signal handler, returns a handler connection ID.
+				size_t operator+= (const CbFunction& cb)
+				{
+					ensure_ring();
+					return callback_ring_->add_before(cb);
+				}
+				/// Operator to remove a signal handler through it connection ID, returns if a handler was removed.
+				bool operator-= (size_t connection)
+				{
+					return (callback_ring_ ? callback_ring_->remove_sibling(connection) : false);
+				}
+				/// Emit a signal, i.e. invoke all its callbacks and collect return types with the Collector.
+				CollectorResult emit (Args... args)
+				{
+					Collector collector;
+					if (!callback_ring_)
+					{
+						return collector.result();
+					}
+					SignalLink* link = callback_ring_;
+					link->incref();
+					do
+					{
+						if (link->function != NULL)
+						{
+							const bool continue_emission = this->invoke(collector, link->function, args...);
+							if (!continue_emission)
+							{
+								break;
+							}
+						}
+						SignalLink* old = link;
+						link = old->next;
+						link->incref();
+						old->decref();
+					}
+					while (link != callback_ring_);
+					link->decref();
+					return collector.result();
+				}
+		};
+	} // Lib
+
+	/**
+	 * Manager is a template type providing an interface for arbitrary callback lists.
+	 * A signal type needs to be declared with the function signature of its callbacks,
+	 * and optionally a return result collector class type.
+	 * Signal callbacks can be added with operator+= to a signal and removed with operator-=, using
+	 * a callback connection ID return by operator+= as argument.
+	 * The callbacks of a signal are invoked with the emit() method and arguments according to the signature.
+	 * The result returned by emit() depends on the signal collector class. By default, the result of
+	 * the last callback is returned from emit(). Collectors can be implemented to accumulate callback
+	 * results or to halt a running emissions in correspondance to callback results.
+	 * The signal implementation is safe against recursion, so callbacks may be removed and
+	 * added during a signal emission and recursive emit() calls are also safe.
+	 * The overhead of an unused signal is intentionally kept very low, around the size of a single pointer.
+	 * Note that the Manager template types is non-copyable.
+	 */
+	template <typename SignalSignature, class Collector = Lib::CollectorDefault<typename std::function<SignalSignature>::result_type> >
+	struct Manager /*final*/ : Lib::ProtoSignal<SignalSignature, Collector>
+	{
+		typedef Lib::ProtoSignal<SignalSignature, Collector> ProtoSignal;
+		typedef typename ProtoSignal::CbFunction CbFunction;
+		/// Manager constructor, supports a default callback as argument.
+		Manager (const CbFunction& method = CbFunction()) : ProtoSignal(method) {}
+	};
+
+	/// This function creates a std::function by binding @a object to the member function pointer @a method.
+	template<class Instance, class Class, class R, class... Args>
+	std::function<R (Args...)> CreateCallBack(Instance& object, R (Class::*method) (Args...))
+	{
+		return [&object, method] (Args... args) { return (object .* method) (args...); };
+	}
+
+	/// This function creates a std::function by binding @a object to the member function pointer @a method.
+	template<class Class, class R, class... Args>
+	std::function<R (Args...)> CreateCallBack(Class* object, R (Class::*method) (Args...))
+	{
+		return [object, method] (Args... args) { return (object ->* method) (args...); };
+	}
+
+	/// Keep signal emissions going while all handlers return !0 (true).
+	template<typename Result>
+	struct CollectorUntil0
+	{
+		public:
+			typedef Result CollectorResult;
+			explicit CollectorUntil0 () : result_() {}
+			const CollectorResult& result ()
+			{
+				return result_;
 			}
-		}
+			inline bool operator () (Result r)
+			{
+				result_ = r;
+				return (result_ ? true : false);
+			}
+		private:
+			CollectorResult result_;
+	};
 
-		bool add(EventListenerBase3<ReturnT, ParamT1, ParamT2, ParamT3>* slot)
-		{
-			int handle = slot->add(this);
-			m_slots[handle] = slot;
+	/// Keep signal emissions going while all handlers return 0 (false).
+	template<typename Result>
+	struct CollectorWhile0
+	{
+		public:
+			typedef Result CollectorResult;
+			explicit CollectorWhile0 () : result_() {}
+			const CollectorResult& result ()
+			{
+				return result_;
+			}
+			inline bool operator () (Result r)
+			{
+				result_ = r;
+				return (result_ ? false : true);
+			}
+		private:
+			CollectorResult result_;
+	};
 
-			return true;
-		}
-
-		bool trigger(ParamT1 param1, ParamT2 param2, ParamT3 param3)
-		{
-			this->notify(param1, param2, param3);
-
-			return true;
-		}
-
-		template <class CollectorT>
-		typename CollectorT::return_type Trigger(ParamT1 param1, ParamT2 param2, ParamT3 param3, CollectorT& collect)
-		{
-			return notify(param1, param2, param3, collect);
-		}
-
-	private:
-		SlotHandlersMap m_slots;
-};
+	/// CollectorVector returns the result of the all signal handlers from a signal emission in a std::vector.
+	template<typename Result>
+	struct CollectorVector
+	{
+		public:
+			typedef std::vector<Result> CollectorResult;
+			const CollectorResult& result ()
+			{
+				return result_;
+			}
+			inline bool operator () (Result r)
+			{
+				result_.push_back(r);
+				return true;
+			}
+		private:
+			CollectorResult result_;
+	};
+} // Event
 
 
 #endif // EVENT_HPP

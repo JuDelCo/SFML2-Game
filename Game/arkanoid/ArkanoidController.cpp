@@ -25,6 +25,9 @@ Arkanoid::Arkanoid()
 	m_video->changeTitle("Arkanoid");
 
 	reset();
+
+	m_input->EventKeyDown += Event::CreateCallBack(this, &Arkanoid::onKeyDown);
+	m_input->EventQuit += Event::CreateCallBack(this, &Arkanoid::onQuit);
 }
 
 
@@ -193,40 +196,35 @@ void Arkanoid::onRender()
 }
 
 
-void Arkanoid::onEvent(const int eventType, const int param1, const int param2)
+void Arkanoid::onKeyDown(int keyCode)
 {
-	m_eventHandler.trigger(eventType);
-
-	switch (eventType)
+	switch (keyCode)
 	{
-		case EVENT_KEYDOWN:
-			switch (param1)
+		case KeyId::F2:
+			if(m_sound.getVolume() > 0)
 			{
-				case KeyId::F2:
-					if(m_sound.getVolume() > 0)
-					{
-						m_sound.setVolume(0);
-					}
-					else
-					{
-						m_sound.setVolume(100);
-					}
-					break;
-				case KeyId::Escape:
-					stop();
-					break;
-
-				case KeyId::F1:
-					reset();
-					break;
+				m_sound.setVolume(0);
+			}
+			else
+			{
+				m_sound.setVolume(100);
 			}
 			break;
 
-		case EVENT_QUIT:
+		case KeyId::Escape:
 			stop();
+			break;
 
+		case KeyId::F1:
+			reset();
 			break;
 	}
+}
+
+
+void Arkanoid::onQuit()
+{
+	stop();
 }
 
 

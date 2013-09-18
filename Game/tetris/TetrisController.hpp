@@ -10,14 +10,14 @@
 class Tetris : public GameBase
 {
 	public:
-		EventManager1<void, int> m_eventHandler;
 		Tetris();
 		~Tetris() {};
 
 	private:
 		void onTick();
 		void onRender();
-		void onEvent(const int eventType, const int param1, const int param2);
+		void onKeyDown(int keyCode);
+		void onQuit();
 		void reset();
 		sf::Color getColor(unsigned int colorId);
 		void changeNextBlock();

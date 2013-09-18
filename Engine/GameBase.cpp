@@ -6,14 +6,13 @@
 #include "helpers/Timer.hpp"
 
 
-GameBase::GameBase() : m_eventListener(this, &GameBase::onEvent)
+GameBase::GameBase()
 {
 	srand(time(NULL));
 
 	m_debug = DebugPtr(new Debug());
 	m_video = VideoPtr(new Video());
 	m_input = InputPtr(new Input());
-	m_input->m_eventHandler.add(&m_eventListener);
 
 	m_run = true;
 }

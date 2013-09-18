@@ -167,7 +167,8 @@ void Input::pollEvents(RenderWindowPtr window)
 			m_mouse.yRel = m_mouse.y - event.mouseMove.y;
 			m_mouse.x = event.mouseMove.x;
 			m_mouse.y = event.mouseMove.y;
-			m_eventHandler.trigger(EVENT_MOUSEMOTION, 0, 0);
+
+			EventMouseMotion.emit(sf::Vector2i(event.mouseMove.x, event.mouseMove.y));
 		}
 		else if(event.type == sf::Event::KeyPressed)
 		{
@@ -181,7 +182,7 @@ void Input::pollEvents(RenderWindowPtr window)
 					keyDown->value = true;
 					keyHeld->value = true;
 
-					m_eventHandler.trigger(EVENT_KEYDOWN, keyDown->sdlKey, 0);
+					EventKeyDown.emit(event.key.code);
 				}
 			}
 		}
@@ -197,7 +198,7 @@ void Input::pollEvents(RenderWindowPtr window)
 					keyUp->value = true;
 					keyHeld->value = false;
 
-					m_eventHandler.trigger(EVENT_KEYUP, keyUp->sdlKey, 0);
+					EventKeyUp.emit(event.key.code);
 				}
 			}
 		}
@@ -225,7 +226,7 @@ void Input::pollEvents(RenderWindowPtr window)
 				m_mouse.y = event.mouseButton.y;
 			}
 
-			m_eventHandler.trigger(EVENT_MOUSEDOWN, 0, 0);
+			EventMouseDown.emit(event.mouseButton.button);
 		}
 		else if(event.type == sf::Event::MouseButtonReleased)
 		{
@@ -251,11 +252,11 @@ void Input::pollEvents(RenderWindowPtr window)
 				m_mouse.y = event.mouseButton.y;
 			}
 
-			m_eventHandler.trigger(EVENT_MOUSEUP, 0, 0);
+			EventMouseUp.emit(event.mouseButton.button);
 		}
 		else if(event.type == sf::Event::TextEntered)
 		{
-			m_eventHandler.trigger(EVENT_TEXTENTERED, event.text.unicode, 0);
+			EventTextEntered.emit(event.text.unicode);
 		}
 		else if(event.type == sf::Event::MouseWheelMoved)
 		{
@@ -264,15 +265,17 @@ void Input::pollEvents(RenderWindowPtr window)
 				m_mouse.press.wheelUp = true;
 				m_mouse.held.wheelUp = false;
 				m_mouse.up.wheelUp = false;
+
+				EventMouseWheel.emit(true);
 			}
 			else
 			{
 				m_mouse.press.wheelDown = true;
 				m_mouse.held.wheelDown = false;
 				m_mouse.up.wheelDown = false;
-			}
 
-			m_eventHandler.trigger(EVENT_MOUSEWHEEL, 0, 0);
+				EventMouseWheel.emit(false);
+			}
 
 			// Unset "KeyPress" of mouse wheel after the event because doesn't have a "KeyUp"
 			m_mouse.press.wheelUp = false;
@@ -280,30 +283,33 @@ void Input::pollEvents(RenderWindowPtr window)
 		}
 		else if(event.type == sf::Event::MouseEntered)
 		{
-			m_eventHandler.trigger(EVENT_MOUSEFOCUS, 0, 0);
+			EventMouseFocus.emit();
 		}
 		else if(event.type == sf::Event::MouseLeft)
 		{
 			releaseMouse();
-			m_eventHandler.trigger(EVENT_MOUSEBLUR, 0, 0);
+
+			EventMouseBlur.emit();
 		}
 		else if(event.type == sf::Event::GainedFocus)
 		{
-			m_eventHandler.trigger(EVENT_KEYFOCUS, 0, 0);
+			EventKeyFocus.emit();
 		}
 		else if(event.type == sf::Event::LostFocus)
 		{
 			releaseKeys();
-			m_eventHandler.trigger(EVENT_KEYBLUR, 0, 0);
+
+			EventKeyBlur.emit();
 		}
 		else if(event.type == sf::Event::Resized)
 		{
-			m_eventHandler.trigger(EVENT_VIDEORESIZE, event.size.width, event.size.height);
+			EventVideoResize.emit(sf::Vector2i(event.size.width, event.size.height));
 		}
 		else if(event.type == sf::Event::Closed)
 		{
 			m_windowClosed = true;
-			m_eventHandler.trigger(EVENT_QUIT, 0, 0);
+
+			EventQuit.emit();
 
 			return;
 		}
