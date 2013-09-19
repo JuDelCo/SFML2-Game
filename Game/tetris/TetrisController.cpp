@@ -116,8 +116,8 @@ Tetris::Tetris()
 
 	reset();
 
-	m_input->EventKeyDown += Event::CreateCallBack(this, &Tetris::onKeyDown);
-	m_input->EventQuit += Event::CreateCallBack(this, &Tetris::onQuit);
+	m_input->EventKeyDown.connect(Event::CreateCallBack(this, &Tetris::onKeyDown));
+	m_input->EventQuit.connect(Event::CreateCallBack(this, &Tetris::onQuit));
 }
 
 

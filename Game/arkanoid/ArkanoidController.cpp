@@ -26,8 +26,8 @@ Arkanoid::Arkanoid()
 
 	reset();
 
-	m_input->EventKeyDown += Event::CreateCallBack(this, &Arkanoid::onKeyDown);
-	m_input->EventQuit += Event::CreateCallBack(this, &Arkanoid::onQuit);
+	m_input->EventKeyDown.connect(Event::CreateCallBack(this, &Arkanoid::onKeyDown));
+	m_input->EventQuit.connect(Event::CreateCallBack(this, &Arkanoid::onQuit));
 }
 
 

@@ -23,8 +23,8 @@ Pong::Pong()
 
 	reset();
 
-	m_input->EventKeyDown += Event::CreateCallBack(this, &Pong::onKeyDown);
-	m_input->EventQuit += Event::CreateCallBack(this, &Pong::onQuit);
+	m_input->EventKeyDown.connect(Event::CreateCallBack(this, &Pong::onKeyDown));
+	m_input->EventQuit.connect(Event::CreateCallBack(this, &Pong::onQuit));
 }
 
 

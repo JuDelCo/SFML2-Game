@@ -20,10 +20,10 @@ TechDemo::TechDemo()
 
 	m_video->changeTitle("TechDemo");
 
-	m_input->EventKeyDown += Event::CreateCallBack(this, &TechDemo::onKeyDown);
-	m_input->EventMouseMotion += Event::CreateCallBack(this, &TechDemo::onMouseMotion);
-	m_input->EventMouseDown += Event::CreateCallBack(this, &TechDemo::onMouseDown);
-	m_input->EventQuit += Event::CreateCallBack(this, &TechDemo::onQuit);
+	m_input->EventKeyDown.connect(Event::CreateCallBack(this, &TechDemo::onKeyDown));
+	m_input->EventMouseMotion.connect(Event::CreateCallBack(this, &TechDemo::onMouseMotion));
+	m_input->EventMouseDown.connect(Event::CreateCallBack(this, &TechDemo::onMouseDown));
+	m_input->EventQuit.connect(Event::CreateCallBack(this, &TechDemo::onQuit));
 }
 
 

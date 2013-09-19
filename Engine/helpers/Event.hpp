@@ -215,10 +215,20 @@ namespace Event
 					ensure_ring();
 					return callback_ring_->add_before(cb);
 				}
+				/// Alias to add a new function or lambda
+				inline size_t connect (const CbFunction& cb)
+				{
+					return (*this += cb);
+				}
 				/// Operator to remove a signal handler through it connection ID, returns if a handler was removed.
 				bool operator-= (size_t connection)
 				{
 					return (callback_ring_ ? callback_ring_->remove_sibling(connection) : false);
+				}
+				/// Alias to remove a signal handler
+				inline bool disconnect (size_t connection)
+				{
+					return (*this -= connection);
 				}
 				/// Emit a signal, i.e. invoke all its callbacks and collect return types with the Collector.
 				CollectorResult emit (Args... args)

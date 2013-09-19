@@ -95,8 +95,8 @@ Pacman::Pacman()
 		stop();
 	}
 
-	m_input->EventKeyDown += Event::CreateCallBack(this, &Pacman::onKeyDown);
-	m_input->EventQuit += Event::CreateCallBack(this, &Pacman::onQuit);
+	m_input->EventKeyDown.connect(Event::CreateCallBack(this, &Pacman::onKeyDown));
+	m_input->EventQuit.connect(Event::CreateCallBack(this, &Pacman::onQuit));
 }
 
 
