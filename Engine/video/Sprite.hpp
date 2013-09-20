@@ -1,6 +1,6 @@
 #pragma once
-#ifndef SPRITE_ANIMATED_HPP
-#define SPRITE_ANIMATED_HPP
+#ifndef SPRITE_HPP
+#define SPRITE_HPP
 
 
 #include <SFML/Graphics.hpp>
@@ -50,4 +50,4 @@ class Sprite : public sf::Drawable, public sf::Transformable
 };
 
 
-#endif // SPRITE_ANIMATED_HPP
+#endif // SPRITE_HPP

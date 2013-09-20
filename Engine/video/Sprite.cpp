@@ -1,6 +1,4 @@
 #include "Sprite.hpp"
-#include "../debug/DebugLog.hpp"
-#include "../Defines.hpp"
 
 
 Sprite::Sprite()

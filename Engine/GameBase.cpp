@@ -1,6 +1,5 @@
 #include "GameBase.hpp"
 #include "Defines.hpp"
-#include "debug/DebugLog.hpp"
 #include "input/Input.hpp"
 #include "video/Video.hpp"
 #include "helpers/Timer.hpp"
