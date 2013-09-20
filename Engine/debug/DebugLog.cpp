@@ -77,8 +77,11 @@ void Debug::write(int target, std::string message, ...)
 
 	if (target == LOG_FILE || target == LOG_ALL)
 	{
-		m_logger << buffer << "\n";
-		m_logger.flush();
+		if(m_logger.is_open())
+		{
+			m_logger << buffer << "\n";
+			m_logger.flush();
+		}
 	}
 
 	if (target == LOG_CONSOLE || target == LOG_ALL)
