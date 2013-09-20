@@ -73,7 +73,7 @@ void Input::releaseMouse()
 
 KeyPtr Input::getKey(KeyInfoPtr keyStruct, unsigned int numberId)
 {
-	return KeyPtr(((Key*)(&*keyStruct)) + numberId);
+	return KeyPtr(((Key*)(keyStruct.get())) + numberId);
 }
 
 
