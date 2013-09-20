@@ -78,6 +78,12 @@ void Sprite::setTextureRect(sf::IntRect textureRect)
 }
 
 
+void Sprite::setFrame(unsigned int frameNumber)
+{
+	setTextureRect(sf::IntRect(m_size.x * frameNumber, 0, m_size.x, m_size.y));
+}
+
+
 void Sprite::flipHorizontal(bool flipHorizontal)
 {
 	m_flipHorizontal = flipHorizontal;

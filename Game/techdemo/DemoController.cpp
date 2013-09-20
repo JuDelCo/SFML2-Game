@@ -27,7 +27,6 @@ TechDemo::TechDemo()
 
 	m_spriteTest.setSize(sf::Vector2i(15,15));
 	m_spriteTest.bindTexture(TexturePtr(&m_textureTest));
-	m_spriteTest.setTextureRect(sf::IntRect(0,0,15,15));
 	m_spriteTest.setOrigin(7.5,7.5);
 	m_spriteTest.setScale(4,4);
 	m_spriteTest.setRotation(45);
@@ -60,24 +59,28 @@ void TechDemo::onRender()
 	m_video->draw(*m_tileMap);
 
 	m_spriteTest.setPosition(100,350);
+	m_spriteTest.setFrame(0);
 	m_spriteTest.setColor(sf::Color::Red);
 	m_spriteTest.flipHorizontal(false);
 	m_spriteTest.flipVertical(false);
 	m_video->draw(m_spriteTest);
 
 	m_spriteTest.setPosition(200,350);
+	m_spriteTest.setFrame(1);
 	m_spriteTest.setColor(sf::Color::Yellow);
 	m_spriteTest.flipHorizontal(true);
 	m_spriteTest.flipVertical(false);
 	m_video->draw(m_spriteTest);
 
 	m_spriteTest.setPosition(300,350);
+	m_spriteTest.setFrame(0);
 	m_spriteTest.setColor(sf::Color::Blue);
 	m_spriteTest.flipHorizontal(false);
 	m_spriteTest.flipVertical(true);
 	m_video->draw(m_spriteTest);
 
 	m_spriteTest.setPosition(400,350);
+	m_spriteTest.setFrame(1);
 	m_spriteTest.setColor(sf::Color::Green);
 	m_spriteTest.flipHorizontal(true);
 	m_spriteTest.flipVertical(true);

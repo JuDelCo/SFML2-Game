@@ -21,6 +21,7 @@ class Sprite : public sf::Drawable, public sf::Transformable
 		void setSize(sf::Vector2i spriteSize);
 		sf::Vector2i getSize();
 		void setTextureRect(sf::IntRect textureRect);
+		void setFrame(unsigned int frameNumber);
 		void flipHorizontal(bool flipHorizontal);
 		void flipVertical(bool flipVertical);
 		void setColor(const sf::Color& color);
