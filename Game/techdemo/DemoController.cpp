@@ -20,6 +20,18 @@ TechDemo::TechDemo()
 
 	m_video->changeTitle("TechDemo");
 
+	if (!m_textureTest.loadFromFile("resources/tileset_pacman_ghost.png"))
+	{
+		stop();
+	}
+
+	m_spriteTest.setSize(sf::Vector2i(15,15));
+	m_spriteTest.bindTexture(TexturePtr(&m_textureTest));
+	m_spriteTest.setTextureRect(sf::IntRect(0,0,15,15));
+	m_spriteTest.setOrigin(7.5,7.5);
+	m_spriteTest.setScale(4,4);
+	m_spriteTest.setRotation(45);
+
 	m_input->EventKeyDown.connect(Event::CreateCallBack(this, &TechDemo::onKeyDown));
 	m_input->EventMouseMotion.connect(Event::CreateCallBack(this, &TechDemo::onMouseMotion));
 	m_input->EventMouseDown.connect(Event::CreateCallBack(this, &TechDemo::onMouseDown));
@@ -46,6 +58,30 @@ void TechDemo::onRender()
 	m_video->viewResetToCamera();
 
 	m_video->draw(*m_tileMap);
+
+	m_spriteTest.setPosition(100,350);
+	m_spriteTest.setColor(sf::Color::Red);
+	m_spriteTest.flipHorizontal(false);
+	m_spriteTest.flipVertical(false);
+	m_video->draw(m_spriteTest);
+
+	m_spriteTest.setPosition(200,350);
+	m_spriteTest.setColor(sf::Color::Yellow);
+	m_spriteTest.flipHorizontal(true);
+	m_spriteTest.flipVertical(false);
+	m_video->draw(m_spriteTest);
+
+	m_spriteTest.setPosition(300,350);
+	m_spriteTest.setColor(sf::Color::Blue);
+	m_spriteTest.flipHorizontal(false);
+	m_spriteTest.flipVertical(true);
+	m_video->draw(m_spriteTest);
+
+	m_spriteTest.setPosition(400,350);
+	m_spriteTest.setColor(sf::Color::Green);
+	m_spriteTest.flipHorizontal(true);
+	m_spriteTest.flipVertical(true);
+	m_video->draw(m_spriteTest);
 
 	m_video->swapBuffers();
 }
@@ -77,7 +113,7 @@ void TechDemo::onMouseDown(sf::Mouse::Button mouseButton)
 
 		sf::Vector2u tileMousePointed = m_tileMap->getTilePos(sf::Vector2u(mousePositionWorld));
 
-		m_tileMap->setTile(tileMousePointed, 2); // 2 = Test
+		m_tileMap->setTile(tileMousePointed, (rand() % 4));
 	}
 }
 

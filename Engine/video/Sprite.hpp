@@ -4,32 +4,48 @@
 
 
 #include <SFML/Graphics.hpp>
+#include <memory>
+
+typedef std::shared_ptr<sf::Texture> TexturePtr;
 
 
-class SpriteAnimated : public sf::Sprite
+class Sprite : public sf::Drawable, public sf::Transformable
 {
 	public:
-		SpriteAnimated();
-		SpriteAnimated(const std::string location, const int numFrames, const int delay);
-		~SpriteAnimated() {};
-		void loadTexture(const std::string location, const int numFrames);
-		void update(const int& msLastFrame);
-		void setCurrentFrame(const int currentFrame);
-		void setFrameWidth(const int frameWidth);
-		void setNumOfFrames(const int numFrames);
-		void setDelay(const int delay);
-		int getCurrentFrame();
-		int getFrameWidth();
-		int getNumOfFrames();
-		int getDelay();
+		Sprite();
+		Sprite(TexturePtr texture);
+		Sprite(TexturePtr texture, sf::IntRect textureRect);
+		~Sprite() {};
+		bool isUpdated();
+		const sf::Vertex* getUpdate();
+		void setSize(sf::Vector2i spriteSize);
+		sf::Vector2i getSize();
+		void setTextureRect(sf::IntRect textureRect);
+		void flipHorizontal(bool flipHorizontal);
+		void flipVertical(bool flipVertical);
+		void setColor(const sf::Color& color);
+		void bindTexture(TexturePtr texture);
+		void setPosition(float x, float y);
+		void setPosition(const sf::Vector2f &position);
+		void setRotation(float angle);
+		void setScale(float factorX, float factorY);
+		void setScale(const sf::Vector2f &factors);
+		void move(float offsetX, float offsetY);
+		void move(const sf::Vector2f &offset);
+		void rotate(float angle);
+		void scale(float factorX, float factorY);
+		void scale(const sf::Vector2f &factor);
 
 	private:
-		sf::Texture m_image;
-		unsigned int m_currentFrame;
-		unsigned int m_numFrames;
-		int m_timeRemain;
-		unsigned int m_frameWidth;
-		float m_frameTime;
+		void updateVertex();
+		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+		std::vector<sf::Vertex> m_vertices;
+		sf::Vector2i m_size;
+		sf::IntRect m_textureRect;
+		TexturePtr m_texture;
+		bool m_flipHorizontal;
+		bool m_flipVertical;
+		bool m_updated;
 };
 
 

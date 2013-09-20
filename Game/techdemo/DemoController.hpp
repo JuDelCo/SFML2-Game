@@ -21,6 +21,8 @@ class TechDemo : public GameBase
 		void onQuit();
 
 		TileMap* m_tileMap;
+		sf::Texture m_textureTest;
+		Sprite m_spriteTest;
 };
 
 
