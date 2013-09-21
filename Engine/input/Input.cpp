@@ -1,8 +1,11 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #include "Input.hpp"
 #include <string.h>
 #include "../Defines.hpp"
 #include "../video/Video.hpp"
-
 
 Input::Input()
 {
@@ -10,7 +13,6 @@ Input::Input()
 
 	releaseAll();
 }
-
 
 void Input::onTick(RenderWindowPtr window)
 {
@@ -33,13 +35,11 @@ void Input::onTick(RenderWindowPtr window)
 	pollEvents(window);
 }
 
-
 void Input::releaseAll()
 {
 	releaseKeys();
 	releaseMouse();
 }
-
 
 void Input::releaseKeys()
 {
@@ -47,7 +47,6 @@ void Input::releaseKeys()
 	memcpy(&m_keyHeld, &KEY_CONFIG, sizeof(KeyInfo));
 	memcpy(&m_keyUp, &KEY_CONFIG, sizeof(KeyInfo));
 }
-
 
 void Input::releaseMouse()
 {
@@ -70,90 +69,75 @@ void Input::releaseMouse()
 	m_mouse.up.wheelDown = false;
 }
 
-
 KeyPtr Input::getKey(KeyInfoPtr keyStruct, unsigned int numberId)
 {
 	return KeyPtr(((Key*)(keyStruct.get())) + numberId);
 }
-
 
 bool Input::isWindowClosed()
 {
 	return m_windowClosed;
 }
 
-
 KeyInfoPtr Input::getKeyPress()
 {
 	return KeyInfoPtr(&m_keyPress);
 }
-
 
 KeyInfoPtr Input::getKeyHeld()
 {
 	return KeyInfoPtr(&m_keyHeld);
 }
 
-
 KeyInfoPtr Input::getKeyUp()
 {
 	return KeyInfoPtr(&m_keyUp);
 }
-
 
 bool Input::isKeyPress(KeyId key)
 {
 	return getKey(getKeyPress(), key)->value;
 }
 
-
 bool Input::isKeyHeld(KeyId key)
 {
 	return getKey(getKeyHeld(), key)->value;
 }
-
 
 bool Input::isKeyUp(KeyId key)
 {
 	return getKey(getKeyUp(), key)->value;
 }
 
-
 MouseInfoPtr Input::getMouse()
 {
 	return MouseInfoPtr(&m_mouse);
 }
-
 
 MouseKeyPtr Input::getMousePress()
 {
 	return MouseKeyPtr(&m_mouse.press);
 }
 
-
 MouseKeyPtr Input::getMouseHeld()
 {
 	return MouseKeyPtr(&m_mouse.held);
 }
-
 
 MouseKeyPtr Input::getMouseUp()
 {
 	return MouseKeyPtr(&m_mouse.up);
 }
 
-
 sf::Vector2i Input::getMousePos()
 {
 	return sf::Vector2i(m_mouse.x, m_mouse.y);
 }
 
-
 sf::Vector2i Input::getMousePosRel()
 {
 	return sf::Vector2i(m_mouse.xRel, m_mouse.yRel);
 }
-
 
 void Input::pollEvents(RenderWindowPtr window)
 {

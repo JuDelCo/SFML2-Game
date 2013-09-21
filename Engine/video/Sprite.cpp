@@ -1,5 +1,8 @@
-#include "Sprite.hpp"
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
 
+#include "Sprite.hpp"
 
 Sprite::Sprite()
 {
@@ -9,24 +12,20 @@ Sprite::Sprite()
 	m_updated = false;
 }
 
-
 Sprite::Sprite(TexturePtr texture) : Sprite()
 {
 	bindTexture(texture);
 }
-
 
 Sprite::Sprite(TexturePtr texture, sf::IntRect textureRect) : Sprite(texture)
 {
 	setTextureRect(textureRect);
 }
 
-
 bool Sprite::isUpdated()
 {
 	return m_updated;
 }
-
 
 const sf::Vertex* Sprite::getUpdate()
 {
@@ -34,7 +33,6 @@ const sf::Vertex* Sprite::getUpdate()
 
 	return &m_vertices[0];
 }
-
 
 void Sprite::setSize(sf::Vector2i spriteSize)
 {
@@ -48,12 +46,10 @@ void Sprite::setSize(sf::Vector2i spriteSize)
 	setOrigin(sf::Vector2f(m_size.x / 2.0f, m_size.y / 2.0f));
 }
 
-
 sf::Vector2i Sprite::getSize()
 {
 	return m_size;
 }
-
 
 void Sprite::setTextureRect(sf::IntRect textureRect)
 {
@@ -75,12 +71,10 @@ void Sprite::setTextureRect(sf::IntRect textureRect)
 	m_updated = true;
 }
 
-
 void Sprite::setFrame(unsigned int frameNumber)
 {
 	setTextureRect(sf::IntRect(m_size.x * frameNumber, 0, m_size.x, m_size.y));
 }
-
 
 void Sprite::flipHorizontal(bool flipHorizontal)
 {
@@ -89,14 +83,12 @@ void Sprite::flipHorizontal(bool flipHorizontal)
 	setTextureRect(m_textureRect);
 }
 
-
 void Sprite::flipVertical(bool flipVertical)
 {
 	m_flipVertical = flipVertical;
 
 	setTextureRect(m_textureRect);
 }
-
 
 void Sprite::setColor(const sf::Color& color)
 {
@@ -108,7 +100,6 @@ void Sprite::setColor(const sf::Color& color)
 	m_updated = true;
 }
 
-
 void Sprite::setColor(const sf::Color& color1, const sf::Color& color2, const sf::Color& color3, const sf::Color& color4)
 {
 	m_vertices[0].color = color1;
@@ -119,12 +110,10 @@ void Sprite::setColor(const sf::Color& color1, const sf::Color& color2, const sf
 	m_updated = true;
 }
 
-
 void Sprite::bindTexture(TexturePtr texture)
 {
 	m_texture = texture;
 }
-
 
 void Sprite::setPosition(float x, float y)
 {
@@ -133,14 +122,12 @@ void Sprite::setPosition(float x, float y)
 	updateVertex();
 }
 
-
 void Sprite::setPosition(const sf::Vector2f &position)
 {
 	Transformable::setPosition(position);
 
 	updateVertex();
 }
-
 
 void Sprite::setRotation(float angle)
 {
@@ -149,14 +136,12 @@ void Sprite::setRotation(float angle)
 	updateVertex();
 }
 
-
 void Sprite::setScale(float factorX, float factorY)
 {
 	Transformable::setScale(factorX, factorY);
 
 	updateVertex();
 }
-
 
 void Sprite::setScale(const sf::Vector2f &factors)
 {
@@ -165,14 +150,12 @@ void Sprite::setScale(const sf::Vector2f &factors)
 	updateVertex();
 }
 
-
 void Sprite::move(float offsetX, float offsetY)
 {
 	Transformable::move(offsetX, offsetY);
 
 	updateVertex();
 }
-
 
 void Sprite::move(const sf::Vector2f &offset)
 {
@@ -181,14 +164,12 @@ void Sprite::move(const sf::Vector2f &offset)
 	updateVertex();
 }
 
-
 void Sprite::rotate(float angle)
 {
 	Transformable::rotate(angle);
 
 	updateVertex();
 }
-
 
 void Sprite::scale(float factorX, float factorY)
 {
@@ -197,14 +178,12 @@ void Sprite::scale(float factorX, float factorY)
 	updateVertex();
 }
 
-
 void Sprite::scale(const sf::Vector2f &factor)
 {
 	Transformable::scale(factor);
 
 	updateVertex();
 }
-
 
 void Sprite::updateVertex()
 {
@@ -217,7 +196,6 @@ void Sprite::updateVertex()
 
 	m_updated = true;
 }
-
 
 void Sprite::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {

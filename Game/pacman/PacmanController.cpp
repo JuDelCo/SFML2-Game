@@ -1,6 +1,9 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #include "PacmanController.hpp"
 #include <stdlib.h>
-
 
 Pacman::Pacman()
 {
@@ -98,7 +101,6 @@ Pacman::Pacman()
 	m_input->EventKeyDown.connect(Event::CreateCallBack(this, &Pacman::onKeyDown));
 	m_input->EventQuit.connect(Event::CreateCallBack(this, &Pacman::onQuit));
 }
-
 
 void Pacman::onTick()
 {
@@ -437,7 +439,6 @@ void Pacman::onTick()
 	}
 }
 
-
 void Pacman::onRender()
 {
 	m_video->clear(sf::Color::Black);
@@ -595,7 +596,6 @@ void Pacman::onRender()
 	m_video->swapBuffers();
 }
 
-
 void Pacman::onKeyDown(int keyCode)
 {
 	switch (keyCode)
@@ -621,12 +621,10 @@ void Pacman::onKeyDown(int keyCode)
 	}
 }
 
-
 void Pacman::onQuit()
 {
 	stop();
 }
-
 
 void Pacman::reset()
 {
@@ -635,7 +633,6 @@ void Pacman::reset()
 
 	resetGame();
 }
-
 
 void Pacman::resetGame()
 {
@@ -734,7 +731,6 @@ void Pacman::resetGame()
 	m_readyTimer.start();
 }
 
-
 bool Pacman::loadMap()
 {
 	unsigned int counter = 0;
@@ -803,7 +799,6 @@ bool Pacman::loadMap()
 	return true;
 }
 
-
 void Pacman::mapSetCell(unsigned int cellIndex, CellType cellType)
 {
 	int tileNumber;
@@ -847,7 +842,6 @@ void Pacman::mapSetCell(unsigned int cellIndex, CellType cellType)
 	quad[3].texCoords = sf::Vector2f(texturePosX * m_tileSize.x, (texturePosY + 1) * m_tileSize.y);
 }
 
-
 bool Pacman::checkCollision(unsigned int cellIndex, ViewDirection direction, bool isPlayer)
 {
 	int mapInfo = getMapInfo(cellIndex, direction);
@@ -859,7 +853,6 @@ bool Pacman::checkCollision(unsigned int cellIndex, ViewDirection direction, boo
 
 	return false;
 }
-
 
 void Pacman::moveEntity(unsigned int* cellIndex, sf::Vector2f* offset, ViewDirection* direction, ViewDirection* desiredDirection, bool* isMoving, float speed, bool isPlayer)
 {
@@ -1042,7 +1035,6 @@ void Pacman::moveEntity(unsigned int* cellIndex, sf::Vector2f* offset, ViewDirec
 	}
 }
 
-
 Pacman::ViewDirection Pacman::getNextDirection(unsigned int startIndex, unsigned int searchIndex, unsigned int ignoreCell)
 {
 	std::list<Node> OpenNodeList;
@@ -1219,7 +1211,6 @@ Pacman::ViewDirection Pacman::getNextDirection(unsigned int startIndex, unsigned
 	}
 }
 
-
 Pacman::ViewDirection Pacman::getRandomDirection(unsigned int cellIndex, unsigned int ignoreCell)
 {
 	std::vector<ViewDirection> randomDirection;
@@ -1309,7 +1300,6 @@ Pacman::ViewDirection Pacman::getRandomDirection(unsigned int cellIndex, unsigne
 	}
 }
 
-
 unsigned int Pacman::getMapIndex(unsigned int cellIndex, ViewDirection direction)
 {
 	unsigned int cellMapIndex;
@@ -1362,12 +1352,10 @@ unsigned int Pacman::getMapIndex(unsigned int cellIndex, ViewDirection direction
 	return cellMapIndex;
 }
 
-
 unsigned int Pacman::getMapInfo(unsigned int cellIndex, ViewDirection direction)
 {
 	return m_mapInfo[getMapIndex(cellIndex, direction)];
 }
-
 
 void Pacman::ghostCollide(unsigned int ghostId)
 {
@@ -1422,7 +1410,6 @@ void Pacman::ghostCollide(unsigned int ghostId)
 		m_ghostKillTimer.pause();
 	}
 }
-
 
 void Pacman::addScore(unsigned int score)
 {

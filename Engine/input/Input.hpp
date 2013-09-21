@@ -1,14 +1,16 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #pragma once
 #ifndef INPUT_HPP
 #define INPUT_HPP
-
 
 #include <SFML/Graphics.hpp>
 #include "InputData.hpp"
 #include "../helpers/Event.hpp"
 
 typedef std::shared_ptr<sf::RenderWindow> RenderWindowPtr;
-
 
 class Input
 {
@@ -60,8 +62,6 @@ class Input
 		void pollEvents(RenderWindowPtr window);
 };
 
-
 typedef std::shared_ptr<Input> InputPtr;
-
 
 #endif // INPUT_HPP

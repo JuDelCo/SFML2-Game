@@ -1,13 +1,15 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #pragma once
 #ifndef DEBUG_LOG_HPP
 #define DEBUG_LOG_HPP
-
 
 #include <fstream>
 #include <vector>
 #include <string>
 #include <memory>
-
 
 class Debug
 {
@@ -26,8 +28,6 @@ class Debug
 		std::ofstream m_logger;
 };
 
-
 typedef std::shared_ptr<Debug> DebugPtr;
-
 
 #endif // DEBUG_LOG_HPP

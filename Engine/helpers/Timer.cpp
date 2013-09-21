@@ -1,9 +1,11 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #include "Timer.hpp"
 #include <SFML/system.hpp>
 
-
 #define getElapsedTimeMs() getElapsedTime().asMilliseconds()
-
 
 Timer::Timer()
 {
@@ -16,7 +18,6 @@ Timer::Timer()
 	m_pausedTicks = 0;
 }
 
-
 void Timer::start()
 {
 	if (!isStarted())
@@ -28,7 +29,6 @@ void Timer::start()
 	reset();
 }
 
-
 void Timer::reset()
 {
 	if(isStarted())
@@ -36,7 +36,6 @@ void Timer::reset()
 		m_startTicks = m_clock->getElapsedTimeMs() - m_pausedTicks;
 	}
 }
-
 
 void Timer::pause()
 {
@@ -46,7 +45,6 @@ void Timer::pause()
 		m_pausedTicks = m_clock->getElapsedTimeMs() - m_startTicks;
 	}
 }
-
 
 void Timer::resume()
 {
@@ -58,7 +56,6 @@ void Timer::resume()
 	}
 }
 
-
 void Timer::stop()
 {
 	if(isStarted())
@@ -67,7 +64,6 @@ void Timer::stop()
 		m_paused = false;
 	}
 }
-
 
 unsigned int Timer::getTicks()
 {
@@ -86,12 +82,10 @@ unsigned int Timer::getTicks()
 	return 0;
 }
 
-
 bool Timer::isStarted()
 {
 	return m_started;
 }
-
 
 bool Timer::isPaused()
 {

@@ -1,11 +1,13 @@
-#include "TileMap.hpp"
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
 
+#include "TileMap.hpp"
 
 // Actualizar solo los quads modificados (no recalcular todos)
 // Dibujar en pantalla solo lo visible (VertexArray.size == Screen.size)
 //      (+ ResizeFnc para el onResize de la pantalla)
 //      (+ MoveFnc para mover la cámara) "m_offset"
-
 
 TileMap::TileMap(const std::string tileSetPath, sf::Vector2u tileSize, int* tiles, unsigned int width, unsigned int height)
 {
@@ -21,19 +23,16 @@ TileMap::TileMap(const std::string tileSetPath, sf::Vector2u tileSize, int* tile
 	update();
 }
 
-
 TileMap::~TileMap()
 {
 	delete m_tiles;
 }
-
 
 void TileMap::draw(sf::RenderTarget& renderTarget, sf::RenderStates renderState) const
 {
 	renderState.texture = &m_texture;
 	renderTarget.draw(m_vertices, renderState);
 }
-
 
 void TileMap::update()
 {
@@ -60,18 +59,15 @@ void TileMap::update()
 	}
 }
 
-
 int TileMap::getTile(sf::Vector2u position)
 {
 	return m_tiles[position.x + position.y * m_width];
 }
 
-
 void TileMap::setTile(sf::Vector2u position, int tileValue)
 {
 	m_tiles[position.x + position.y * m_width] = tileValue;
 }
-
 
 sf::Vector2u TileMap::getTilePos(sf::Vector2u position)
 {

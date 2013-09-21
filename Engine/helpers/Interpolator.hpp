@@ -1,7 +1,10 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #pragma once
 #ifndef INTERPOLATOR_HPP
 #define INTERPOLATOR_HPP
-
 
 class IInterpolator
 {
@@ -17,7 +20,6 @@ class IInterpolator
 		bool m_finished;
 };
 
-
 class ITimeBasedInterpolator : public IInterpolator
 {
 	public:
@@ -32,7 +34,6 @@ class ITimeBasedInterpolator : public IInterpolator
 		float m_totalTime;
 };
 
-
 class LinearInterpolator : public ITimeBasedInterpolator
 {
 	public:
@@ -44,7 +45,6 @@ class LinearInterpolator : public ITimeBasedInterpolator
 		float m_startValue;
 		float m_endValue;
 };
-
 
 class QuadraticInterpolator : public ITimeBasedInterpolator
 {
@@ -59,7 +59,6 @@ class QuadraticInterpolator : public ITimeBasedInterpolator
 		float m_endValue;
 };
 
-
 class CubicInterpolator : public ITimeBasedInterpolator
 {
 	public:
@@ -73,6 +72,5 @@ class CubicInterpolator : public ITimeBasedInterpolator
 		float m_midValue2;
 		float m_endValue;
 };
-
 
 #endif // INTERPOLATOR_HPP

@@ -1,5 +1,8 @@
-#include "DemoController.hpp"
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
 
+#include "DemoController.hpp"
 
 int level[] =
 {
@@ -12,7 +15,6 @@ int level[] =
 	3, 0, 2, 0, 1, 0, 3, 3, 3, 0, 2, 2, 2, 2, 2, 2,
 	0, 0, 2, 0, 1, 3, 3, 3, 0, 0, 0, 0, 2, 2, 2, 2,
 };
-
 
 TechDemo::TechDemo()
 {
@@ -37,18 +39,15 @@ TechDemo::TechDemo()
 	m_input->EventQuit.connect(Event::CreateCallBack(this, &TechDemo::onQuit));
 }
 
-
 TechDemo::~TechDemo()
 {
 	delete m_tileMap;
 }
 
-
 void TechDemo::onTick()
 {
 	m_tileMap->update();
 }
-
 
 void TechDemo::onRender()
 {
@@ -98,7 +97,6 @@ void TechDemo::onRender()
 	m_video->swapBuffers();
 }
 
-
 void TechDemo::onKeyDown(int keyCode)
 {
 	if(keyCode == KeyId::Escape)
@@ -107,7 +105,6 @@ void TechDemo::onKeyDown(int keyCode)
 	}
 }
 
-
 void TechDemo::onMouseMotion(sf::Vector2i mousePosition)
 {
 	if (m_input->getMouse()->held.right)
@@ -115,7 +112,6 @@ void TechDemo::onMouseMotion(sf::Vector2i mousePosition)
 		m_video->moveCameraPosition(sf::Vector2i(m_input->getMouse()->xRel, m_input->getMouse()->yRel));
 	}
 }
-
 
 void TechDemo::onMouseDown(sf::Mouse::Button mouseButton)
 {
@@ -128,7 +124,6 @@ void TechDemo::onMouseDown(sf::Mouse::Button mouseButton)
 		m_tileMap->setTile(tileMousePointed, (rand() % 4));
 	}
 }
-
 
 void TechDemo::onQuit()
 {

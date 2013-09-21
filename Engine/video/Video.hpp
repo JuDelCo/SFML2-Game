@@ -1,13 +1,15 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #pragma once
 #ifndef VIDEO_HPP
 #define VIDEO_HPP
-
 
 #include <SFML/Graphics.hpp>
 #include <memory>
 
 typedef std::shared_ptr<sf::RenderWindow> RenderWindowPtr;
-
 
 class Video
 {
@@ -45,8 +47,6 @@ class Video
 		void endWindow();
 };
 
-
 typedef std::shared_ptr<Video> VideoPtr;
-
 
 #endif // VIDEO_HPP

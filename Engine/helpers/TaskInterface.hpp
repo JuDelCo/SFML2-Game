@@ -1,7 +1,10 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #pragma once
 #ifndef TASK_INTERFACE_HPP
 #define TASK_INTERFACE_HPP
-
 
 class ITask
 {
@@ -18,6 +21,5 @@ class ITask
 		bool m_isFinished;
 		unsigned int m_priority;
 };
-
 
 #endif // TASK_INTERFACE_HPP

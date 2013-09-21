@@ -1,14 +1,16 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #pragma once
 #ifndef GAME_BASE_HPP
 #define GAME_BASE_HPP
-
 
 #include "helpers/Event.hpp"
 #include "helpers/Timer.hpp"
 #include "input/Input.hpp"
 #include "video/Video.hpp"
 #include "debug/DebugLog.hpp"
-
 
 class GameBase
 {
@@ -43,6 +45,5 @@ class GameBase
 		Timer m_runningTimer;
 		unsigned int m_fps;
 };
-
 
 #endif // GAME_BASE_HPP

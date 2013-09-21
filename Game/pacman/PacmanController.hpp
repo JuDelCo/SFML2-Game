@@ -1,11 +1,13 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #pragma once
 #ifndef PACMAN_CONTROLLER_HPP
 #define PACMAN_CONTROLLER_HPP
 
-
 #include "../../Engine/Includes.hpp"
 #include <SFML/Audio.hpp>
-
 
 class Pacman : public GameBase
 {
@@ -133,8 +135,6 @@ class Pacman : public GameBase
 		sf::Sprite m_liveSprite;
 };
 
-
 typedef std::shared_ptr<Pacman> PacmanPtr;
-
 
 #endif // PACMAN_CONTROLLER_HPP

@@ -1,11 +1,13 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #pragma once
 #ifndef ARKANOID_CONTROLLER_HPP
 #define ARKANOID_CONTROLLER_HPP
 
-
 #include "../../Engine/Includes.hpp"
 #include <SFML/Audio.hpp>
-
 
 class Arkanoid : public GameBase
 {
@@ -39,8 +41,6 @@ class Arkanoid : public GameBase
 		std::vector<BlockInfo> m_blockStack;
 };
 
-
 typedef std::shared_ptr<Arkanoid> ArkanoidPtr;
-
 
 #endif // ARKANOID_CONTROLLER_HPP

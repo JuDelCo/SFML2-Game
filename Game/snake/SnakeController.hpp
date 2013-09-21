@@ -1,11 +1,13 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #pragma once
 #ifndef SNAKE_CONTROLLER_HPP
 #define SNAKE_CONTROLLER_HPP
 
-
 #include "../../Engine/Includes.hpp"
 #include <SFML/Audio.hpp>
-
 
 class Snake : public GameBase
 {
@@ -49,8 +51,6 @@ class Snake : public GameBase
 		sf::Vector2i m_screenSize;
 };
 
-
 typedef std::shared_ptr<Snake> SnakePtr;
-
 
 #endif // SNAKE_CONTROLLER_HPP

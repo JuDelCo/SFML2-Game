@@ -1,6 +1,9 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #include "ArkanoidController.hpp"
 #include <stdlib.h>
-
 
 Arkanoid::Arkanoid()
 {
@@ -29,7 +32,6 @@ Arkanoid::Arkanoid()
 	m_input->EventKeyDown.connect(Event::CreateCallBack(this, &Arkanoid::onKeyDown));
 	m_input->EventQuit.connect(Event::CreateCallBack(this, &Arkanoid::onQuit));
 }
-
 
 void Arkanoid::onTick()
 {
@@ -149,7 +151,6 @@ void Arkanoid::onTick()
 	m_ballPosition += m_ballVelocity;
 }
 
-
 void Arkanoid::onRender()
 {
 	m_video->clear(sf::Color::Black);
@@ -195,7 +196,6 @@ void Arkanoid::onRender()
 	m_video->swapBuffers();
 }
 
-
 void Arkanoid::onKeyDown(int keyCode)
 {
 	switch (keyCode)
@@ -221,12 +221,10 @@ void Arkanoid::onKeyDown(int keyCode)
 	}
 }
 
-
 void Arkanoid::onQuit()
 {
 	stop();
 }
-
 
 void Arkanoid::reset()
 {

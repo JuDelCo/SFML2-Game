@@ -5,9 +5,8 @@ A little collection of simple games made with SFML2. Some of them can be unfinis
 
 To compile it, you'll need:
 
-- GCC >= 4.7.0
+- [GCC](http://gcc.gnu.org/) >= 4.7.0
 - [SFML](http://www.sfml-dev.org/) >= v2.1 (2013-07-25 fork)
-
 
 Games
 --------------
@@ -32,7 +31,6 @@ Games
 
 ![Alt text](/bin/Releases/Pong_1.0.0.png "Optional title")
 
-
 License
 =================
 
@@ -51,7 +49,6 @@ Permission is granted to anyone to use this software for any purpose, including 
 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 
 3. This notice may not be removed or altered from any source distribution.
-
 
 --------------
 

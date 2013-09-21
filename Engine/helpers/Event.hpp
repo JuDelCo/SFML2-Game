@@ -1,7 +1,10 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #pragma once
 #ifndef EVENT_HPP
 #define EVENT_HPP
-
 
 #include <stddef.h>
 #include <assert.h>
@@ -9,9 +12,7 @@
 #include <functional>
 #include <vector>
 
-
 #define EventManager Event::Manager
-
 
 namespace Event
 {
@@ -359,6 +360,5 @@ namespace Event
 			CollectorResult result_;
 	};
 } // Event
-
 
 #endif // EVENT_HPP

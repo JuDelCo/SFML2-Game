@@ -1,6 +1,9 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #include "Motion.hpp"
 #include <math.h>
-
 
 Motion::Motion(const float initialValue, const float maxVelocity, const float acceleration)
 {
@@ -10,7 +13,6 @@ Motion::Motion(const float initialValue, const float maxVelocity, const float ac
 
 	reset();
 }
-
 
 void Motion::newValue(const float newValue, const float timeStart)
 {
@@ -100,7 +102,6 @@ void Motion::newValue(const float newValue, const float timeStart)
 	}
 }
 
-
 void Motion::onTick(const float timeMs)
 {
 	if (m_inProgress)
@@ -173,7 +174,6 @@ void Motion::onTick(const float timeMs)
 	}
 }
 
-
 void Motion::reset()
 {
 	m_value = m_initialValue;
@@ -192,60 +192,50 @@ void Motion::reset()
 	m_previousTime = 0.0;
 }
 
-
 void Motion::setInitialValue(const float initialValue)
 {
 	m_initialValue = initialValue;
 }
-
 
 float Motion::getInitialValue()
 {
 	return m_initialValue;
 }
 
-
 float Motion::getMaxVelocity()
 {
 	return m_maxVelocity;
 }
-
 
 float Motion::getAcceleration()
 {
 	return m_acceleration;
 }
 
-
 float Motion::getValue()
 {
 	return m_value;
 }
-
 
 float Motion::getDesiredValue()
 {
 	return m_desiredValue;
 }
 
-
 float Motion::getSpeed()
 {
 	return m_speed;
 }
-
 
 int Motion::getPhase()
 {
 	return m_phase;
 }
 
-
 bool Motion::isInProgress()
 {
 	return m_inProgress;
 }
-
 
 bool Motion::isInAjust()
 {

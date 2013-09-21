@@ -1,10 +1,12 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #pragma once
 #ifndef TECH_DEMO_CONTROLLER_HPP
 #define TECH_DEMO_CONTROLLER_HPP
 
-
 #include "../../Engine/Includes.hpp"
-
 
 class TechDemo : public GameBase
 {
@@ -25,8 +27,6 @@ class TechDemo : public GameBase
 		Sprite m_spriteTest;
 };
 
-
 typedef std::shared_ptr<TechDemo> TechDemoPtr;
-
 
 #endif // TECH_DEMO_CONTROLLER_HPP

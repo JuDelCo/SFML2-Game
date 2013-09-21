@@ -1,7 +1,10 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #include "TaskManager.hpp"
 #include <algorithm>
 #include <cassert>
-
 
 bool ITaskManager::addTask(taskPtr& task)
 {
@@ -27,7 +30,6 @@ bool ITaskManager::addTask(taskPtr& task)
 	return true;
 }
 
-
 void ITaskManager::updateTaskList()
 {
 	while (!m_taskList.empty())
@@ -52,7 +54,6 @@ void ITaskManager::updateTaskList()
 	}
 }
 
-
 void ITaskManager::suspendTask(taskPtr& task)
 {
 	if (std::find(m_taskList.begin(), m_taskList.end(), task) != m_taskList.end())
@@ -62,7 +63,6 @@ void ITaskManager::suspendTask(taskPtr& task)
 		m_pausedTaskList.emplace_back(task);
 	}
 }
-
 
 void ITaskManager::resumeTask(taskPtr& task)
 {
@@ -87,7 +87,6 @@ void ITaskManager::resumeTask(taskPtr& task)
 	}
 }
 
-
 void ITaskManager::removeTask(taskPtr& task)
 {
 	assert(task && "Tried to remove a null task.");
@@ -109,7 +108,6 @@ void ITaskManager::removeTask(taskPtr& task)
 		return;
 	}
 }
-
 
 void ITaskManager::killAllTasks()
 {

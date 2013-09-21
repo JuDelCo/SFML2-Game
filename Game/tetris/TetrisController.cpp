@@ -1,6 +1,9 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #include "TetrisController.hpp"
 #include <stdlib.h>
-
 
 int Tetris::blockInfoColor[] =
 {
@@ -71,7 +74,6 @@ int Tetris::blockInfo[10][4*4] =
 	}
 };
 
-
 Tetris::Tetris()
 {
 	if (!m_scoreFont.loadFromFile("resources/arial.ttf"))
@@ -119,7 +121,6 @@ Tetris::Tetris()
 	m_input->EventKeyDown.connect(Event::CreateCallBack(this, &Tetris::onKeyDown));
 	m_input->EventQuit.connect(Event::CreateCallBack(this, &Tetris::onQuit));
 }
-
 
 void Tetris::onTick()
 {
@@ -225,7 +226,6 @@ void Tetris::onTick()
 	}
 }
 
-
 void Tetris::onRender()
 {
 	m_video->clear(sf::Color::White);
@@ -320,7 +320,6 @@ void Tetris::onRender()
 	m_video->swapBuffers();
 }
 
-
 void Tetris::onKeyDown(int keyCode)
 {
 	switch (keyCode)
@@ -351,12 +350,10 @@ void Tetris::onKeyDown(int keyCode)
 	}
 }
 
-
 void Tetris::onQuit()
 {
 	stop();
 }
-
 
 void Tetris::reset()
 {
@@ -383,7 +380,6 @@ void Tetris::reset()
 	m_timingTimer.start();
 	m_lastUpdateTime = m_timingTimer.getTicks();
 }
-
 
 sf::Color Tetris::getColor(unsigned int colorId)
 {
@@ -414,7 +410,6 @@ sf::Color Tetris::getColor(unsigned int colorId)
 	return color;
 }
 
-
 void Tetris::changeNextBlock()
 {
 	if(m_hardMode && (rand() % 100 > 35))
@@ -426,7 +421,6 @@ void Tetris::changeNextBlock()
 		m_nextBlockId = (rand() % 7);
 	}
 }
-
 
 bool Tetris::checkCollision(sf::Vector2i playerPosition)
 {
@@ -471,7 +465,6 @@ bool Tetris::checkCollision(sf::Vector2i playerPosition)
 	return false;
 }
 
-
 void Tetris::copyBlockInfoToPlayer()
 {
 	for(int x = 0; x < (m_blockPlayerStackSize.x * m_blockPlayerStackSize.y); ++x)
@@ -485,7 +478,6 @@ void Tetris::copyBlockInfoToPlayer()
 		}
 	}
 }
-
 
 void Tetris::copyPlayerToBoard()
 {
@@ -575,7 +567,6 @@ bool Tetris::checkLinesBoard()
 
 	return hasLines;
 }
-
 
 void Tetris::rotatePlayerBlocks()
 {

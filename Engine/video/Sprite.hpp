@@ -1,13 +1,15 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #pragma once
 #ifndef SPRITE_HPP
 #define SPRITE_HPP
-
 
 #include <SFML/Graphics.hpp>
 #include <memory>
 
 typedef std::shared_ptr<sf::Texture> TexturePtr;
-
 
 class Sprite : public sf::Drawable, public sf::Transformable
 {
@@ -49,6 +51,5 @@ class Sprite : public sf::Drawable, public sf::Transformable
 		bool m_flipVertical;
 		bool m_updated;
 };
-
 
 #endif // SPRITE_HPP

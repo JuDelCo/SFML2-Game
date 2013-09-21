@@ -1,6 +1,9 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #include "Video.hpp"
 #include "../Defines.hpp"
-
 
 Video::Video()
 {
@@ -11,12 +14,10 @@ Video::Video()
 	m_window = RenderWindowPtr(new sf::RenderWindow());
 }
 
-
 Video::~Video()
 {
 	endWindow();
 }
-
 
 bool Video::init()
 {
@@ -36,7 +37,6 @@ bool Video::init()
 	return false;
 }
 
-
 void Video::initWindow()
 {
 	m_window->create(sf::VideoMode(m_resolution.x, m_resolution.y), m_title, sf::Style::Titlebar | sf::Style::Close);
@@ -50,7 +50,6 @@ void Video::initWindow()
 	}
 }
 
-
 void Video::endWindow()
 {
 	if(m_window->isOpen())
@@ -59,36 +58,30 @@ void Video::endWindow()
 	}
 }
 
-
 void Video::swapBuffers()
 {
 	m_window->display();
 }
-
 
 sf::Vector2u Video::getSize()
 {
 	return m_window->getSize();
 }
 
-
 RenderWindowPtr Video::getWindow()
 {
 	return m_window;
 }
-
 
 sf::Vector2i Video::getCameraPosition()
 {
 	return m_cameraPosition;
 }
 
-
 float Video::getFpsLimit()
 {
 	return m_fpsLimit;
 }
-
 
 void Video::setFpsLimit(float fpsLimit)
 {
@@ -97,7 +90,6 @@ void Video::setFpsLimit(float fpsLimit)
 		m_fpsLimit = fpsLimit;
 	}
 }
-
 
 void Video::changeTitle(std::string title)
 {
@@ -109,7 +101,6 @@ void Video::changeTitle(std::string title)
 	}
 }
 
-
 void Video::changeResolution(sf::Vector2u resolution)
 {
 	m_resolution = resolution;
@@ -120,18 +111,15 @@ void Video::changeResolution(sf::Vector2u resolution)
 	}
 }
 
-
 void Video::setCameraPosition(sf::Vector2i position)
 {
 	m_cameraPosition = position;
 }
 
-
 void Video::moveCameraPosition(sf::Vector2i offset)
 {
 	m_cameraPosition += offset;
 }
-
 
 void Video::viewReset(sf::FloatRect rect)
 {
@@ -142,30 +130,25 @@ void Video::viewReset(sf::FloatRect rect)
 	m_window->setView(view);
 }
 
-
 void Video::viewResetToCamera()
 {
 	viewReset(sf::FloatRect(getCameraPosition().x, getCameraPosition().y, getSize().x, getSize().y));
 }
-
 
 void Video::clear(sf::Color color)
 {
 	m_window->clear(color);
 }
 
-
 void Video::draw(sf::Drawable& drawable)
 {
 	m_window->draw(drawable);
 }
 
-
 void Video::draw(sf::Drawable& drawable, sf::RenderStates& renderStates)
 {
 	m_window->draw(drawable, renderStates);
 }
-
 
 static sf::CircleShape circleDrawPoint;
 void Video::drawPoint(const float positionX, const float positionY, const sf::Color color)
@@ -176,7 +159,6 @@ void Video::drawPoint(const float positionX, const float positionY, const sf::Co
 
 	m_window->draw(circleDrawPoint);
 }
-
 
 static sf::RectangleShape rectangleDrawRectangle;
 void Video::drawRectangle(const sf::Vector2f position, const sf::Vector2f size, const sf::Color color)

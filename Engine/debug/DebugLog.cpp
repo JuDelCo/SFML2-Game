@@ -1,20 +1,21 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #include "DebugLog.hpp"
 #include "../Defines.hpp"
 #include <iostream>
 #include <stdarg.h>
-
 
 Debug::Debug()
 {
 	m_logStrings.clear();
 }
 
-
 Debug::~Debug()
 {
 	closeFile();
 }
-
 
 bool Debug::openFile(std::string fileName)
 {
@@ -37,7 +38,6 @@ bool Debug::openFile(std::string fileName)
 	return false;
 }
 
-
 void Debug::closeFile()
 {
 	if(m_logger.is_open())
@@ -45,7 +45,6 @@ void Debug::closeFile()
 		m_logger.close();
 	}
 }
-
 
 bool Debug::loadStrings(std::string fileName)
 {
@@ -65,7 +64,6 @@ bool Debug::loadStrings(std::string fileName)
 
 	return true;
 }
-
 
 void Debug::write(int target, std::string message, ...)
 {
@@ -90,7 +88,6 @@ void Debug::write(int target, std::string message, ...)
 
 	va_end(args);
 }
-
 
 bool Debug::write(int target, unsigned long messageId, ...)
 {

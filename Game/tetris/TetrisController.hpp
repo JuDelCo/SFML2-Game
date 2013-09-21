@@ -1,11 +1,13 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #pragma once
 #ifndef TETRIS_CONTROLLER_HPP
 #define TETRIS_CONTROLLER_HPP
 
-
 #include "../../Engine/Includes.hpp"
 #include <SFML/Audio.hpp>
-
 
 class Tetris : public GameBase
 {
@@ -56,8 +58,6 @@ class Tetris : public GameBase
 		unsigned int m_playerScore;
 };
 
-
 typedef std::shared_ptr<Tetris> TetrisPtr;
-
 
 #endif // TETRIS_CONTROLLER_HPP

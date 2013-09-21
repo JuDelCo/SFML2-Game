@@ -1,6 +1,9 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #include "PongController.hpp"
 #include <stdlib.h>
-
 
 Pong::Pong()
 {
@@ -26,7 +29,6 @@ Pong::Pong()
 	m_input->EventKeyDown.connect(Event::CreateCallBack(this, &Pong::onKeyDown));
 	m_input->EventQuit.connect(Event::CreateCallBack(this, &Pong::onQuit));
 }
-
 
 void Pong::onTick()
 {
@@ -132,7 +134,6 @@ void Pong::onTick()
 	m_ballPosition += m_ballVelocity;
 }
 
-
 void Pong::onRender()
 {
 	m_video->clear(sf::Color::Black);
@@ -155,7 +156,6 @@ void Pong::onRender()
 	m_video->swapBuffers();
 }
 
-
 void Pong::onKeyDown(int keyCode)
 {
 	switch (keyCode)
@@ -170,12 +170,10 @@ void Pong::onKeyDown(int keyCode)
 	}
 }
 
-
 void Pong::onQuit()
 {
 	stop();
 }
-
 
 void Pong::reset()
 {

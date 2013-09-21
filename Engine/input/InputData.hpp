@@ -1,12 +1,14 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #pragma once
 #ifndef INPUT_DATA_HPP
 #define INPUT_DATA_HPP
 
-
 #include <memory>
 
 #define NUMBER_OF_KEYS (sizeof(KeyInfo)/sizeof(Key))
-
 
 typedef struct
 {
@@ -15,9 +17,7 @@ typedef struct
 	int sdlKey;
 } Key;
 
-
 typedef std::shared_ptr<Key> KeyPtr;
-
 
 typedef struct
 {
@@ -124,9 +124,7 @@ typedef struct
 	Key Pause;
 } KeyInfo;
 
-
 typedef std::shared_ptr<KeyInfo> KeyInfoPtr;
-
 
 enum KeyId
 {
@@ -233,7 +231,6 @@ enum KeyId
 	Pause
 };
 
-
 static const KeyInfo KEY_CONFIG =
 {
 	{ 0, 'a',  0 },         // A
@@ -339,7 +336,6 @@ static const KeyInfo KEY_CONFIG =
 	{ 0, '\0', 100 },       // Pause
 };
 
-
 typedef struct
 {
 	bool left;
@@ -349,9 +345,7 @@ typedef struct
 	bool wheelDown;
 } MouseKey;
 
-
 typedef std::shared_ptr<MouseKey> MouseKeyPtr;
-
 
 typedef struct
 {
@@ -364,8 +358,6 @@ typedef struct
 	MouseKey up;
 } MouseInfo;
 
-
 typedef std::shared_ptr<MouseInfo> MouseInfoPtr;
-
 
 #endif // INPUT_DATA_HPP

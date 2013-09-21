@@ -1,10 +1,12 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #pragma once
 #ifndef TILE_MAP_HPP
 #define TILE_MAP_HPP
 
-
 #include <SFML\Graphics.hpp>
-
 
 class TileMap : public sf::Drawable
 {
@@ -26,6 +28,5 @@ class TileMap : public sf::Drawable
 		unsigned int m_height;
 		sf::Vector2u m_tileSize;
 };
-
 
 #endif // TILE_MAP_HPP

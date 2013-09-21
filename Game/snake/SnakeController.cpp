@@ -1,6 +1,9 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #include "SnakeController.hpp"
 #include <stdlib.h>
-
 
 Snake::Snake()
 {
@@ -36,7 +39,6 @@ Snake::Snake()
 	m_input->EventKeyDown.connect(Event::CreateCallBack(this, &Snake::onKeyDown));
 	m_input->EventQuit.connect(Event::CreateCallBack(this, &Snake::onQuit));
 }
-
 
 void Snake::onTick()
 {
@@ -182,7 +184,6 @@ void Snake::onTick()
 	m_sound.play();
 }
 
-
 void Snake::onRender()
 {
 	m_video->clear(sf::Color::White);
@@ -211,7 +212,6 @@ void Snake::onRender()
 
 	m_video->swapBuffers();
 }
-
 
 void Snake::onKeyDown(int keyCode)
 {
@@ -243,12 +243,10 @@ void Snake::onKeyDown(int keyCode)
 	}
 }
 
-
 void Snake::onQuit()
 {
 	stop();
 }
-
 
 void Snake::reset()
 {
@@ -277,7 +275,6 @@ void Snake::reset()
 
 	createNewFood();
 }
-
 
 void Snake::createNewFood()
 {

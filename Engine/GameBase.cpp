@@ -1,9 +1,12 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
 #include "GameBase.hpp"
 #include "Defines.hpp"
 #include "input/Input.hpp"
 #include "video/Video.hpp"
 #include "helpers/Timer.hpp"
-
 
 GameBase::GameBase()
 {
@@ -16,7 +19,6 @@ GameBase::GameBase()
 	m_run = true;
 }
 
-
 void GameBase::start()
 {
 	if(m_video->init())
@@ -25,30 +27,25 @@ void GameBase::start()
 	}
 }
 
-
 void GameBase::stop()
 {
 	m_run = false;
 }
-
 
 unsigned int GameBase::getTimeRunning()
 {
 	return m_runningTimer.getTicks();
 }
 
-
 unsigned int GameBase::getFps()
 {
 	return m_fps;
 }
 
-
 void GameBase::delayMs(const unsigned int delayMs)
 {
 	sf::sleep(sf::milliseconds(delayMs));
 }
-
 
 void GameBase::loop()
 {
@@ -82,7 +79,6 @@ void GameBase::loop()
 	systemEnd();
 }
 
-
 void GameBase::systemInit()
 {
 	m_fpsCounter = 0;
@@ -93,7 +89,6 @@ void GameBase::systemInit()
 	m_runningTimer.start();
 	m_updateTimer.start();
 }
-
 
 void GameBase::systemEnd()
 {
