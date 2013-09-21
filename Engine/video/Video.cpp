@@ -161,6 +161,12 @@ void Video::draw(sf::Drawable& drawable)
 }
 
 
+void Video::draw(sf::Drawable& drawable, sf::RenderStates& renderStates)
+{
+	m_window->draw(drawable, renderStates);
+}
+
+
 static sf::CircleShape circleDrawPoint;
 void Video::drawPoint(const float positionX, const float positionY, const sf::Color color)
 {

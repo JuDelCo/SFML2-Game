@@ -109,6 +109,17 @@ void Sprite::setColor(const sf::Color& color)
 }
 
 
+void Sprite::setColor(const sf::Color& color1, const sf::Color& color2, const sf::Color& color3, const sf::Color& color4)
+{
+	m_vertices[0].color = color1;
+	m_vertices[1].color = color2;
+	m_vertices[2].color = color3;
+	m_vertices[3].color = color4;
+
+	m_updated = true;
+}
+
+
 void Sprite::bindTexture(TexturePtr texture)
 {
 	m_texture = texture;

@@ -29,6 +29,7 @@ class Video
 		void viewResetToCamera();
 		void clear(sf::Color color);
 		void draw(sf::Drawable& drawable);
+		void draw(sf::Drawable& drawable, sf::RenderStates& renderStates);
 		void drawPoint(const float positionX, const float positionY, const sf::Color color);
 		void drawRectangle(const sf::Vector2f position, const sf::Vector2f size, const sf::Color color);
 

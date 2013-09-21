@@ -58,33 +58,42 @@ void TechDemo::onRender()
 
 	m_video->draw(*m_tileMap);
 
-	m_spriteTest.setPosition(100,350);
+	sf::RenderStates renderStates;
+	renderStates.blendMode = sf::BlendMode::BlendAdd;
+
+	m_spriteTest.setPosition(100,100);
 	m_spriteTest.setFrame(0);
 	m_spriteTest.setColor(sf::Color::Red);
 	m_spriteTest.flipHorizontal(false);
 	m_spriteTest.flipVertical(false);
-	m_video->draw(m_spriteTest);
+	m_video->draw(m_spriteTest, renderStates);
 
-	m_spriteTest.setPosition(200,350);
+	renderStates.blendMode = sf::BlendMode::BlendAlpha;
+
+	m_spriteTest.setPosition(200,100);
 	m_spriteTest.setFrame(1);
-	m_spriteTest.setColor(sf::Color::Yellow);
+	m_spriteTest.setColor(sf::Color(0,0,0), sf::Color(50,50,50), sf::Color(150,150,150), sf::Color(255,255,255));
 	m_spriteTest.flipHorizontal(true);
 	m_spriteTest.flipVertical(false);
-	m_video->draw(m_spriteTest);
+	m_video->draw(m_spriteTest, renderStates);
 
-	m_spriteTest.setPosition(300,350);
+	renderStates.blendMode = sf::BlendMode::BlendMultiply;
+
+	m_spriteTest.setPosition(300,100);
 	m_spriteTest.setFrame(0);
 	m_spriteTest.setColor(sf::Color::Blue);
 	m_spriteTest.flipHorizontal(false);
 	m_spriteTest.flipVertical(true);
-	m_video->draw(m_spriteTest);
+	m_video->draw(m_spriteTest, renderStates);
 
-	m_spriteTest.setPosition(400,350);
+	renderStates.blendMode = sf::BlendMode::BlendNone;
+
+	m_spriteTest.setPosition(400,100);
 	m_spriteTest.setFrame(1);
 	m_spriteTest.setColor(sf::Color::Green);
 	m_spriteTest.flipHorizontal(true);
 	m_spriteTest.flipVertical(true);
-	m_video->draw(m_spriteTest);
+	m_video->draw(m_spriteTest, renderStates);
 
 	m_video->swapBuffers();
 }

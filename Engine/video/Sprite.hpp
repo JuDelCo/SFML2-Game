@@ -25,6 +25,7 @@ class Sprite : public sf::Drawable, public sf::Transformable
 		void flipHorizontal(bool flipHorizontal);
 		void flipVertical(bool flipVertical);
 		void setColor(const sf::Color& color);
+		void setColor(const sf::Color& color1, const sf::Color& color2, const sf::Color& color3, const sf::Color& color4);
 		void bindTexture(TexturePtr texture);
 		void setPosition(float x, float y);
 		void setPosition(const sf::Vector2f &position);
