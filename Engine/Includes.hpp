@@ -11,6 +11,7 @@
 #include "input/Input.hpp"
 #include "video/Video.hpp"
 #include "video/Sprite.hpp"
+#include "video/SpriteBatch.hpp"
 #include "video/TileMap.hpp"
 #include "debug/DebugLog.hpp"
 #include "helpers/Timer.hpp"
