@@ -18,12 +18,12 @@ class Video
 		~Video();
 		bool init();
 		void swapBuffers();
-		sf::Vector2u getSize();
 		RenderWindowPtr getWindow();
-		sf::Vector2i getCameraPosition();
+		const sf::Vector2i getCameraPosition();
 		float getFpsLimit();
 		void setFpsLimit(float fpsLimit);
 		void changeTitle(std::string title);
+		const sf::Vector2u getResolution();
 		void changeResolution(sf::Vector2u resolution);
 		void setCameraPosition(sf::Vector2i position);
 		void moveCameraPosition(sf::Vector2i offset);

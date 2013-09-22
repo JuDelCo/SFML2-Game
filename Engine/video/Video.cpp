@@ -63,9 +63,9 @@ void Video::swapBuffers()
 	m_window->display();
 }
 
-sf::Vector2u Video::getSize()
+const sf::Vector2u Video::getResolution()
 {
-	return m_window->getSize();
+	return m_resolution;
 }
 
 RenderWindowPtr Video::getWindow()
@@ -73,7 +73,7 @@ RenderWindowPtr Video::getWindow()
 	return m_window;
 }
 
-sf::Vector2i Video::getCameraPosition()
+const sf::Vector2i Video::getCameraPosition()
 {
 	return m_cameraPosition;
 }
@@ -132,7 +132,7 @@ void Video::viewReset(sf::FloatRect rect)
 
 void Video::viewResetToCamera()
 {
-	viewReset(sf::FloatRect(getCameraPosition().x, getCameraPosition().y, getSize().x, getSize().y));
+	viewReset(sf::FloatRect(getCameraPosition().x, getCameraPosition().y, getResolution().x, getResolution().y));
 }
 
 void Video::clear(sf::Color color)
