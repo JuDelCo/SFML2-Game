@@ -43,6 +43,7 @@ class Sprite : public sf::Drawable, public sf::Transformable
 	private:
 		void updateVertex();
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
 		std::vector<sf::Vertex> m_vertices;
 		sf::Vector2i m_size;
 		sf::IntRect m_textureRect;

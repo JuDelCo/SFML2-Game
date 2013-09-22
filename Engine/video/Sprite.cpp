@@ -9,7 +9,10 @@ Sprite::Sprite()
 	m_vertices.resize(4);
 	m_flipHorizontal = false;
 	m_flipVertical = false;
-	m_updated = false;
+	m_updated = true;
+	m_size = sf::Vector2i(0, 0);
+	m_textureRect = sf::IntRect(0, 0, 0, 0);
+	m_texture = nullptr;
 }
 
 Sprite::Sprite(TexturePtr texture) : Sprite()
@@ -42,8 +45,6 @@ void Sprite::setSize(sf::Vector2i spriteSize)
 	m_vertices[1].position = sf::Vector2f(m_size.x, 0);
 	m_vertices[2].position = sf::Vector2f(m_size.x, m_size.y);
 	m_vertices[3].position = sf::Vector2f(0, m_size.y);
-
-	setOrigin(sf::Vector2f(m_size.x / 2.0f, m_size.y / 2.0f));
 }
 
 sf::Vector2i Sprite::getSize()
