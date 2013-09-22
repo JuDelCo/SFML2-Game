@@ -25,6 +25,7 @@ class TechDemo : public GameBase
 		TileMap* m_tileMap;
 		sf::Texture m_textureTest;
 		Sprite m_spriteTest;
+		SpriteBatch m_spriteBatchTest;
 };
 
 typedef std::shared_ptr<TechDemo> TechDemoPtr;

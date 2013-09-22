@@ -27,6 +27,15 @@ TechDemo::TechDemo()
 		stop();
 	}
 
+	for(unsigned int x = 0; x < 307200; ++x) // Warning, TOO MUCH SPRITES (But it works very well...)
+	{
+		Sprite& sprite = m_spriteBatchTest.newSprite(Sprite());
+		sprite.setSize(sf::Vector2i(1, 1));
+		sprite.setPosition(sf::Vector2f((x * sprite.getSize().x) % m_video->getResolution().x, (int)(x / (m_video->getResolution().x / sprite.getSize().x)) * sprite.getSize().y));
+		sprite.setColor(sf::Color(rand() % 255, rand() % 255, rand() % 255));
+	}
+	m_spriteBatchTest.update();
+
 	m_spriteTest.setSize(sf::Vector2i(15,15));
 	m_spriteTest.bindTexture(TexturePtr(&m_textureTest));
 	m_spriteTest.setOrigin(7.5,7.5);
@@ -54,6 +63,8 @@ void TechDemo::onRender()
 	m_video->clear(sf::Color::Black);
 
 	m_video->viewResetToCamera();
+
+	m_video->draw(m_spriteBatchTest);
 
 	m_video->draw(*m_tileMap);
 
