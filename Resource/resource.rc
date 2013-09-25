@@ -1,0 +1,67 @@
+// Copyright (c) 2013 Juan Delgado (JuDelCo)
+// License: zlib/libpng License
+// zlib/libpng License web page: http://opensource.org/licenses/Zlib
+
+#if __WIN32 || __WIN32__
+
+#include <windows.h>
+
+#define VERSION_MAJOR 0
+#define VERSION_MINOR 0
+#define VERSION_PATCH 1
+#define VERSION ((VERSION_MAJOR<<16) | (VERSION_MINOR<<8) | (VERSION_PATCH))
+#define VERSION_STRING "0.0.1"
+#define RC_VERSION VERSION_MAJOR,VERSION_MINOR,VERSION_PATCH,0
+#define COPYRIGHT_STRING "Copyright (C) 2013 JuDelCo Developments"
+
+//Setup the .exe icon
+VS_USER_DEFINED ICON "icon.ico"
+
+//Application Languages
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
+
+//.exe information
+VS_VERSION_INFO VERSIONINFO
+    FILEVERSION      RC_VERSION
+    PRODUCTVERSION   RC_VERSION
+    FILEFLAGSMASK    VS_FFI_FILEFLAGSMASK
+#ifdef _DEBUG
+    FILEFLAGS        VS_FF_DEBUG|VS_FF_PRIVATEBUILD|VS_FF_PRERELEASE
+#else
+    FILEFLAGS        0x0L // final version
+#endif
+    FILEOS           VOS_NT_WINDOWS32
+    FILETYPE         VFT_APP
+    FILESUBTYPE      VFT2_UNKNOWN // not used
+{
+    BLOCK "StringFileInfo"
+    {
+        BLOCK "040904E4"
+        {
+            VALUE "Build",            "2013"
+            VALUE "Comments",         "Free for personal use only"
+            VALUE "CompanyName",      "JuDelCo Developments"
+            VALUE "Developer",        "Juan Delgado (JuDelCo)"
+            VALUE "FileDescription",  "SFML2 - Random Games"
+            VALUE "FileVersion",      VERSION_STRING
+            VALUE "InternalName",     "TheGame"
+            VALUE "LegalCopyright",   COPYRIGHT_STRING
+            VALUE "LegalTrademarks",  "All rights reserved"
+            VALUE "OriginalFilename", "TheGame.exe"
+            VALUE "PrivateBuild",     " "
+            VALUE "ProductName",      "SFML2 Game"
+            VALUE "ProductVersion",   VERSION_STRING
+            VALUE "SpecialBuild",     " "
+            VALUE "Support",          "https://twitter.com/JuDelCo"
+            VALUE "Users",            "Unlimited"
+        }
+    }
+    BLOCK "VarFileInfo"
+    {
+        VALUE "Translation", 0x0809, 1252  // Lang=UK English, CharSet=Windows Multilingual
+        //0x0809 = MAKELANGID(LANG_ENGLISH,SUBLANG_ENGLISH_UK) -- in <winnt.h>
+        //0x0409 = MAKELANGID(LANG_ENGLISH,SUBLANG_ENGLISH_US)
+    }
+}
+
+#endif

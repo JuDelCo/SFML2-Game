@@ -1,6 +1,5 @@
 _DOC/*
 _TEMP/*
-Resource/*
 bin/obj/*
 bin/*.exe
 bin/*.dll
