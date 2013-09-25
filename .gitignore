@@ -6,7 +6,7 @@ bin/*.exe
 bin/*.dll
 bin/*.txt
 
-*.txt
+*.user
 *.bat
 *.cbp
 *.depend
