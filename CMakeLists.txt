@@ -12,7 +12,7 @@ set(CMAKE_CXX_FLAGS_DEBUG   "-g -O0")
 set(CMAKE_CXX_FLAGS_RELEASE "-s -O2")
 set(SFML_DEBUG_LIBS   "-lmingw32 -lsfml-graphics-s-d -lsfml-audio-s-d -lsfml-window-s-d -lsfml-system-s-d -lopengl32 -lglu32 -static-libgcc -static-libstdc++")
 set(SFML_RELEASE_LIBS "-lmingw32 -lsfml-graphics-s   -lsfml-audio-s   -lsfml-window-s   -lsfml-system-s   -lopengl32 -lglu32 -static-libgcc -static-libstdc++ -mwindows")
-set(SFML_PATH "C:/Programacion/CppLibs/SFML2_2.1_20130725/")
+set(SFML_PATH "C:/Programacion/CppLibs/SFML2_2.1_20130924/")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 
 set(SOURCE_ENGINE
