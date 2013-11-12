@@ -15,7 +15,7 @@ class SpriteBatch : public sf::Drawable, public sf::Transformable
 {
 	public:
 		SpriteBatch();
-		~SpriteBatch() {};
+		~SpriteBatch() {}
 		Sprite& operator[] (unsigned int index);
 		Sprite& newSprite(Sprite&& sprite);
 		bool deleteSprite(Sprite& sprite);

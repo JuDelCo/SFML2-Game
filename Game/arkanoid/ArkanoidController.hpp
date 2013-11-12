@@ -13,7 +13,7 @@ class Arkanoid : public GameBase
 {
 	public:
 		Arkanoid();
-		~Arkanoid() {};
+		~Arkanoid() {}
 
 	private:
 		void onTick();

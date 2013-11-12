@@ -17,7 +17,7 @@ class Sprite : public sf::Drawable, public sf::Transformable
 		Sprite();
 		Sprite(TexturePtr texture);
 		Sprite(TexturePtr texture, sf::IntRect textureRect);
-		~Sprite() {};
+		~Sprite() {}
 		bool isUpdated();
 		const sf::Vertex* getUpdate();
 		void setSize(sf::Vector2i spriteSize);

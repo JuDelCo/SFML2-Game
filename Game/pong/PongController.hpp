@@ -13,7 +13,7 @@ class Pong : public GameBase
 {
 	public:
 		Pong();
-		~Pong() {};
+		~Pong() {}
 
 	private:
 		void onTick();

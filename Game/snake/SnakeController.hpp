@@ -13,7 +13,7 @@ class Snake : public GameBase
 {
 	public:
 		Snake();
-		~Snake() {};
+		~Snake() {}
 
 	private:
 		void onTick();

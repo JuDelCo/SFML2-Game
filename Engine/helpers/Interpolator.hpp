@@ -10,7 +10,7 @@ class IInterpolator
 {
 	public:
 		IInterpolator();
-		virtual ~IInterpolator() {};
+		virtual ~IInterpolator() {}
 		virtual float update(float value) = 0;
 		float getValue();
 		bool isFinished();

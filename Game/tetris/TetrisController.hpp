@@ -13,7 +13,7 @@ class Tetris : public GameBase
 {
 	public:
 		Tetris();
-		~Tetris() {};
+		~Tetris() {}
 
 	private:
 		void onTick();

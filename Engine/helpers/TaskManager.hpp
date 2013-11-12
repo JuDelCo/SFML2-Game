@@ -16,7 +16,7 @@ class ITaskManager : public ITask
 {
 	public:
 		ITaskManager(unsigned int priority = 10000) : ITask(priority) {};
-		~ITaskManager() {};
+		~ITaskManager() {}
 
 		bool addTask(taskPtr& task);
 		void updateTaskList();

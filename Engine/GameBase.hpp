@@ -16,7 +16,7 @@ class GameBase
 {
 	public:
 		GameBase();
-		~GameBase() {};
+		~GameBase() {}
 		void start();
 		void stop();
 		unsigned int getTimeRunning();
@@ -32,10 +32,10 @@ class GameBase
 		void loop();
 		void systemInit();
 		void systemEnd();
-		virtual void init() {};
+		virtual void init() {}
 		virtual void onTick() = 0;
 		virtual void onRender() = 0;
-		virtual void end() {};
+		virtual void end() {}
 
 		bool m_run;
 		unsigned int m_fpsCounter;

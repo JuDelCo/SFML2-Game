@@ -16,7 +16,7 @@ class Input
 {
 	public:
 		Input();
-		~Input() {};
+		~Input() {}
 		void onTick(RenderWindowPtr window);
 		void releaseAll();
 		void releaseKeys();

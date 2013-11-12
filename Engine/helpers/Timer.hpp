@@ -19,7 +19,7 @@ class Timer
 {
 	public:
 		Timer();
-		~Timer() {};
+		~Timer() {}
 		void start();
 		void reset();
 		void pause();

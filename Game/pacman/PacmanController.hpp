@@ -13,7 +13,7 @@ class Pacman : public GameBase
 {
 	public:
 		Pacman();
-		~Pacman() {};
+		~Pacman() {}
 
 	private:
 		void onTick();
