@@ -18,8 +18,8 @@ class TechDemo : public GameBase
 		void onTick();
 		void onRender();
 		void onKeyDown(int keyCode);
-		void onMouseMotion(sf::Vector2i mousePosition);
-		void onMouseDown(sf::Mouse::Button mouseButton);
+		void onMouseMotion(MouseInfoPtr mouse);
+		void onMouseDown(MouseInfoPtr mouse);
 		void onQuit();
 
 		TileMap* m_tileMap;

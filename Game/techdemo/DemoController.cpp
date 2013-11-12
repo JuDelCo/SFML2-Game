@@ -4,7 +4,7 @@
 
 #include "DemoController.hpp"
 
-int level[] =
+int demo_level[] =
 {
 	0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
 	0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 3, 0, 0, 0, 0,
@@ -18,7 +18,7 @@ int level[] =
 
 TechDemo::TechDemo()
 {
-	m_tileMap = new TileMap("resources/tileset.png", sf::Vector2u(32, 32), level, 16, 8);
+	m_tileMap = new TileMap("resources/tileset.png", sf::Vector2u(32, 32), demo_level, 16, 8);
 
 	m_video->changeTitle("TechDemo");
 
@@ -116,17 +116,17 @@ void TechDemo::onKeyDown(int keyCode)
 	}
 }
 
-void TechDemo::onMouseMotion(sf::Vector2i mousePosition)
+void TechDemo::onMouseMotion(MouseInfoPtr mouse)
 {
-	if (m_input->getMouse()->held.right)
+	if (mouse->held.right)
 	{
-		m_video->moveCameraPosition(sf::Vector2i(m_input->getMouse()->xRel, m_input->getMouse()->yRel));
+		m_video->moveCameraPosition(sf::Vector2i(mouse->xRel, mouse->yRel));
 	}
 }
 
-void TechDemo::onMouseDown(sf::Mouse::Button mouseButton)
+void TechDemo::onMouseDown(MouseInfoPtr mouse)
 {
-	if (m_input->getMouse()->press.left)
+	if (mouse->press.left)
 	{
 		sf::Vector2i mousePositionWorld = m_input->getMousePos() + m_video->getCameraPosition();
 

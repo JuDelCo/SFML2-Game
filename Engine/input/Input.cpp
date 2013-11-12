@@ -152,7 +152,7 @@ void Input::pollEvents(RenderWindowPtr window)
 			m_mouse.x = event.mouseMove.x;
 			m_mouse.y = event.mouseMove.y;
 
-			EventMouseMotion.emit(sf::Vector2i(event.mouseMove.x, event.mouseMove.y));
+			EventMouseMotion.emit(getMouse());
 		}
 		else if(event.type == sf::Event::KeyPressed)
 		{
@@ -210,7 +210,7 @@ void Input::pollEvents(RenderWindowPtr window)
 				m_mouse.y = event.mouseButton.y;
 			}
 
-			EventMouseDown.emit(event.mouseButton.button);
+			EventMouseDown.emit(getMouse());
 		}
 		else if(event.type == sf::Event::MouseButtonReleased)
 		{
@@ -236,7 +236,7 @@ void Input::pollEvents(RenderWindowPtr window)
 				m_mouse.y = event.mouseButton.y;
 			}
 
-			EventMouseUp.emit(event.mouseButton.button);
+			EventMouseUp.emit(getMouse());
 		}
 		else if(event.type == sf::Event::TextEntered)
 		{

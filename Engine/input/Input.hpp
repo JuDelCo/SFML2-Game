@@ -35,13 +35,13 @@ class Input
 		sf::Vector2i getMousePos();
 		sf::Vector2i getMousePosRel();
 
-		EventManager<void (sf::Vector2i)> EventMouseMotion;
+		EventManager<void (MouseInfoPtr)> EventMouseMotion;
+		EventManager<void (MouseInfoPtr)> EventMouseDown;
+		EventManager<void (MouseInfoPtr)> EventMouseUp;
+		EventManager<void (bool)> EventMouseWheel;
 		EventManager<void (int)> EventKeyDown;
 		EventManager<void (int)> EventKeyUp;
-		EventManager<void (sf::Mouse::Button)> EventMouseDown;
-		EventManager<void (sf::Mouse::Button)> EventMouseUp;
 		EventManager<void (sf::Uint32)> EventTextEntered;
-		EventManager<void (bool)> EventMouseWheel;
 		EventManager<void ()> EventMouseFocus;
 		EventManager<void ()> EventMouseBlur;
 		EventManager<void ()> EventKeyFocus;
