@@ -33,4 +33,13 @@ inline bool collisionAABB(sf::Vector2f position1, sf::Vector2f size1, sf::Vector
 		? true : false);
 }
 
+inline bool collisionRectPoint(sf::Vector2f position, sf::Vector2f size, sf::Vector2f point)
+{
+	return (position.x <= point.x &&
+			position.x + size.x >= point.x &&
+			position.y <= point.y &&
+			position.y + size.y >= point.y
+		? true : false);
+}
+
 #endif // UTIL_HPP
