@@ -12,6 +12,8 @@
 class Arkanoid : public GameBase
 {
 	public:
+		typedef std::shared_ptr<Arkanoid> Ptr;
+
 		Arkanoid();
 		~Arkanoid() {}
 
@@ -40,7 +42,5 @@ class Arkanoid : public GameBase
 		sf::Vector2f m_playerSize;
 		std::vector<BlockInfo> m_blockStack;
 };
-
-typedef std::shared_ptr<Arkanoid> ArkanoidPtr;
 
 #endif // ARKANOID_CONTROLLER_HPP

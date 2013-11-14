@@ -12,6 +12,8 @@
 class Snake : public GameBase
 {
 	public:
+		typedef std::shared_ptr<Snake> Ptr;
+
 		Snake();
 		~Snake() {}
 
@@ -50,7 +52,5 @@ class Snake : public GameBase
 		std::vector<CellStatus> m_cellState;
 		sf::Vector2i m_screenSize;
 };
-
-typedef std::shared_ptr<Snake> SnakePtr;
 
 #endif // SNAKE_CONTROLLER_HPP

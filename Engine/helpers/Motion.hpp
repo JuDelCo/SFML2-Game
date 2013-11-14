@@ -11,6 +11,7 @@ class Motion
 	public:
 		Motion(const float initialValue, const float maxVelocity, const float acceleration);
 		~Motion() {}
+
 		void newValue(const float newValue, const float timeStart);
 		void onTick(const float timeMs);
 		void reset();

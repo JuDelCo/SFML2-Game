@@ -8,18 +8,19 @@
 #include "Game/arkanoid/ArkanoidController.hpp"
 #include "Game/tetris/TetrisController.hpp"
 #include "Game/pacman/PacmanController.hpp"
+#include "Game/engitime/EngiTimeController.hpp"
 
 int main(const int argc, const char* args[])
 {
 	/* --------------------------------- */
 	/* Uncomment ONE to compile the game */
 	/* --------------------------------- */
-	TechDemoPtr game(new TechDemo());
-	//PongPtr game(new Pong());
-	//SnakePtr game(new Snake());
-	//ArkanoidPtr game(new Arkanoid());
-	//TetrisPtr game(new Tetris());
-	//PacmanPtr game(new Pacman());
+	GameBase::Ptr game(new TechDemo());
+	//GameBase::Ptr game(new Pong());
+	//GameBase::Ptr game(new Snake());
+	//GameBase::Ptr game(new Arkanoid());
+	//GameBase::Ptr game(new Tetris());
+	//GameBase::Ptr game(new Pacman());
 	/* --------------------------------- */
 
 	game->start();

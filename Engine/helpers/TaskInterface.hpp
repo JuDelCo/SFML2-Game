@@ -9,6 +9,8 @@
 class ITask
 {
 	public:
+		typedef std::shared_ptr<ITask> Ptr;
+
 		ITask(unsigned int priority = 10000) : m_isFinished(false), m_priority(priority) {};
 		~ITask() {}
 

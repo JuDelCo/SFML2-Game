@@ -12,9 +12,9 @@ GameBase::GameBase()
 {
 	srand(time(NULL));
 
-	m_debug = DebugPtr(new Debug());
-	m_video = VideoPtr(new Video());
-	m_input = InputPtr(new Input());
+	m_debug = Debug::Ptr(new Debug());
+	m_video = Video::Ptr(new Video());
+	m_input = Input::Ptr(new Input());
 
 	m_run = true;
 }

@@ -12,6 +12,8 @@
 class Pacman : public GameBase
 {
 	public:
+		typedef std::shared_ptr<Pacman> Ptr;
+
 		Pacman();
 		~Pacman() {}
 
@@ -134,7 +136,5 @@ class Pacman : public GameBase
 		unsigned int m_gameScore;
 		sf::Sprite m_liveSprite;
 };
-
-typedef std::shared_ptr<Pacman> PacmanPtr;
 
 #endif // PACMAN_CONTROLLER_HPP

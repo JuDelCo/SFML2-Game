@@ -14,10 +14,13 @@ typedef std::shared_ptr<sf::Texture> TexturePtr;
 class Sprite : public sf::Drawable, public sf::Transformable
 {
 	public:
+		typedef std::shared_ptr<Sprite> Ptr;
+
 		Sprite();
 		Sprite(TexturePtr texture);
 		Sprite(TexturePtr texture, sf::IntRect textureRect);
 		~Sprite() {}
+
 		bool isUpdated();
 		const sf::Vertex* getUpdate();
 		void setSize(sf::Vector2i spriteSize);

@@ -15,8 +15,11 @@ typedef std::shared_ptr<sf::RenderWindow> RenderWindowPtr;
 class Input
 {
 	public:
+		typedef std::shared_ptr<Input> Ptr;
+
 		Input();
 		~Input() {}
+
 		void onTick(RenderWindowPtr window);
 		void releaseAll();
 		void releaseKeys();
@@ -61,7 +64,5 @@ class Input
 	private:
 		void pollEvents(RenderWindowPtr window);
 };
-
-typedef std::shared_ptr<Input> InputPtr;
 
 #endif // INPUT_HPP

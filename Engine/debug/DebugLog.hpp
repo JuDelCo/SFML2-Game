@@ -14,6 +14,8 @@
 class Debug
 {
 	public:
+		typedef std::shared_ptr<Debug> Ptr;
+
 		Debug();
 		~Debug();
 
@@ -27,7 +29,5 @@ class Debug
 		std::vector<std::string> m_logStrings;
 		std::ofstream m_logger;
 };
-
-typedef std::shared_ptr<Debug> DebugPtr;
 
 #endif // DEBUG_LOG_HPP

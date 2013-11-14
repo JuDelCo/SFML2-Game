@@ -12,6 +12,8 @@
 class Tetris : public GameBase
 {
 	public:
+		typedef std::shared_ptr<Tetris> Ptr;
+
 		Tetris();
 		~Tetris() {}
 
@@ -57,7 +59,5 @@ class Tetris : public GameBase
 		unsigned int m_nextBlockId;
 		unsigned int m_playerScore;
 };
-
-typedef std::shared_ptr<Tetris> TetrisPtr;
 
 #endif // TETRIS_CONTROLLER_HPP

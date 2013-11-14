@@ -11,6 +11,8 @@
 class TechDemo : public GameBase
 {
 	public:
+		typedef std::shared_ptr<TechDemo> Ptr;
+
 		TechDemo();
 		~TechDemo();
 
@@ -27,7 +29,5 @@ class TechDemo : public GameBase
 		Sprite m_spriteTest;
 		SpriteBatch m_spriteBatchTest;
 };
-
-typedef std::shared_ptr<TechDemo> TechDemoPtr;
 
 #endif // TECH_DEMO_CONTROLLER_HPP

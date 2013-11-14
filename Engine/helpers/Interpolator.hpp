@@ -10,6 +10,7 @@ class IInterpolator
 {
 	public:
 		IInterpolator();
+
 		virtual ~IInterpolator() {}
 		virtual float update(float value) = 0;
 		float getValue();
@@ -24,6 +25,7 @@ class ITimeBasedInterpolator : public IInterpolator
 {
 	public:
 		ITimeBasedInterpolator(float totalTimeMs);
+
 		float update(float elapsedTimeMs);
 		void reset();
 

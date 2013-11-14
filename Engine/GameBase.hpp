@@ -15,17 +15,20 @@
 class GameBase
 {
 	public:
+		typedef std::shared_ptr<GameBase> Ptr;
+
 		GameBase();
 		~GameBase() {}
+
 		void start();
 		void stop();
 		unsigned int getTimeRunning();
 		unsigned int getFps();
 
 	protected:
-		InputPtr m_input;
-		VideoPtr m_video;
-		DebugPtr m_debug;
+		Input::Ptr m_input;
+		Video::Ptr m_video;
+		Debug::Ptr m_debug;
 
 	private:
 		void delayMs(const unsigned int delayMs);

@@ -12,6 +12,8 @@
 class Pong : public GameBase
 {
 	public:
+		typedef std::shared_ptr<Pong> Ptr;
+
 		Pong();
 		~Pong() {}
 
@@ -37,7 +39,5 @@ class Pong : public GameBase
 		unsigned int m_playerScore;
 		unsigned int m_cpuScore;
 };
-
-typedef std::shared_ptr<Pong> PongPtr;
 
 #endif // PONG_CONTROLLER_HPP

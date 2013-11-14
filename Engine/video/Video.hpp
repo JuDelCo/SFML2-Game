@@ -14,8 +14,11 @@ typedef std::shared_ptr<sf::RenderWindow> RenderWindowPtr;
 class Video
 {
 	public:
+		typedef std::shared_ptr<Video> Ptr;
+
 		Video();
 		~Video();
+
 		bool init();
 		void swapBuffers();
 		RenderWindowPtr getWindow();
@@ -46,7 +49,5 @@ class Video
 		void initWindow();
 		void endWindow();
 };
-
-typedef std::shared_ptr<Video> VideoPtr;
 
 #endif // VIDEO_HPP

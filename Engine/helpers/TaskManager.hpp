@@ -10,24 +10,22 @@
 #include <list>
 #include "TaskInterface.hpp"
 
-typedef std::shared_ptr<ITask> taskPtr;
-
 class ITaskManager : public ITask
 {
 	public:
 		ITaskManager(unsigned int priority = 10000) : ITask(priority) {};
 		~ITaskManager() {}
 
-		bool addTask(taskPtr& task);
+		bool addTask(ITask::Ptr& task);
 		void updateTaskList();
-		void suspendTask(taskPtr& task);
-		void resumeTask(taskPtr& task);
-		void removeTask(taskPtr& task);
+		void suspendTask(ITask::Ptr& task);
+		void resumeTask(ITask::Ptr& task);
+		void removeTask(ITask::Ptr& task);
 		void killAllTasks();
 
 	protected:
-		std::list<taskPtr> m_taskList;
-		std::list<taskPtr> m_pausedTaskList;
+		std::list<ITask::Ptr> m_taskList;
+		std::list<ITask::Ptr> m_pausedTaskList;
 };
 
 #endif // TASK_MANAGER_HPP

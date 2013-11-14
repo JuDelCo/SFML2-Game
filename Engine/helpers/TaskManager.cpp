@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <cassert>
 
-bool ITaskManager::addTask(taskPtr& task)
+bool ITaskManager::addTask(ITask::Ptr& task)
 {
 	if (!task->start())
 	{
@@ -17,7 +17,7 @@ bool ITaskManager::addTask(taskPtr& task)
 
 	for (; it != m_taskList.end(); ++it)
 	{
-		taskPtr& comp = (*it);
+		ITask::Ptr& comp = (*it);
 
 		if (comp->m_priority > task->m_priority)
 		{
@@ -54,7 +54,7 @@ void ITaskManager::updateTaskList()
 	}
 }
 
-void ITaskManager::suspendTask(taskPtr& task)
+void ITaskManager::suspendTask(ITask::Ptr& task)
 {
 	if (std::find(m_taskList.begin(), m_taskList.end(), task) != m_taskList.end())
 	{
@@ -64,7 +64,7 @@ void ITaskManager::suspendTask(taskPtr& task)
 	}
 }
 
-void ITaskManager::resumeTask(taskPtr& task)
+void ITaskManager::resumeTask(ITask::Ptr& task)
 {
 	if (std::find(m_pausedTaskList.begin(), m_pausedTaskList.end(), task) != m_pausedTaskList.end())
 	{
@@ -75,7 +75,7 @@ void ITaskManager::resumeTask(taskPtr& task)
 
 		for (; it != m_taskList.end(); ++it)
 		{
-			taskPtr& comp = (*it);
+			ITask::Ptr& comp = (*it);
 
 			if (comp->m_priority > task->m_priority)
 			{
@@ -87,7 +87,7 @@ void ITaskManager::resumeTask(taskPtr& task)
 	}
 }
 
-void ITaskManager::removeTask(taskPtr& task)
+void ITaskManager::removeTask(ITask::Ptr& task)
 {
 	assert(task && "Tried to remove a null task.");
 
