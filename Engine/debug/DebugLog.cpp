@@ -83,7 +83,7 @@ void Debug::write(int target, std::string message, ...)
 
 	if (target == LOG_CONSOLE || target == LOG_ALL)
 	{
-		std::cout << message << std::endl;
+		std::cout << buffer << std::endl;
 	}
 
 	va_end(args);
