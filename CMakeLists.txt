@@ -40,6 +40,10 @@ set(SOURCE_ENGINE
 	Engine/video/TileMap.hpp
 	Engine/video/Video.cpp
 	Engine/video/Video.hpp
+	Engine/video/gui/Manager.cpp
+	Engine/video/gui/Manager.hpp
+	Engine/video/gui/Widget.cpp
+	Engine/video/gui/Widget.hpp
 	Engine/Includes.hpp
 	Engine/Defines.hpp
 	Engine/GameBase.cpp
@@ -52,8 +56,6 @@ set(SOURCE_GAME
 	Game/pacman/PacmanController.hpp
 	Game/pong/PongController.cpp
 	Game/pong/PongController.hpp
-	Game/shmup/ShmupController.cpp
-	Game/shmup/ShmupController.hpp
 	Game/snake/SnakeController.cpp
 	Game/snake/SnakeController.hpp
 	Game/techdemo/DemoController.cpp

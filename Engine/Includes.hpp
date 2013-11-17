@@ -13,6 +13,8 @@
 #include "video/Sprite.hpp"
 #include "video/SpriteBatch.hpp"
 #include "video/TileMap.hpp"
+#include "video/gui/Manager.hpp"
+#include "video/gui/Widget.hpp"
 #include "debug/DebugLog.hpp"
 #include "helpers/Timer.hpp"
 #include "helpers/Event.hpp"
